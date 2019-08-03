@@ -1,9 +1,8 @@
----
 kind: pipeline
 name: arch-package
 
 steps:
-- name:build
+- name: build
   image: docker:archlinux/base
   commands:
     - pacman --noconfirm -Syyu
