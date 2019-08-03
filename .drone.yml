@@ -30,8 +30,8 @@ steps:
     host: tel.aunali1.com
     username:
       from_secret: ingress_user
-    key:
-      from_secret: ssh_key
+    password:
+      from_secret: ingress_password
     port: 22
     rm: true
     target: /srv/ftp/packages/archlinux
