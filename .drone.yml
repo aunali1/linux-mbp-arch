@@ -7,7 +7,10 @@ steps:
   pull: always
   commands:
     - pacman --noconfirm -Syyu
-    - pacman --noconfirm --needed -S base-devel sudo xmlto kmod inetutils bc libelf git python-sphinx python-sphinx_rtd_theme graphviz imagemagick
-    - chown -R nobody:nobody ./
-    - sudo -u nobody gpg --recv-keys 38DBBDC86092693E
-    - sudo -u nobody makepkg -s
+    - pacman --noconfirm --needed -S base-devel sudo
+    - useradd builduser -m
+    - passwd -d builduser
+    - printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers # passwordless sudo
+    - chown -R builduser:builduser ./
+    - sudo -u builduser gpg --recv-keys 38DBBDC86092693E
+    - sudo -u builduser makepkg -s --noconfirm
