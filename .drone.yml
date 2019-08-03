@@ -10,13 +10,15 @@ steps:
       path: /tmp/products
   commands:
     - pacman --noconfirm -Syyu
-    - pacman --noconfirm --needed -S base-devel sudo
-    - useradd builduser -m
-    - passwd -d builduser
-    - printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers # passwordless sudo
-    - chown -R builduser:builduser ./
-    - sudo -u builduser gpg --recv-keys 38DBBDC86092693E
-    - sudo -u builduser bash -c 'export MAKEFLAGS=-j14 && makepkg -s --noconfirm'
+    - pacman --noconfirm --needed -S wget
+    - wget https://packages.aunali1.com/archlinux/linux-mbp-5.1.21-1-x86_64.pkg.tar.xz
+    - #useradd builduser -m
+    - #passwd -d builduser
+    - #printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers # passwordless sudo
+    - #chown -R builduser:builduser ./
+    - #sudo -u builduser gpg --recv-keys 38DBBDC86092693E
+    - #sudo -u builduser bash -c 'export MAKEFLAGS=-j14 && makepkg -s --noconfirm'
+    - ls -lah *.pkg.tar.xz
     - cp *.pkg.tar.xz /tmp/products
 
 - name: publish-server
@@ -26,10 +28,12 @@ steps:
       path: /tmp/products
   settings:
     host: tel.aunali1.com
-    username: ingress
+    username:
+      from_secret: ingress_user
     key:
       from_secret: ssh_key
     port: 22
+    rm: true
     target: /srv/ftp/packages/archlinux
     source:
       - /tmp/products/*.pkg.tar.xz
