@@ -10,8 +10,7 @@ steps:
       path: /tmp/products
   commands:
     - pacman --noconfirm -Syyu
-    - pacman --noconfirm --needed -S wget
-    - wget https://packages.aunali1.com/archlinux/linux-mbp-5.1.21-1-x86_64.pkg.tar.xz
+    - pacman --noconfirm --needed -S base-devel sudo
     - useradd builduser -m
     - passwd -d builduser
     - printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers # passwordless sudo
