@@ -34,6 +34,7 @@ steps:
       from_secret: ingress_password
     port: 22
     rm: true
+    strip_components: 2
     target: /srv/ftp/packages/archlinux
     source:
       - /tmp/products/*.pkg.tar.xz
