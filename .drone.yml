@@ -12,12 +12,12 @@ steps:
     - pacman --noconfirm -Syyu
     - pacman --noconfirm --needed -S wget
     - wget https://packages.aunali1.com/archlinux/linux-mbp-5.1.21-1-x86_64.pkg.tar.xz
-    - #useradd builduser -m
-    - #passwd -d builduser
-    - #printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers # passwordless sudo
-    - #chown -R builduser:builduser ./
-    - #sudo -u builduser gpg --recv-keys 38DBBDC86092693E
-    - #sudo -u builduser bash -c 'export MAKEFLAGS=-j14 && makepkg -s --noconfirm'
+    - useradd builduser -m
+    - passwd -d builduser
+    - printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers # passwordless sudo
+    - chown -R builduser:builduser ./
+    - sudo -u builduser gpg --recv-keys 38DBBDC86092693E
+    - sudo -u builduser bash -c 'export MAKEFLAGS=-j14 && makepkg -s --noconfirm'
     - ls -lah *.pkg.tar.xz
     - cp *.pkg.tar.xz /tmp/products
 
@@ -49,6 +49,8 @@ steps:
       from_secret: github_token
     files: /tmp/products/*.pkg.tar.xz
     prerelease: yes
+  when:
+    event: tag
 
 volumes:
 - name: build-products
