@@ -1,0 +1,33 @@
+diff --git a/drivers/input/mouse/bcm5974.c b/drivers/input/mouse/bcm5974.c
+index d0122134f320..15cf3b5ec7eb 100644
+--- a/drivers/input/mouse/bcm5974.c
++++ b/drivers/input/mouse/bcm5974.c
+@@ -161,6 +161,8 @@ static const struct usb_device_id bcm5974_table[] = {
+ 	BCM5974_DEVICE(USB_DEVICE_ID_APPLE_WELLSPRING9_ANSI),
+ 	BCM5974_DEVICE(USB_DEVICE_ID_APPLE_WELLSPRING9_ISO),
+ 	BCM5974_DEVICE(USB_DEVICE_ID_APPLE_WELLSPRING9_JIS),
++		/* MacbookPro15 */
++	BCM5974_DEVICE(0x027b),
+ 	/* Terminating entry */
+ 	{}
+ };
+@@ -497,6 +499,19 @@ static const struct bcm5974_config bcm5974_config_table[] = {
+ 		{ SN_COORD, -203, 6803 },
+ 		{ SN_ORIENT, -MAX_FINGER_ORIENTATION, MAX_FINGER_ORIENTATION }
+ 	},
++	{
++		0x027b,
++		0,
++		0,
++		HAS_INTEGRATED_BUTTON,
++		0, sizeof(struct bt_data),
++			0x83, DATAFORMAT(TYPE4),
++		{ SN_PRESSURE, 0, 300 },
++			{ SN_WIDTH, 0, 2048 },
++			{ SN_COORD, -6243, 6749 },
++			{ SN_COORD, -170, 7685 },
++		{ SN_ORIENT, -MAX_FINGER_ORIENTATION, MAX_FINGER_ORIENTATION }
++	},
+ 	{}
+ };
+

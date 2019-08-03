@@ -1,0 +1,84 @@
+From eef64237b280663384cf9dd80c8f343c80581725 Mon Sep 17 00:00:00 2001
+From: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Date: Fri, 19 Jul 2019 15:03:06 +1000
+Subject: [PATCH 4/4] nvme-pci: Support shared tags across queues for Apple 2018 controllers
+
+Another issue with the Apple T2 based 2018 controllers seem to be
+that they blow up (and shut the machine down) if there's a tag
+collision between the IO queue and the Admin queue.
+
+My suspicion is that they use our tags for their internal tracking
+and don't mix them with the queue id. They also seem to not like
+when tags go beyond the IO queue depth, ie 128 tags.
+
+This adds a quirk that marks tags 0..31 of the IO queue reserved
+
+Signed-off-by: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+---
+ drivers/nvme/host/nvme.h |  5 +++++
+ drivers/nvme/host/pci.c  | 19 ++++++++++++++++++-
+ 2 files changed, 23 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/nvme/host/nvme.h b/drivers/nvme/host/nvme.h
+index 190664037a89..a1cbfae65176 100644
+--- a/drivers/nvme/host/nvme.h
++++ b/drivers/nvme/host/nvme.h
+@@ -102,6 +102,11 @@ enum nvme_quirks {
+ 	 * Use non-standard 128 bytes SQEs.
+ 	 */
+ 	NVME_QUIRK_128_BYTES_SQES		= (1 << 11),
++
++	/*
++	 * Prevent tag overlap between queues
++	 */
++	NVME_QUIRK_SHARED_TAGS                  = (1 << 12),
+ };
+ 
+ /*
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index e778a3d2d08a..fbc1d7d1d966 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -2119,6 +2119,14 @@ static int nvme_setup_io_queues(struct nvme_dev *dev)
+ 	unsigned long size;
+ 
+ 	nr_io_queues = max_io_queues();
++
++	/*
++	 * If tags are shared with admin queue (Apple bug), then
++	 * make sure we only use one IO queue.
++	 */
++	if (dev->ctrl.quirks & NVME_QUIRK_SHARED_TAGS)
++		nr_io_queues = 1;
++
+ 	result = nvme_set_queue_count(&dev->ctrl, &nr_io_queues);
+ 	if (result < 0)
+ 		return result;
+@@ -2289,6 +2297,14 @@ static int nvme_dev_add(struct nvme_dev *dev)
+ 		dev->tagset.flags = BLK_MQ_F_SHOULD_MERGE;
+ 		dev->tagset.driver_data = dev;
+ 
++		/*
++		 * Some Apple controllers requires tags to be unique
++		 * across admin and IO queue, so reserve the first 32
++		 * tags of the IO queue.
++		 */
++		if (dev->ctrl.quirks & NVME_QUIRK_SHARED_TAGS)
++			dev->tagset.reserved_tags = NVME_AQ_DEPTH;
++
+ 		ret = blk_mq_alloc_tag_set(&dev->tagset);
+ 		if (ret) {
+ 			dev_warn(dev->ctrl.device,
+@@ -2980,7 +2996,8 @@ static const struct pci_device_id nvme_id_table[] = {
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2003) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2005),
+ 		.driver_data = NVME_QUIRK_SINGLE_VECTOR |
+-				NVME_QUIRK_128_BYTES_SQES },
++				NVME_QUIRK_128_BYTES_SQES |
++				NVME_QUIRK_SHARED_TAGS },
+ 	{ 0, }
+ };
+ MODULE_DEVICE_TABLE(pci, nvme_id_table);
+-- 
+2.22.0
+
