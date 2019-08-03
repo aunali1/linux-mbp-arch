@@ -4,8 +4,10 @@ name: arch-package
 steps:
 - name: build
   image: archlinux/base
+  pull: always
   commands:
     - pacman --noconfirm -Syyu
-    - pacman --noconfirm -S base-devel
-    - gpg --recv-keys 38DBBDC86092693E
-    - makepkg -s
+    - pacman --noconfirm --needed -S base-devel sudo xmlto kmod inetutils bc libelf git python-sphinx python-sphinx_rtd_theme graphviz imagemagick
+    - chown -R nobody:nobody ./
+    - sudo -u nobody gpg --recv-keys 38DBBDC86092693E
+    - sudo -u nobody makepkg -s
