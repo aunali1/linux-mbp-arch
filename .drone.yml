@@ -1,0 +1,12 @@
+---
+kind: pipeline
+name: arch-package
+
+steps:
+- name:build
+  image: docker:archlinux/base
+  commands:
+    - pacman --noconfirm -Syyu
+    - pacman --noconfirm -S base-devel
+    - gpg --recv-keys 38DBBDC86092693E
+    - makepkg -s
