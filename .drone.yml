@@ -3,7 +3,7 @@ name: arch-package
 
 steps:
 - name: build
-  image: docker:archlinux/base
+  image: archlinux/base
   commands:
     - pacman --noconfirm -Syyu
     - pacman --noconfirm -S base-devel
