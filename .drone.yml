@@ -5,6 +5,8 @@ steps:
 - name: build
   image: archlinux/base
   pull: always
+  environment:
+    MAKEFLAGS: -j14
   commands:
     - pacman --noconfirm -Syyu
     - pacman --noconfirm --needed -S base-devel sudo
