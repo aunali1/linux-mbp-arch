@@ -17,14 +17,32 @@ steps:
     - chown -R builduser:builduser ./
     - sudo -u builduser gpg --recv-keys 38DBBDC86092693E
     - sudo -u builduser bash -c 'export MAKEFLAGS=-j14 && makepkg -s --noconfirm'
-    - cp *.pkg.* /tmp/products
+    - cp *.pkg.tar.xz /tmp/products
+
+- name: publish-server
+  image: appleboy/drone-scp
+  volumes:
+    - name: build-products
+      path: /tmp/products
+  settings:
+    host: tel.aunali1.com
+    username: ingress
+    key:
+      from_secret: ssh_key
+    port: 22
+    target: /srv/ftp/packages/archlinux
+    source:
+      - /tmp/products/*.pkg.tar.xz
 
 - name: publish-github
   image: plugins/github-release
+  volumes:
+    - name: build-products
+      path: /tmp/products
   settings:
     api_key:
       from_secret: github_token
-    files: /tmp/products/*
+    files: /tmp/products/*.pkg.tar.xz
     prerelease: yes
 
 volumes:
