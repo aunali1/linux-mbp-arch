@@ -7,6 +7,9 @@ steps:
   pull: always
   environment:
     MAKEFLAGS: -j14
+  volumes:
+    - name: build-products
+      path: /tmp/products
   commands:
     - pacman --noconfirm -Syyu
     - pacman --noconfirm --needed -S base-devel sudo
@@ -16,3 +19,16 @@ steps:
     - chown -R builduser:builduser ./
     - sudo -u builduser gpg --recv-keys 38DBBDC86092693E
     - sudo -u builduser makepkg -s --noconfirm
+    - cp *.pkg.* /tmp/products
+
+- name: publish-github
+  image: plugins/github-release
+  settings:
+    api_key:
+      from_secret: github_token
+    files: /tmp/products/*
+    prerelease: yes
+
+volumes:
+- name: build-products
+  temp: {}
