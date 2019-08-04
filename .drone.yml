@@ -1,5 +1,5 @@
 kind: pipeline
-name: arch-package
+name: arch-kernel-package
 
 steps:
 - name: build
@@ -20,6 +20,21 @@ steps:
     - ls -lah *.pkg.tar.xz
     - cp *.pkg.tar.xz /tmp/products
 
+- name: sign
+  image: plugins/gpgsign
+  volumes:
+    - name: build-products
+      path: /tmp/products
+  settings:
+    key:
+      from_secret: signing_key
+    passphrase:
+      from_secret: signing_key_password
+    files:
+      - /tmp/products/*
+    armor: false
+    detach_sign: true
+
 - name: publish-server
   image: appleboy/drone-scp
   volumes:
@@ -34,9 +49,24 @@ steps:
     port: 22
     rm: true
     strip_components: 2
-    target: /srv/ftp/packages/archlinux
+    target: /srv/ftp/ingress/mbp
     source:
-      - /tmp/products/*.pkg.tar.xz
+      - /tmp/products/*
+
+- name: update-repo
+  image: appleboy/drone-ssh
+  volumes:
+    - name: build-products
+      path: /tmp/products
+  settings:
+    host: tel.aunali1.com
+    username:
+      from_secret: ingress_user
+    password:
+      from_secret: ingress_password
+    port: 22
+    script:
+      - ./update_mbp_repo.sh
 
 - name: publish-github
   image: plugins/github-release
@@ -46,7 +76,7 @@ steps:
   settings:
     api_key:
       from_secret: github_token
-    files: /tmp/products/*.pkg.tar.xz
+    files: /tmp/products/*
     prerelease: yes
   when:
     event: tag
