@@ -34,6 +34,8 @@ steps:
       - /tmp/products/*
     armor: false
     detach_sign: true
+  when:
+    event: tag
 
 - name: publish-server
   image: appleboy/drone-scp
@@ -52,6 +54,8 @@ steps:
     target: /srv/ftp/ingress/mbp
     source:
       - /tmp/products/*
+  when:
+    event: tag
 
 - name: update-repo
   image: appleboy/drone-ssh
@@ -67,6 +71,8 @@ steps:
     port: 22
     script:
       - ./update_mbp_repo.sh
+  when:
+    event: tag
 
 - name: publish-github
   image: plugins/github-release
