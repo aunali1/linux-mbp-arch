@@ -4,7 +4,7 @@
 # Contributor: Thomas Baechler <thomas@archlinux.org>
 
 pkgbase=linux-mbp
-pkgver=5.1.21
+pkgver=5.2.6
 _srcname=linux-${pkgver}
 pkgrel=1
 arch=(x86_64)
@@ -27,11 +27,9 @@ source=(
   # Arch Linux patches
   0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch
   0002-ZEN-Add-CONFIG-for-unprivileged_userns_clone.patch
-
-  # Backported NVME patches
-  1001-nvme-pci-use-a-flag-for-polled-queues.patch
-  1002-nvme-pci-remove-q_dmadev-from-nvme_queue.patch
-  1003-nvme-pci-check-for-NULL-return-from-pci_alloc_p2pmem.patch
+  0003-iwlwifi-mvm-disable-TX-AMSDU-on-older-NICs.patch
+  0004-iwlwifi-Add-support-for-SAR-South-Korea-limitation.patch
+  0005-netfilter-nf_tables-fix-module-autoload-for-redir.patch
 
   # MBP ANS2 NVME Controller support
   2001-nvme-pci-Pass-the-queue-to-SQ_SIZE-CQ_SIZE-macros.patch
@@ -50,18 +48,18 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('56495f82314f0dfb84a3fe7fad78e17be69c4fd36ef46f2452458b2fa1e341f6'
+sha256sums=('be105afb7394dce98953bcea79c2ce02345587eee4638fce9a5f5a1e7e7b1ff2'
             'SKIP'
-            'd096ce672dd3524839474b60002badd7f98d2794440775c8fcf554d899a26768'
+            '5de46587162a3283585ea4c828a8ae04586897ca2b66db7c8c967a5ce61fc9b3'
             'ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21'
             'c043f3033bb781e2688794a59f6d1f7ed49ef9b13eb77ff9a425df33a244a636'
             'ad6344badc91ad0630caacde83f7f9b97276f80d26a20619a87952be65492c65'
-            '74551a4f69bcb15167df37aed4cc206df6184e553f5206375524dc12119e2cc7'
-            '0676ad857bd637580630d249eeec3f7dafe2c90bb4790ca6d413281b682f75c5'
-            '6743985f730612a999a2d13c8290191e8a2654990a0956fe0a2b7dd88325e190'
-            '1b25452fe776659b28698a4b0aa51370a03d8601d387289dd93036fbe51d9b08'
-            '998a114b4a55e0e33b07229c911df5c7e70a3f133b3a1323afdca37078471d39'
-            '4db88cdb4ad34bd86c997b5cfd9298509ad9d49b916c551bee4c0c22a137fca8'
+            '34fdf9284ceba5f73ef21bfb1a7dbd22453ddad28dcd64123701db1fb173dc70'
+            '0699a9cc8105af1a1ceea3facbac22168ea7a6d60b79c27b03397ea0731c939c'
+            'e5c6c0a368ab0a5a754c162508c9c199bc4adef0e9bc144b780fd5ff744d6752'
+            'f49217d462018c424549cfe800f6305f2dea3382ef24591d67f901648defed79'
+            '279b8c6ee9f1a66682f3daef7f2704aab009751351e427aff9e3c90139b14135'
+            '01c8faa7d045a6bd7c40b3d9f5dda3a0f89761d8bd54a9a113e1277fcb2be350'
             '4d1439c742cc5e7ec4040853fd864f50616201ee47a41ed9e840dcd8d58bcc8f'
             'a7dfb80325a2d7ed0d8d16f8b1bd19766236fb6d698a4efe13f27e4e03110c6b'
             '42118dbf93fd7ff655f6a36f926d6bf60cad3ef1538ed3786ab45fa3919360ca'
