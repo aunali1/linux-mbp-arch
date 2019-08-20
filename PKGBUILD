@@ -4,7 +4,7 @@
 # Contributor: Thomas Baechler <thomas@archlinux.org>
 
 pkgbase=linux-mbp
-pkgver=5.2.8
+pkgver=5.2.9
 _srcname=linux-${pkgver}
 pkgrel=1
 arch=(x86_64)
@@ -29,7 +29,6 @@ source=(
   0002-ZEN-Add-CONFIG-for-unprivileged_userns_clone.patch
   0003-iwlwifi-mvm-disable-TX-AMSDU-on-older-NICs.patch
   0004-iwlwifi-Add-support-for-SAR-South-Korea-limitation.patch
-  0005-netfilter-nf_tables-fix-module-autoload-for-redir.patch
 
   # MBP ANS2 NVME Controller support
   2001-nvme-pci-Pass-the-queue-to-SQ_SIZE-CQ_SIZE-macros.patch
@@ -48,7 +47,7 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('a127cd06cc01468e5564c5242827610b679827d7b40c2a2e4d82c629dd0f6937'
+sha256sums=('b6f02a4b306ca5cd314d72615bfc2650166969613135da202630e6c4e1b5d4e6'
             'SKIP'
             '5de46587162a3283585ea4c828a8ae04586897ca2b66db7c8c967a5ce61fc9b3'
             'ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21'
@@ -58,13 +57,12 @@ sha256sums=('a127cd06cc01468e5564c5242827610b679827d7b40c2a2e4d82c629dd0f6937'
             '0699a9cc8105af1a1ceea3facbac22168ea7a6d60b79c27b03397ea0731c939c'
             'e5c6c0a368ab0a5a754c162508c9c199bc4adef0e9bc144b780fd5ff744d6752'
             'f49217d462018c424549cfe800f6305f2dea3382ef24591d67f901648defed79'
-            '279b8c6ee9f1a66682f3daef7f2704aab009751351e427aff9e3c90139b14135'
             '01c8faa7d045a6bd7c40b3d9f5dda3a0f89761d8bd54a9a113e1277fcb2be350'
             '4d1439c742cc5e7ec4040853fd864f50616201ee47a41ed9e840dcd8d58bcc8f'
             'a7dfb80325a2d7ed0d8d16f8b1bd19766236fb6d698a4efe13f27e4e03110c6b'
             '42118dbf93fd7ff655f6a36f926d6bf60cad3ef1538ed3786ab45fa3919360ca'
             '717f7fc70a3e3fcfa5ffbac505c8259c1d86718ca1ca6593e8925dac3d29a835'
-            '0d9b789ba6ef8ae572da0cbd1fcf36f4262e29294065570018eff7a4aea8aa00'
+            '6e0010902048571ed6515547b481bc7a4a2f21abb1469d3ed0c68cd9e1a4de0e'
             'f03fa03f850b5598317c5d810809f92fc0e258d87b4f9ed0381ed413e1cf3cb2')
 
 _kernelname=${pkgbase#linux}
