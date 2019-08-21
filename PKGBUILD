@@ -6,7 +6,7 @@
 pkgbase=linux-mbp
 pkgver=5.2.9
 _srcname=linux-${pkgver}
-pkgrel=1
+pkgrel=2
 arch=(x86_64)
 url="https://git.archlinux.org/linux.git/log/?h=v$_srcver"
 license=(GPL2)
