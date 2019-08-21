@@ -54,7 +54,7 @@ index 671a285724f9..d8d7232b65e2 100644
  	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_GEYSER1_TP_ONLY) },
  	{ }
 diff --git a/drivers/input/mouse/bcm5974.c b/drivers/input/mouse/bcm5974.c
-index 59a14505b9cd..a87b883b77a2 100644
+index 59a14505b9cd..5df8baa58e00 100644
 --- a/drivers/input/mouse/bcm5974.c
 +++ b/drivers/input/mouse/bcm5974.c
 @@ -82,6 +82,13 @@
@@ -84,35 +84,36 @@ index 59a14505b9cd..a87b883b77a2 100644
  	/* Terminating entry */
  	{}
  };
-@@ -482,6 +495,43 @@ static const struct bcm5974_config bcm5974_config_table[] = {
- 		{ SN_COORD, -4828, 5345 },
+@@ -483,6 +496,45 @@ static const struct bcm5974_config bcm5974_config_table[] = {
  		{ SN_COORD, -203, 6803 },
  		{ SN_ORIENT, -MAX_FINGER_ORIENTATION, MAX_FINGER_ORIENTATION }
+ 	},
++	{
++		USB_DEVICE_ID_APPLE_WELLSPRING10_T2_A,
++		0,
++		0,
++		HAS_INTEGRATED_BUTTON,
++		0, sizeof(struct bt_data),
++		0x83, DATAFORMAT(TYPE4),
++		{ SN_PRESSURE, 0, 300 },
++		{ SN_WIDTH, 0, 2048 },
++		{ SN_COORD, -6243, 6749 },
++		{ SN_COORD, -170, 7685 },
++		{ SN_ORIENT, -MAX_FINGER_ORIENTATION, MAX_FINGER_ORIENTATION }
 +	},
-+                USB_DEVICE_ID_APPLE_WELLSPRING10_T2_A,
-+                0,
-+                0,
-+                HAS_INTEGRATED_BUTTON,
-+                0, sizeof(struct bt_data),
-+                0x83, DATAFORMAT(TYPE4),
-+                { SN_PRESSURE, 0, 300 },
-+                { SN_WIDTH, 0, 2048 },
-+                { SN_COORD, -6243, 6749 },
-+                { SN_COORD, -170, 7685 },
-+                { SN_ORIENT, -MAX_FINGER_ORIENTATION, MAX_FINGER_ORIENTATION }
-+        },
-+                USB_DEVICE_ID_APPLE_WELLSPRING10_T2_B,
-+                0,
-+                0,
-+                HAS_INTEGRATED_BUTTON,
-+                0, sizeof(struct bt_data),
-+                0x83, DATAFORMAT(TYPE4),
-+                { SN_PRESSURE, 0, 300 },
-+                { SN_WIDTH, 0, 2048 },
-+                { SN_COORD, -6243, 6749 },
-+                { SN_COORD, -170, 7685 },
-+                { SN_ORIENT, -MAX_FINGER_ORIENTATION, MAX_FINGER_ORIENTATION }
-+        },
++	{
++		USB_DEVICE_ID_APPLE_WELLSPRING10_T2_B,
++		0,
++		0,
++		HAS_INTEGRATED_BUTTON,
++		0, sizeof(struct bt_data),
++		0x83, DATAFORMAT(TYPE4),
++		{ SN_PRESSURE, 0, 300 },
++		{ SN_WIDTH, 0, 2048 },
++		{ SN_COORD, -6243, 6749 },
++		{ SN_COORD, -170, 7685 },
++		{ SN_ORIENT, -MAX_FINGER_ORIENTATION, MAX_FINGER_ORIENTATION }
++	},
 +	{
 +		USB_DEVICE_ID_APPLE_WELLSPRING10_T2_C,
 +		0,
@@ -125,6 +126,7 @@ index 59a14505b9cd..a87b883b77a2 100644
 +		{ SN_COORD, -6243, 6749 },
 +		{ SN_COORD, -170, 7685 },
 +		{ SN_ORIENT, -MAX_FINGER_ORIENTATION, MAX_FINGER_ORIENTATION }
- 	},
++	},
  	{}
  };
+ 
