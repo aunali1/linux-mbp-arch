@@ -1,63 +1,120 @@
+diff --git a/drivers/hid/hid-apple.c b/drivers/hid/hid-apple.c
+index 81df62f48c4c..4839ed2c0475 100644
+--- a/drivers/hid/hid-apple.c
++++ b/drivers/hid/hid-apple.c
+@@ -554,6 +554,12 @@ static const struct hid_device_id apple_devices[] = {
+ 		.driver_data = APPLE_HAS_FN },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING9_JIS),
+ 		.driver_data = APPLE_HAS_FN | APPLE_RDESC_JIS },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING10_T2_A),
++		.driver_data = APPLE_HAS_FN },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING10_T2_B),
++		.driver_data = APPLE_HAS_FN },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING10_T2_C),
++		.driver_data = APPLE_HAS_FN },
+ 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_ALU_WIRELESS_2009_ANSI),
+ 		.driver_data = APPLE_NUMLOCK_EMULATION | APPLE_HAS_FN },
+ 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_ALU_WIRELESS_2009_ISO),
 diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index b032d3899fa3..b3116477e2d2 100644
+index b032d3899fa3..4af2f7eb12af 100644
 --- a/drivers/hid/hid-ids.h
 +++ b/drivers/hid/hid-ids.h
-@@ -168,6 +168,7 @@
+@@ -168,6 +168,9 @@
  #define USB_DEVICE_ID_APPLE_WELLSPRING9_ANSI	0x0272
  #define USB_DEVICE_ID_APPLE_WELLSPRING9_ISO		0x0273
  #define USB_DEVICE_ID_APPLE_WELLSPRING9_JIS		0x0274
-+#define USB_DEVICE_ID_APPLE_WELLSPRING10	0x027b
++#define USB_DEVICE_ID_APPLE_WELLSPRING10_T2_A	0x027a
++#define USB_DEVICE_ID_APPLE_WELLSPRING10_T2_B	0x027b
++#define USB_DEVICE_ID_APPLE_WELLSPRING10_T2_C	0x027c
  #define USB_DEVICE_ID_APPLE_FOUNTAIN_TP_ONLY	0x030a
  #define USB_DEVICE_ID_APPLE_GEYSER1_TP_ONLY	0x030b
  #define USB_DEVICE_ID_APPLE_IRCONTROL	0x8240
 diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index 671a285724f9..30d4c66ea2b1 100644
+index 671a285724f9..d8d7232b65e2 100644
 --- a/drivers/hid/hid-quirks.c
 +++ b/drivers/hid/hid-quirks.c
-@@ -267,6 +267,7 @@ static const struct hid_device_id hid_have_special_driver[] = {
+@@ -267,6 +267,9 @@ static const struct hid_device_id hid_have_special_driver[] = {
  	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING9_ANSI) },
  	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING9_ISO) },
  	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING9_JIS) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING10) },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING10_T2_A) },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING10_T2_B) },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING10_T2_C) },
  	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_ALU_WIRELESS_2009_ANSI) },
  	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_ALU_WIRELESS_2009_ISO) },
  	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_ALU_WIRELESS_2009_JIS) },
-@@ -908,6 +909,7 @@ static const struct hid_device_id hid_mouse_ignore_list[] = {
+@@ -908,6 +911,9 @@ static const struct hid_device_id hid_mouse_ignore_list[] = {
  	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING9_ANSI) },
  	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING9_ISO) },
  	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING9_JIS) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING10) },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING10_T2_A) },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING10_T2_B) },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING10_T2_C) },
  	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_FOUNTAIN_TP_ONLY) },
  	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_GEYSER1_TP_ONLY) },
  	{ }
 diff --git a/drivers/input/mouse/bcm5974.c b/drivers/input/mouse/bcm5974.c
-index 59a14505b9cd..ed0d4865c3a4 100644
+index 59a14505b9cd..a87b883b77a2 100644
 --- a/drivers/input/mouse/bcm5974.c
 +++ b/drivers/input/mouse/bcm5974.c
-@@ -82,6 +82,8 @@
+@@ -82,6 +82,13 @@
  #define USB_DEVICE_ID_APPLE_WELLSPRING9_ANSI	0x0272
  #define USB_DEVICE_ID_APPLE_WELLSPRING9_ISO	0x0273
  #define USB_DEVICE_ID_APPLE_WELLSPRING9_JIS	0x0274
++/* T2-Attached Devices */
++/* MacbookAir8,1 (2019) */
++#define USB_DEVICE_ID_APPLE_WELLSPRING10_T2_A	0x027a
++/* MacbookPro15,2 (2018) */
++#define USB_DEVICE_ID_APPLE_WELLSPRING10_T2_B	0x027b
 +/* MacbookPro15,1 (2018) */
-+#define USB_DEVICE_ID_APPLE_WELLSPRING10	0x027b
++#define USB_DEVICE_ID_APPLE_WELLSPRING10_T2_C	0x027c
  
  #define BCM5974_DEVICE(prod) {					\
  	.match_flags = (USB_DEVICE_ID_MATCH_DEVICE |		\
-@@ -147,6 +149,8 @@ static const struct usb_device_id bcm5974_table[] = {
+@@ -147,6 +154,12 @@ static const struct usb_device_id bcm5974_table[] = {
  	BCM5974_DEVICE(USB_DEVICE_ID_APPLE_WELLSPRING9_ANSI),
  	BCM5974_DEVICE(USB_DEVICE_ID_APPLE_WELLSPRING9_ISO),
  	BCM5974_DEVICE(USB_DEVICE_ID_APPLE_WELLSPRING9_JIS),
++	/* MacbookAir8,1 */
++	BCM5974_DEVICE(USB_DEVICE_ID_APPLE_WELLSPRING10_T2_A),
++	/* MacbookPro15,2 */
++	BCM5974_DEVICE(USB_DEVICE_ID_APPLE_WELLSPRING10_T2_B),
 +	/* MacbookPro15,1 */
-+	BCM5974_DEVICE(USB_DEVICE_ID_APPLE_WELLSPRING10),
++	BCM5974_DEVICE(USB_DEVICE_ID_APPLE_WELLSPRING10_T2_C),
  	/* Terminating entry */
  	{}
  };
-@@ -483,6 +487,19 @@ static const struct bcm5974_config bcm5974_config_table[] = {
+@@ -482,6 +495,43 @@ static const struct bcm5974_config bcm5974_config_table[] = {
+ 		{ SN_COORD, -4828, 5345 },
  		{ SN_COORD, -203, 6803 },
  		{ SN_ORIENT, -MAX_FINGER_ORIENTATION, MAX_FINGER_ORIENTATION }
- 	},
++	},
++                USB_DEVICE_ID_APPLE_WELLSPRING10_T2_A,
++                0,
++                0,
++                HAS_INTEGRATED_BUTTON,
++                0, sizeof(struct bt_data),
++                0x83, DATAFORMAT(TYPE4),
++                { SN_PRESSURE, 0, 300 },
++                { SN_WIDTH, 0, 2048 },
++                { SN_COORD, -6243, 6749 },
++                { SN_COORD, -170, 7685 },
++                { SN_ORIENT, -MAX_FINGER_ORIENTATION, MAX_FINGER_ORIENTATION }
++        },
++                USB_DEVICE_ID_APPLE_WELLSPRING10_T2_B,
++                0,
++                0,
++                HAS_INTEGRATED_BUTTON,
++                0, sizeof(struct bt_data),
++                0x83, DATAFORMAT(TYPE4),
++                { SN_PRESSURE, 0, 300 },
++                { SN_WIDTH, 0, 2048 },
++                { SN_COORD, -6243, 6749 },
++                { SN_COORD, -170, 7685 },
++                { SN_ORIENT, -MAX_FINGER_ORIENTATION, MAX_FINGER_ORIENTATION }
++        },
 +	{
-+		USB_DEVICE_ID_APPLE_WELLSPRING10,
++		USB_DEVICE_ID_APPLE_WELLSPRING10_T2_C,
 +		0,
 +		0,
 +		HAS_INTEGRATED_BUTTON,
@@ -68,7 +125,6 @@ index 59a14505b9cd..ed0d4865c3a4 100644
 +		{ SN_COORD, -6243, 6749 },
 +		{ SN_COORD, -170, 7685 },
 +		{ SN_ORIENT, -MAX_FINGER_ORIENTATION, MAX_FINGER_ORIENTATION }
-+	},
+ 	},
  	{}
  };
- 
