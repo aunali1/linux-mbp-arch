@@ -1,7 +1,7 @@
 From 9605d0c619abca3551dfbaeb00a255b55a8722d8 Mon Sep 17 00:00:00 2001
 From: Haim Dreyfuss <haim.dreyfuss@intel.com>
 Date: Wed, 27 Feb 2019 16:43:45 +0200
-Subject: [PATCH 4/5] iwlwifi: Add support for SAR South Korea limitation
+Subject: [PATCH 4/4] iwlwifi: Add support for SAR South Korea limitation
 
 South Korea is adding a more strict SAR limit called "Limb SAR".
 Currently, WGDS SAR offset group 3 is not used (not mapped to any country).

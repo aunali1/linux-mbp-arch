@@ -1,7 +1,7 @@
 From b8125c22f0fc0ebe930bbbf39f0563aa4fdfda2b Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <jan.steffens@gmail.com>
 Date: Thu, 7 Dec 2017 13:50:48 +0100
-Subject: [PATCH 2/5] ZEN: Add CONFIG for unprivileged_userns_clone
+Subject: [PATCH 2/4] ZEN: Add CONFIG for unprivileged_userns_clone
 
 This way our default behavior continues to match the vanilla kernel.
 ---
