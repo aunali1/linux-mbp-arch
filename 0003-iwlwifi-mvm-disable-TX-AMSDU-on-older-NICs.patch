@@ -1,4 +1,4 @@
-From fb4e0c86d00bbc4985edd6ebe3066e8eff6e950a Mon Sep 17 00:00:00 2001
+From 84359ac9be0d1b2cb9ab4beab2d4cfac9100162d Mon Sep 17 00:00:00 2001
 From: Johannes Berg <johannes.berg@intel.com>
 Date: Wed, 3 Jul 2019 11:10:49 +0300
 Subject: [PATCH 3/4] iwlwifi: mvm: disable TX-AMSDU on older NICs
@@ -49,5 +49,5 @@ index 964c7baabede..3905770b8a1f 100644
  
  	if (iwl_mvm_has_tlc_offload(mvm)) {
 -- 
-2.22.0
+2.23.0
 

@@ -4,9 +4,9 @@
 # Contributor: Thomas Baechler <thomas@archlinux.org>
 
 pkgbase=linux-mbp
-pkgver=5.2.9
+pkgver=5.2.10
 _srcname=linux-${pkgver}
-pkgrel=3
+pkgrel=1
 arch=(x86_64)
 url="https://git.archlinux.org/linux.git/log/?h=v$_srcver"
 license=(GPL2)
@@ -28,7 +28,7 @@ source=(
   0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch
   0002-ZEN-Add-CONFIG-for-unprivileged_userns_clone.patch
   0003-iwlwifi-mvm-disable-TX-AMSDU-on-older-NICs.patch
-  0004-iwlwifi-Add-support-for-SAR-South-Korea-limitation.patch
+  0004-drm-amdgpu-pin-the-csb-buffer-on-hw-init-for-gfx-v8.patch
 
   # MBP ANS2 NVME Controller support
   2001-nvme-pci-Pass-the-queue-to-SQ_SIZE-CQ_SIZE-macros.patch
@@ -47,16 +47,16 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('b6f02a4b306ca5cd314d72615bfc2650166969613135da202630e6c4e1b5d4e6'
+sha256sums=('6096c4387c2a296de9136080942d11ae3f1bd28129b6952f7133c570e43bfc49'
             'SKIP'
             '5de46587162a3283585ea4c828a8ae04586897ca2b66db7c8c967a5ce61fc9b3'
             'ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21'
             'c043f3033bb781e2688794a59f6d1f7ed49ef9b13eb77ff9a425df33a244a636'
             'ad6344badc91ad0630caacde83f7f9b97276f80d26a20619a87952be65492c65'
-            '174ceacd4a0d4610263ab3e43cd696dd7b27537d0ff3ab3975f63ffe99483a43'
-            '432cee62860c52dbf5430f9fcefdca11ff9b9db94742ce8dfe84fc7cc9c08862'
-            '321ef162cb9e6beef43e91b03efbe1f45607414e05c274e682c25664f4a17f8f'
-            'c3d89db17e88ee5e4c8d4126295855540c6e72c12c44f8e10cc3414b5400eca3'
+            '5c07c86e0fab6d98587d945e62c83bfdd01a6dfac1223d83f96f5afc3c8f0c1e'
+            '907c8a2180b86789373b38fe80a6fa102e8a6f8a40c2b3c6e70ada1b523dc469'
+            '0f104bb581265ed4504141b6de063b035bbccfadf2abdabc27b9a4a7a66299cc'
+            '0dbbe4c7a7b25630f506fb2faf3148ead5db1b30a0215426960afb5134aa644e'
             '01c8faa7d045a6bd7c40b3d9f5dda3a0f89761d8bd54a9a113e1277fcb2be350'
             '4d1439c742cc5e7ec4040853fd864f50616201ee47a41ed9e840dcd8d58bcc8f'
             'a7dfb80325a2d7ed0d8d16f8b1bd19766236fb6d698a4efe13f27e4e03110c6b'
