@@ -6,7 +6,7 @@
 pkgbase=linux-mbp
 pkgver=5.2.10
 _srcname=linux-${pkgver}
-pkgrel=1
+pkgrel=2
 arch=(x86_64)
 url="https://git.archlinux.org/linux.git/log/?h=v$_srcver"
 license=(GPL2)
@@ -58,7 +58,7 @@ validpgpkeys=(
 
 sha256sums=('6096c4387c2a296de9136080942d11ae3f1bd28129b6952f7133c570e43bfc49'
             'SKIP'
-            'f21128dfafef74624fcfc96719df6454606dacaec1564313bdeda1efd9ab802a'
+            'ca03f3e65af0c4bfde88a864deac18a1b3afdb3fcc88339114272f693bbfadda'
             'ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21'
             'c043f3033bb781e2688794a59f6d1f7ed49ef9b13eb77ff9a425df33a244a636'
             'ad6344badc91ad0630caacde83f7f9b97276f80d26a20619a87952be65492c65'
