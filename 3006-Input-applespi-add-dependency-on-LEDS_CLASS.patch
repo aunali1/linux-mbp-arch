@@ -1,0 +1,35 @@
+From e77ff779a0c6666b697c56a6e41972bbf30b977f Mon Sep 17 00:00:00 2001
+From: YueHaibing <yuehaibing@huawei.com>
+Date: Wed, 31 Jul 2019 06:48:09 -0700
+Subject: [PATCH] Input: applespi - add dependency on LEDS_CLASS
+
+If applespi is enabled, but LEDs class support is not, the build fails:
+
+drivers/input/keyboard/applespi.o: In function `applespi_probe':
+applespi.c:(.text+0x1fcd): undefined reference to `devm_led_classdev_register_ext'
+
+Add "depends on LEDS_CLASS" to the Konfig
+
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Fixes: 038b1a05eae6 ("Input: add Apple SPI keyboard and trackpad driver")
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+---
+ drivers/input/keyboard/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/input/keyboard/Kconfig b/drivers/input/keyboard/Kconfig
+index ebb19e21473e..90e8a7f2f07c 100644
+--- a/drivers/input/keyboard/Kconfig
++++ b/drivers/input/keyboard/Kconfig
+@@ -76,6 +76,7 @@ config KEYBOARD_APPLESPI
+ 	depends on ACPI && EFI
+ 	depends on SPI
+ 	depends on X86 || COMPILE_TEST
++	depends on LEDS_CLASS
+ 	select CRC16
+ 	help
+ 	  Say Y here if you are running Linux on any Apple MacBook8,1 or later,
+-- 
+2.23.0
+

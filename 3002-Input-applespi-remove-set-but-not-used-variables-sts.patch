@@ -1,0 +1,41 @@
+From d56fef0ec85b8a8bae5d7d003b93f0a0aaf82ed9 Mon Sep 17 00:00:00 2001
+From: Mao Wenan <maowenan@huawei.com>
+Date: Tue, 16 Jul 2019 20:16:28 +0200
+Subject: [PATCH] Input: applespi - remove set but not used variables 'sts'
+
+Fixes gcc '-Wunused-but-set-variable' warning:
+
+drivers/input/keyboard/applespi.c: In function applespi_set_bl_level:
+drivers/input/keyboard/applespi.c:902:6: warning: variable sts set but not used [-Wunused-but-set-variable]
+
+Fixes: b426ac0452093d ("Input: add Apple SPI keyboard and trackpad driver")
+Signed-off-by: Mao Wenan <maowenan@huawei.com>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+---
+ drivers/input/keyboard/applespi.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/drivers/input/keyboard/applespi.c b/drivers/input/keyboard/applespi.c
+index c1a68438245a..548737e7aeda 100644
+--- a/drivers/input/keyboard/applespi.c
++++ b/drivers/input/keyboard/applespi.c
+@@ -899,7 +899,6 @@ static void applespi_set_bl_level(struct led_classdev *led_cdev,
+ 	struct applespi_data *applespi =
+ 		container_of(led_cdev, struct applespi_data, backlight_info);
+ 	unsigned long flags;
+-	int sts;
+ 
+ 	spin_lock_irqsave(&applespi->cmd_msg_lock, flags);
+ 
+@@ -916,7 +915,7 @@ static void applespi_set_bl_level(struct led_classdev *led_cdev,
+ 			 KBD_BL_LEVEL_MIN);
+ 	}
+ 
+-	sts = applespi_send_cmd_msg(applespi);
++	applespi_send_cmd_msg(applespi);
+ 
+ 	spin_unlock_irqrestore(&applespi->cmd_msg_lock, flags);
+ }
+-- 
+2.22.0
+

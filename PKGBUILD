@@ -36,6 +36,15 @@ source=(
   2003-nvme-pci-Add-support-for-Apple-2018-models.patch
   2004-nvme-pci-Support-shared-tags-across-queues-for-Apple.patch
 
+  # Backported Apple SPI keyboard/touchpad support
+  3001-Input-add-Apple-SPI-keyboard-and-trackpad-driver.patch
+  3002-Input-applespi-remove-set-but-not-used-variables-sts.patch
+  3003-Input-applespi-fix-warnings-detected-by-sparse.patch
+  3004-Input-applespi-select-CRC16-module.patch
+  3005-Input-applespi-fix-trivial-typo-in-struct-descriptio.patch
+  3006-Input-applespi-add-dependency-on-LEDS_CLASS.patch
+  3007-Input-applespi-use-struct_size-helper.patch
+
   # MBP Peripheral support
   camera.patch   # UVC Camera support
   touchpad.patch # Touchpad support
@@ -49,7 +58,7 @@ validpgpkeys=(
 
 sha256sums=('6096c4387c2a296de9136080942d11ae3f1bd28129b6952f7133c570e43bfc49'
             'SKIP'
-            '5de46587162a3283585ea4c828a8ae04586897ca2b66db7c8c967a5ce61fc9b3'
+            'f21128dfafef74624fcfc96719df6454606dacaec1564313bdeda1efd9ab802a'
             'ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21'
             'c043f3033bb781e2688794a59f6d1f7ed49ef9b13eb77ff9a425df33a244a636'
             'ad6344badc91ad0630caacde83f7f9b97276f80d26a20619a87952be65492c65'
@@ -61,6 +70,13 @@ sha256sums=('6096c4387c2a296de9136080942d11ae3f1bd28129b6952f7133c570e43bfc49'
             '4d1439c742cc5e7ec4040853fd864f50616201ee47a41ed9e840dcd8d58bcc8f'
             'a7dfb80325a2d7ed0d8d16f8b1bd19766236fb6d698a4efe13f27e4e03110c6b'
             '42118dbf93fd7ff655f6a36f926d6bf60cad3ef1538ed3786ab45fa3919360ca'
+            '1c793d05446d361f3c1a160e86b01dceea922218fc17d5834ecd816118fb3495'
+            '9bd2c7822f51a809fe3b40cf9022d324cc27e2bee8858138af3240b52cf0af55'
+            'adf8deb4de1021afc23dd95398142ca18068d7af9f912685d5c7fbe6179c8be4'
+            '7111e6d8331f48213d53f276d734ea0d6daa0f788c3fad429264291b30457b1e'
+            'c37b22ae17e26ac40c7a217503041dd3e95054df3d0ab61257610ba0e5c511a3'
+            '325d2d904d1613b5678131fc4fd3e81d9e38b8fc4ea0ede90f1577e418baa596'
+            '5ec9cabde47610a7f2f6ef8cbf4ea8944f835a62542fb344b059ceb333637e00'
             '717f7fc70a3e3fcfa5ffbac505c8259c1d86718ca1ca6593e8925dac3d29a835'
             '8cd1e9a8ee729f0e09af71c4d2de41f91020070b85a55ab9326d32e046282290'
             '0990a04ffd9e276d377f4057e5ae3c6b849a500fd9cfb57ede05ddd3be3f4dfa')
