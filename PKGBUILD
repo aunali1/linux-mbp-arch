@@ -4,9 +4,9 @@
 # Contributor: Thomas Baechler <thomas@archlinux.org>
 
 pkgbase=linux-mbp
-pkgver=5.2.10
+pkgver=5.2.11
 _srcname=linux-${pkgver}
-pkgrel=2
+pkgrel=1
 arch=(x86_64)
 url="https://git.archlinux.org/linux.git/log/?h=v$_srcver"
 license=(GPL2)
@@ -27,8 +27,6 @@ source=(
   # Arch Linux patches
   0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch
   0002-ZEN-Add-CONFIG-for-unprivileged_userns_clone.patch
-  0003-iwlwifi-mvm-disable-TX-AMSDU-on-older-NICs.patch
-  0004-drm-amdgpu-pin-the-csb-buffer-on-hw-init-for-gfx-v8.patch
 
   # MBP ANS2 NVME Controller support
   2001-nvme-pci-Pass-the-queue-to-SQ_SIZE-CQ_SIZE-macros.patch
@@ -56,16 +54,14 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('6096c4387c2a296de9136080942d11ae3f1bd28129b6952f7133c570e43bfc49'
+sha256sums=('0c2a831f993dc8a8a8e1ca4186b467de72ff173c6f5855e2aab70f6f7fb033f9'
             'SKIP'
             'ca03f3e65af0c4bfde88a864deac18a1b3afdb3fcc88339114272f693bbfadda'
             'ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21'
             'c043f3033bb781e2688794a59f6d1f7ed49ef9b13eb77ff9a425df33a244a636'
             'ad6344badc91ad0630caacde83f7f9b97276f80d26a20619a87952be65492c65'
-            '5c07c86e0fab6d98587d945e62c83bfdd01a6dfac1223d83f96f5afc3c8f0c1e'
-            '907c8a2180b86789373b38fe80a6fa102e8a6f8a40c2b3c6e70ada1b523dc469'
-            '0f104bb581265ed4504141b6de063b035bbccfadf2abdabc27b9a4a7a66299cc'
-            '0dbbe4c7a7b25630f506fb2faf3148ead5db1b30a0215426960afb5134aa644e'
+            '66317772dacc68cc4fd196905349633b0768ba21948b1becf3381352e5330e6a'
+            '1327ffb8effef56f9e65d64db5fa22dc8c38d9d77e6881866a4873ff8d2721f6'
             '01c8faa7d045a6bd7c40b3d9f5dda3a0f89761d8bd54a9a113e1277fcb2be350'
             '4d1439c742cc5e7ec4040853fd864f50616201ee47a41ed9e840dcd8d58bcc8f'
             'a7dfb80325a2d7ed0d8d16f8b1bd19766236fb6d698a4efe13f27e4e03110c6b'
