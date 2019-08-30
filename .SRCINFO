@@ -1,6 +1,6 @@
 pkgbase = linux-mbp
 	pkgver = 5.2.11
-	pkgrel = 1
+	pkgrel = 2
 	url = https://git.archlinux.org/linux.git/log/?h=v
 	arch = x86_64
 	license = GPL2
@@ -34,8 +34,9 @@ pkgbase = linux-mbp
 	source = 3005-Input-applespi-fix-trivial-typo-in-struct-descriptio.patch
 	source = 3006-Input-applespi-add-dependency-on-LEDS_CLASS.patch
 	source = 3007-Input-applespi-use-struct_size-helper.patch
+	source = 4001-touchpad.patch
+	source = 4002-keyboard-backlight.patch
 	source = camera.patch
-	source = touchpad.patch
 	source = wifi.patch
 	validpgpkeys = ABAF11C65A2970B130ABE3C479BE3E4300411886
 	validpgpkeys = 647F28654894E3BD457199BE38DBBDC86092693E
@@ -58,8 +59,9 @@ pkgbase = linux-mbp
 	sha256sums = c37b22ae17e26ac40c7a217503041dd3e95054df3d0ab61257610ba0e5c511a3
 	sha256sums = 325d2d904d1613b5678131fc4fd3e81d9e38b8fc4ea0ede90f1577e418baa596
 	sha256sums = 5ec9cabde47610a7f2f6ef8cbf4ea8944f835a62542fb344b059ceb333637e00
-	sha256sums = 717f7fc70a3e3fcfa5ffbac505c8259c1d86718ca1ca6593e8925dac3d29a835
 	sha256sums = 8cd1e9a8ee729f0e09af71c4d2de41f91020070b85a55ab9326d32e046282290
+	sha256sums = a22c77b4eef58728a2bc93bfdae8c62792ba84044cb4f68cb499b659f0b4d732
+	sha256sums = 717f7fc70a3e3fcfa5ffbac505c8259c1d86718ca1ca6593e8925dac3d29a835
 	sha256sums = 0990a04ffd9e276d377f4057e5ae3c6b849a500fd9cfb57ede05ddd3be3f4dfa
 
 pkgname = linux-mbp
