@@ -1,4 +1,4 @@
-From 99e1927381b9a990d5ac84e359cbb8b5ee0b2f98 Mon Sep 17 00:00:00 2001
+From 7097880bd7857294d2b91084a35d2211cef7dd8b Mon Sep 17 00:00:00 2001
 From: Serge Hallyn <serge.hallyn@canonical.com>
 Date: Fri, 31 May 2013 19:12:12 +0100
 Subject: [PATCH 1/2] add sysctl to disallow unprivileged CLONE_NEWUSER by

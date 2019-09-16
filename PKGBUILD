@@ -4,9 +4,9 @@
 # Contributor: Thomas Baechler <thomas@archlinux.org>
 
 pkgbase=linux-mbp
-pkgver=5.2.14
+pkgver=5.2.15
 _srcname=linux-${pkgver}
-pkgrel=3
+pkgrel=1
 arch=(x86_64)
 url="https://git.archlinux.org/linux.git/log/?h=v$_srcver"
 license=(GPL2)
@@ -57,14 +57,14 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('c64d36477fee6a864a734ec417407768e60040a13f144c33208fa9622fd0ce8c'
+sha256sums=('eb561009da8106b463b1e1a16ab0f75cdef564784f49177148f5f92c32380c4a'
             'SKIP'
             'ca03f3e65af0c4bfde88a864deac18a1b3afdb3fcc88339114272f693bbfadda'
             'ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21'
             'c043f3033bb781e2688794a59f6d1f7ed49ef9b13eb77ff9a425df33a244a636'
             'ad6344badc91ad0630caacde83f7f9b97276f80d26a20619a87952be65492c65'
-            '66317772dacc68cc4fd196905349633b0768ba21948b1becf3381352e5330e6a'
-            '1327ffb8effef56f9e65d64db5fa22dc8c38d9d77e6881866a4873ff8d2721f6'
+            '2219e0cc40e12f8db3c0df774276156be058bba5913972ca1507c13a4791a50c'
+            'd8a77f1feaa5e2c8c9e9b91604060aeee0bf3cf8fd4296088a105bac40743ac3'
             '01c8faa7d045a6bd7c40b3d9f5dda3a0f89761d8bd54a9a113e1277fcb2be350'
             '4d1439c742cc5e7ec4040853fd864f50616201ee47a41ed9e840dcd8d58bcc8f'
             'a7dfb80325a2d7ed0d8d16f8b1bd19766236fb6d698a4efe13f27e4e03110c6b'
