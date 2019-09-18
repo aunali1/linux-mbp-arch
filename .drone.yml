@@ -20,9 +20,12 @@ steps:
     - sudo -u builduser bash -c 'export MAKEFLAGS=-j14 && makepkg -s --noconfirm'
     - ls -lah *.pkg.tar.xz
     - cp *.pkg.tar.xz /tmp/products
-  when:
-    branch: master,5.1-testing
-    event: tag
+  trigger:
+    branch:
+      - master
+      - 5.1-testing
+    event:
+      - tag
 
 - name: sign
   image: plugins/gpgsign
@@ -38,9 +41,12 @@ steps:
       - /tmp/products/*
     armor: false
     detach_sign: true
-  when:
-    branch: master,5.1-testing
-    event: tag
+  trigger:
+    branch:
+      - master
+      - 5.1-testing
+    event:
+      - tag
 
 - name: publish-server
   image: appleboy/drone-scp
@@ -59,9 +65,11 @@ steps:
     target: /srv/ftp/ingress/mbp
     source:
       - /tmp/products/*
-  when:
-    branch: master
-    event: tag
+  trigger:
+    branch:
+      - master
+    event:
+      - tag
 
 - name: publish-server-testing
   image: appleboy/drone-scp
@@ -80,9 +88,11 @@ steps:
     target: /srv/ftp/ingress/mbp-testing
     source:
       - /tmp/products/*
-  when:
-    branch: 5.1-testing
-    event: tag
+  trigger:
+    branch:
+      - 5.1-testing
+    event:
+      - tag
 
 - name: update-repo
   image: appleboy/drone-ssh
@@ -98,9 +108,11 @@ steps:
     port: 22
     script:
       - ./update_mbp_repo.sh
-  when:
-    branch: master
-    event: tag
+  trigger:
+    branch:
+      - master
+    event:
+      - tag
 
 - name: update-repo-testing
   image: appleboy/drone-ssh
@@ -116,9 +128,11 @@ steps:
     port: 22
     script:
       - ./update_mbp_repo_testing.sh
-  when:
-    branch: 5.1-testing
-    event: tag
+  trigger:
+    branch:
+      - 5.1-testing
+    event:
+      - tag
 
 - name: publish-github
   image: plugins/github-release
@@ -130,9 +144,11 @@ steps:
       from_secret: github_token
     files: /tmp/products/*
     prerelease: yes
-  when:
-    branch: master
-    event: tag
+  trigger:
+    branch:
+      - master
+    event:
+      - tag
 
 volumes:
 - name: build-products
