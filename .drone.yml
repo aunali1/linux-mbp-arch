@@ -48,29 +48,6 @@ steps:
     event:
       - tag
 
-- name: publish-server
-  image: appleboy/drone-scp
-  volumes:
-    - name: build-products
-      path: /tmp/products
-  settings:
-    host: tel.aunali1.com
-    username:
-      from_secret: ingress_user
-    password:
-      from_secret: ingress_password
-    port: 22
-    rm: true
-    strip_components: 2
-    target: /srv/ftp/ingress/mbp
-    source:
-      - /tmp/products/*
-  trigger:
-    branch:
-      - master
-    event:
-      - tag
-
 - name: publish-server-testing
   image: appleboy/drone-scp
   volumes:
@@ -94,26 +71,6 @@ steps:
     event:
       - tag
 
-- name: update-repo
-  image: appleboy/drone-ssh
-  volumes:
-    - name: build-products
-      path: /tmp/products
-  settings:
-    host: tel.aunali1.com
-    username:
-      from_secret: ingress_user
-    password:
-      from_secret: ingress_password
-    port: 22
-    script:
-      - ./update_mbp_repo.sh
-  trigger:
-    branch:
-      - master
-    event:
-      - tag
-
 - name: update-repo-testing
   image: appleboy/drone-ssh
   volumes:
@@ -131,22 +88,6 @@ steps:
   trigger:
     branch:
       - 5.1-testing
-    event:
-      - tag
-
-- name: publish-github
-  image: plugins/github-release
-  volumes:
-    - name: build-products
-      path: /tmp/products
-  settings:
-    api_key:
-      from_secret: github_token
-    files: /tmp/products/*
-    prerelease: yes
-  trigger:
-    branch:
-      - master
     event:
       - tag
 
