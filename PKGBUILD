@@ -4,7 +4,7 @@
 # Contributor: Thomas Baechler <thomas@archlinux.org>
 
 pkgbase=linux-mbp
-pkgver=5.2.15
+pkgver=5.1.21
 _srcname=linux-${pkgver}
 pkgrel=1
 arch=(x86_64)
@@ -28,20 +28,16 @@ source=(
   0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch
   0002-ZEN-Add-CONFIG-for-unprivileged_userns_clone.patch
 
+  # Backported NVME patches
+  1001-nvme-pci-use-a-flag-for-polled-queues.patch
+  1002-nvme-pci-remove-q_dmadev-from-nvme_queue.patch
+  1003-nvme-pci-check-for-NULL-return-from-pci_alloc_p2pmem.patch
+
   # MBP ANS2 NVME Controller support
   2001-nvme-pci-Pass-the-queue-to-SQ_SIZE-CQ_SIZE-macros.patch
   2002-nvme-pci-Add-support-for-variable-IO-SQ-element-size.patch
   2003-nvme-pci-Add-support-for-Apple-2018-models.patch
   2004-nvme-pci-Support-shared-tags-across-queues-for-Apple.patch
-
-  # Backported Apple SPI keyboard/touchpad support
-  3001-Input-add-Apple-SPI-keyboard-and-trackpad-driver.patch
-  3002-Input-applespi-remove-set-but-not-used-variables-sts.patch
-  3003-Input-applespi-fix-warnings-detected-by-sparse.patch
-  3004-Input-applespi-select-CRC16-module.patch
-  3005-Input-applespi-fix-trivial-typo-in-struct-descriptio.patch
-  3006-Input-applespi-add-dependency-on-LEDS_CLASS.patch
-  3007-Input-applespi-use-struct_size-helper.patch
 
   # T2 USB Keyboard/Touchpad support
   4001-touchpad.patch
@@ -57,25 +53,21 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('eb561009da8106b463b1e1a16ab0f75cdef564784f49177148f5f92c32380c4a'
+sha256sums=('56495f82314f0dfb84a3fe7fad78e17be69c4fd36ef46f2452458b2fa1e341f6'
             'SKIP'
-            'ca03f3e65af0c4bfde88a864deac18a1b3afdb3fcc88339114272f693bbfadda'
+            'd096ce672dd3524839474b60002badd7f98d2794440775c8fcf554d899a26768'
             'ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21'
             'c043f3033bb781e2688794a59f6d1f7ed49ef9b13eb77ff9a425df33a244a636'
             'ad6344badc91ad0630caacde83f7f9b97276f80d26a20619a87952be65492c65'
             '2219e0cc40e12f8db3c0df774276156be058bba5913972ca1507c13a4791a50c'
             'd8a77f1feaa5e2c8c9e9b91604060aeee0bf3cf8fd4296088a105bac40743ac3'
-            '01c8faa7d045a6bd7c40b3d9f5dda3a0f89761d8bd54a9a113e1277fcb2be350'
+            '6743985f730612a999a2d13c8290191e8a2654990a0956fe0a2b7dd88325e190'
+            '1b25452fe776659b28698a4b0aa51370a03d8601d387289dd93036fbe51d9b08'
+            '998a114b4a55e0e33b07229c911df5c7e70a3f133b3a1323afdca37078471d39'
+            '4db88cdb4ad34bd86c997b5cfd9298509ad9d49b916c551bee4c0c22a137fca8'
             '4d1439c742cc5e7ec4040853fd864f50616201ee47a41ed9e840dcd8d58bcc8f'
             'a7dfb80325a2d7ed0d8d16f8b1bd19766236fb6d698a4efe13f27e4e03110c6b'
             '42118dbf93fd7ff655f6a36f926d6bf60cad3ef1538ed3786ab45fa3919360ca'
-            '1c793d05446d361f3c1a160e86b01dceea922218fc17d5834ecd816118fb3495'
-            '9bd2c7822f51a809fe3b40cf9022d324cc27e2bee8858138af3240b52cf0af55'
-            'adf8deb4de1021afc23dd95398142ca18068d7af9f912685d5c7fbe6179c8be4'
-            '7111e6d8331f48213d53f276d734ea0d6daa0f788c3fad429264291b30457b1e'
-            'c37b22ae17e26ac40c7a217503041dd3e95054df3d0ab61257610ba0e5c511a3'
-            '325d2d904d1613b5678131fc4fd3e81d9e38b8fc4ea0ede90f1577e418baa596'
-            '5ec9cabde47610a7f2f6ef8cbf4ea8944f835a62542fb344b059ceb333637e00'
             '594ee36c0bc7eee93df824017bc32c3f5afb13b14f1a396f28b665c97dc1d7c0'
             'c2ce62bae7063636c4352b1d6a48656df938822b2c77b3560782b628c864546b'
             '717f7fc70a3e3fcfa5ffbac505c8259c1d86718ca1ca6593e8925dac3d29a835'

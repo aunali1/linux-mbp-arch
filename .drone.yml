@@ -1,3 +1,4 @@
+---
 kind: pipeline
 name: arch-kernel-package
 
@@ -20,6 +21,7 @@ steps:
     - ls -lah *.pkg.tar.xz
     - cp *.pkg.tar.xz /tmp/products
   when:
+    branch: master,5.1-testing
     event: tag
 
 - name: sign
@@ -37,6 +39,7 @@ steps:
     armor: false
     detach_sign: true
   when:
+    branch: master,5.1-testing
     event: tag
 
 - name: publish-server
@@ -57,6 +60,28 @@ steps:
     source:
       - /tmp/products/*
   when:
+    branch: master
+    event: tag
+
+- name: publish-server-testing
+  image: appleboy/drone-scp
+  volumes:
+    - name: build-products
+      path: /tmp/products
+  settings:
+    host: tel.aunali1.com
+    username:
+      from_secret: ingress_user
+    password:
+      from_secret: ingress_password
+    port: 22
+    rm: true
+    strip_components: 2
+    target: /srv/ftp/ingress/mbp-testing
+    source:
+      - /tmp/products/*
+  when:
+    branch: 5.1-testing
     event: tag
 
 - name: update-repo
@@ -74,6 +99,25 @@ steps:
     script:
       - ./update_mbp_repo.sh
   when:
+    branch: master
+    event: tag
+
+- name: update-repo-testing
+  image: appleboy/drone-ssh
+  volumes:
+    - name: build-products
+      path: /tmp/products
+  settings:
+    host: tel.aunali1.com
+    username:
+      from_secret: ingress_user
+    password:
+      from_secret: ingress_password
+    port: 22
+    script:
+      - ./update_mbp_repo_testing.sh
+  when:
+    branch: 5.1-testing
     event: tag
 
 - name: publish-github
@@ -87,6 +131,7 @@ steps:
     files: /tmp/products/*
     prerelease: yes
   when:
+    branch: master
     event: tag
 
 volumes:

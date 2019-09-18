@@ -1,4 +1,4 @@
-From 895a1134e71e999ec7873faf76ec4b1e2492c92b Mon Sep 17 00:00:00 2001
+From 0ce89857ef62fa27804df19b42032938fbf96eb2 Mon Sep 17 00:00:00 2001
 From: Benjamin Herrenschmidt <benh@kernel.crashing.org>
 Date: Wed, 17 Jul 2019 10:45:25 +1000
 Subject: [PATCH] nvme-pci: Pass the queue to SQ_SIZE/CQ_SIZE macros
@@ -8,12 +8,15 @@ later. No functional change.
 
 Signed-off-by: Benjamin Herrenschmidt <benh@kernel.crashing.org>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
+
+(Adopted for v5.1.16)
+Signed-off-by: Aun-Ali Zaidi <admin@kodeit.net>
 ---
  drivers/nvme/host/pci.c | 30 +++++++++++++++---------------
  1 file changed, 15 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 7fbcd72c438f..a73e4d704483 100644
+index 95d0e47382ec..d7be104f4c89 100644
 --- a/drivers/nvme/host/pci.c
 +++ b/drivers/nvme/host/pci.c
 @@ -27,8 +27,8 @@
@@ -27,7 +30,7 @@ index 7fbcd72c438f..a73e4d704483 100644
  
  #define SGES_PER_PAGE	(PAGE_SIZE / sizeof(struct nvme_sgl_desc))
  
-@@ -1361,16 +1361,16 @@ static enum blk_eh_timer_return nvme_timeout(struct request *req, bool reserved)
+@@ -1371,16 +1371,16 @@ static enum blk_eh_timer_return nvme_timeout(struct request *req, bool reserved)
  
  static void nvme_free_queue(struct nvme_queue *nvmeq)
  {
@@ -47,7 +50,7 @@ index 7fbcd72c438f..a73e4d704483 100644
  				nvmeq->sq_cmds, nvmeq->sq_dma_addr);
  	}
  }
-@@ -1450,12 +1450,12 @@ static int nvme_cmb_qdepth(struct nvme_dev *dev, int nr_io_queues,
+@@ -1460,12 +1460,12 @@ static int nvme_cmb_qdepth(struct nvme_dev *dev, int nr_io_queues,
  }
  
  static int nvme_alloc_sq_cmds(struct nvme_dev *dev, struct nvme_queue *nvmeq,
@@ -62,7 +65,7 @@ index 7fbcd72c438f..a73e4d704483 100644
  		if (nvmeq->sq_cmds) {
  			nvmeq->sq_dma_addr = pci_p2pmem_virt_to_bus(pdev,
  							nvmeq->sq_cmds);
-@@ -1464,11 +1464,11 @@ static int nvme_alloc_sq_cmds(struct nvme_dev *dev, struct nvme_queue *nvmeq,
+@@ -1474,11 +1474,11 @@ static int nvme_alloc_sq_cmds(struct nvme_dev *dev, struct nvme_queue *nvmeq,
  				return 0;
  			}
  
@@ -76,7 +79,7 @@ index 7fbcd72c438f..a73e4d704483 100644
  				&nvmeq->sq_dma_addr, GFP_KERNEL);
  	if (!nvmeq->sq_cmds)
  		return -ENOMEM;
-@@ -1482,12 +1482,13 @@ static int nvme_alloc_queue(struct nvme_dev *dev, int qid, int depth)
+@@ -1492,12 +1492,13 @@ static int nvme_alloc_queue(struct nvme_dev *dev, int qid, int depth)
  	if (dev->ctrl.queue_count > qid)
  		return 0;
  
@@ -92,7 +95,7 @@ index 7fbcd72c438f..a73e4d704483 100644
  		goto free_cqdma;
  
  	nvmeq->dev = dev;
-@@ -1496,15 +1497,14 @@ static int nvme_alloc_queue(struct nvme_dev *dev, int qid, int depth)
+@@ -1506,15 +1507,14 @@ static int nvme_alloc_queue(struct nvme_dev *dev, int qid, int depth)
  	nvmeq->cq_head = 0;
  	nvmeq->cq_phase = 1;
  	nvmeq->q_db = &dev->dbs[qid * 2 * dev->db_stride];
@@ -110,7 +113,7 @@ index 7fbcd72c438f..a73e4d704483 100644
   free_nvmeq:
  	return -ENOMEM;
  }
-@@ -1532,7 +1532,7 @@ static void nvme_init_queue(struct nvme_queue *nvmeq, u16 qid)
+@@ -1542,7 +1542,7 @@ static void nvme_init_queue(struct nvme_queue *nvmeq, u16 qid)
  	nvmeq->cq_head = 0;
  	nvmeq->cq_phase = 1;
  	nvmeq->q_db = &dev->dbs[qid * 2 * dev->db_stride];
