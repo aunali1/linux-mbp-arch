@@ -4,7 +4,7 @@
 # Contributor: Thomas Baechler <thomas@archlinux.org>
 
 pkgbase=linux-mbp
-pkgver=5.2.15
+pkgver=5.2.16
 _srcname=linux-${pkgver}
 pkgrel=1
 arch=(x86_64)
@@ -34,15 +34,6 @@ source=(
   2003-nvme-pci-Add-support-for-Apple-2018-models.patch
   2004-nvme-pci-Support-shared-tags-across-queues-for-Apple.patch
 
-  # Backported Apple SPI keyboard/touchpad support
-  3001-Input-add-Apple-SPI-keyboard-and-trackpad-driver.patch
-  3002-Input-applespi-remove-set-but-not-used-variables-sts.patch
-  3003-Input-applespi-fix-warnings-detected-by-sparse.patch
-  3004-Input-applespi-select-CRC16-module.patch
-  3005-Input-applespi-fix-trivial-typo-in-struct-descriptio.patch
-  3006-Input-applespi-add-dependency-on-LEDS_CLASS.patch
-  3007-Input-applespi-use-struct_size-helper.patch
-
   # T2 USB Keyboard/Touchpad support
   4001-touchpad.patch
   4002-keyboard-backlight.patch
@@ -57,7 +48,7 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('eb561009da8106b463b1e1a16ab0f75cdef564784f49177148f5f92c32380c4a'
+sha256sums=('0c2061c9edc8ab213b77f23af1d5a018127c2603404498a528651d56a795e575'
             'SKIP'
             'ca03f3e65af0c4bfde88a864deac18a1b3afdb3fcc88339114272f693bbfadda'
             'ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21'
@@ -69,13 +60,6 @@ sha256sums=('eb561009da8106b463b1e1a16ab0f75cdef564784f49177148f5f92c32380c4a'
             '15824843737696c0914c6a5720e7d869bc3375f646f62c699e736da79619d655'
             'cfda9f963272aa81dcf0632f6367ef5149fdfb75444f72bc37a8bad554d63d92'
             '8cd292bf560d89858a29e34fe6dc477df461350aa50b3a89d01db1ee5c576b78'
-            '1c793d05446d361f3c1a160e86b01dceea922218fc17d5834ecd816118fb3495'
-            '9bd2c7822f51a809fe3b40cf9022d324cc27e2bee8858138af3240b52cf0af55'
-            'adf8deb4de1021afc23dd95398142ca18068d7af9f912685d5c7fbe6179c8be4'
-            '7111e6d8331f48213d53f276d734ea0d6daa0f788c3fad429264291b30457b1e'
-            'c37b22ae17e26ac40c7a217503041dd3e95054df3d0ab61257610ba0e5c511a3'
-            '325d2d904d1613b5678131fc4fd3e81d9e38b8fc4ea0ede90f1577e418baa596'
-            '5ec9cabde47610a7f2f6ef8cbf4ea8944f835a62542fb344b059ceb333637e00'
             '594ee36c0bc7eee93df824017bc32c3f5afb13b14f1a396f28b665c97dc1d7c0'
             'c2ce62bae7063636c4352b1d6a48656df938822b2c77b3560782b628c864546b'
             '717f7fc70a3e3fcfa5ffbac505c8259c1d86718ca1ca6593e8925dac3d29a835'
