@@ -1,6 +1,6 @@
-From a9fa026d1fd4c5d3f81534aa4d225cfe86d6fa12 Mon Sep 17 00:00:00 2001
+From 66341331ba0d2de4ff421cdc401a1e34de50502a Mon Sep 17 00:00:00 2001
 From: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-Date: Wed, 17 Jul 2019 10:45:27 +1000
+Date: Wed, 7 Aug 2019 17:51:21 +1000
 Subject: [PATCH 3/4] nvme-pci: Add support for Apple 2018+ models
 
 Based on reverse engineering and original patch by
@@ -13,16 +13,19 @@ for the IO queues, and the fact that only interrupt vector 0 appears
 to function properly.
 
 Signed-off-by: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Reviewed-by: Minwoo Im <minwoo.im.dev@gmail.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
 ---
  drivers/nvme/host/nvme.h | 10 ++++++++++
  drivers/nvme/host/pci.c  | 21 ++++++++++++++++++++-
  2 files changed, 30 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/nvme/host/nvme.h b/drivers/nvme/host/nvme.h
-index 55553d293a98..190664037a89 100644
+index 9656f863ea40..21eb48d3385d 100644
 --- a/drivers/nvme/host/nvme.h
 +++ b/drivers/nvme/host/nvme.h
-@@ -92,6 +92,16 @@ enum nvme_quirks {
+@@ -94,6 +94,16 @@ enum nvme_quirks {
  	 * Broken Write Zeroes.
  	 */
  	NVME_QUIRK_DISABLE_WRITE_ZEROES		= (1 << 9),
@@ -40,10 +43,10 @@ index 55553d293a98..190664037a89 100644
  
  /*
 diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 96625de2ae3f..e778a3d2d08a 100644
+index eee93e138c2c..effb79341909 100644
 --- a/drivers/nvme/host/pci.c
 +++ b/drivers/nvme/host/pci.c
-@@ -2094,6 +2094,13 @@ static int nvme_setup_irqs(struct nvme_dev *dev, unsigned int nr_io_queues)
+@@ -2081,6 +2081,13 @@ static int nvme_setup_irqs(struct nvme_dev *dev, unsigned int nr_io_queues)
  	dev->io_queues[HCTX_TYPE_DEFAULT] = 1;
  	dev->io_queues[HCTX_TYPE_READ] = 0;
  
@@ -57,8 +60,8 @@ index 96625de2ae3f..e778a3d2d08a 100644
  	return pci_alloc_irq_vectors_affinity(pdev, 1, irq_queues,
  			      PCI_IRQ_ALL_TYPES | PCI_IRQ_AFFINITY, &affd);
  }
-@@ -2334,7 +2341,16 @@ static int nvme_pci_enable(struct nvme_dev *dev)
- 				io_queue_depth);
+@@ -2321,7 +2328,16 @@ static int nvme_pci_enable(struct nvme_dev *dev)
+ 	dev->ctrl.sqsize = dev->q_depth - 1; /* 0's based queue depth */
  	dev->db_stride = 1 << NVME_CAP_STRIDE(dev->ctrl.cap);
  	dev->dbs = dev->bar + 4096;
 -	dev->io_sqes = NVME_NVM_IOSQES;
@@ -75,7 +78,7 @@ index 96625de2ae3f..e778a3d2d08a 100644
  
  	/*
  	 * Temporary fix for the Apple controller found in the MacBook8,1 and
-@@ -2962,6 +2978,9 @@ static const struct pci_device_id nvme_id_table[] = {
+@@ -3040,6 +3056,9 @@ static const struct pci_device_id nvme_id_table[] = {
  	{ PCI_DEVICE_CLASS(PCI_CLASS_STORAGE_EXPRESS, 0xffffff) },
  	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2001) },
  	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2003) },
@@ -86,5 +89,5 @@ index 96625de2ae3f..e778a3d2d08a 100644
  };
  MODULE_DEVICE_TABLE(pci, nvme_id_table);
 -- 
-2.22.0
+2.23.0
 
