@@ -1,5 +1,5 @@
 pkgbase = linux-mbp
-	pkgver = 5.2.16
+	pkgver = 5.2.17
 	pkgrel = 1
 	url = https://git.archlinux.org/linux.git/log/?h=v
 	arch = x86_64
@@ -15,8 +15,8 @@ pkgbase = linux-mbp
 	makedepends = graphviz
 	makedepends = imagemagick
 	options = !strip
-	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.2.16.tar.xz
-	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.2.16.tar.sign
+	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.2.17.tar.xz
+	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.2.17.tar.sign
 	source = config
 	source = 60-linux.hook
 	source = 90-linux.hook
@@ -33,7 +33,7 @@ pkgbase = linux-mbp
 	source = wifi.patch
 	validpgpkeys = ABAF11C65A2970B130ABE3C479BE3E4300411886
 	validpgpkeys = 647F28654894E3BD457199BE38DBBDC86092693E
-	sha256sums = 0c2061c9edc8ab213b77f23af1d5a018127c2603404498a528651d56a795e575
+	sha256sums = 7b3b8ad09ea936b4216dd02c5fc2ef39c8f58935d0a81ab9690f0fc451102df9
 	sha256sums = SKIP
 	sha256sums = ca03f3e65af0c4bfde88a864deac18a1b3afdb3fcc88339114272f693bbfadda
 	sha256sums = ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21

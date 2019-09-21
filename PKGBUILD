@@ -4,7 +4,7 @@
 # Contributor: Thomas Baechler <thomas@archlinux.org>
 
 pkgbase=linux-mbp
-pkgver=5.2.16
+pkgver=5.2.17
 _srcname=linux-${pkgver}
 pkgrel=1
 arch=(x86_64)
@@ -48,7 +48,7 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('0c2061c9edc8ab213b77f23af1d5a018127c2603404498a528651d56a795e575'
+sha256sums=('7b3b8ad09ea936b4216dd02c5fc2ef39c8f58935d0a81ab9690f0fc451102df9'
             'SKIP'
             'ca03f3e65af0c4bfde88a864deac18a1b3afdb3fcc88339114272f693bbfadda'
             'ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21'
