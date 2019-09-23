@@ -1,8 +1,8 @@
-From d38e9f04ebf667d9cb8185b45bff747485f1d3e9 Mon Sep 17 00:00:00 2001
-From: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-Date: Wed, 7 Aug 2019 17:51:22 +1000
-Subject: [PATCH 4/4] nvme-pci: Support shared tags across queues for Apple
- 2018 controllers
+From 77768a1405881faeeed103a48ed2f99603a7006f Mon Sep 17 00:00:00 2001
+From: Caio Quirino <caioquirino@gmail.com>
+Date: Mon, 23 Sep 2019 18:54:13 +0200
+Subject: [PATCH] [PATCH 4/4] nvme-pci: Support shared tags across queues for
+ Apple  2018 controllers
 
 Another issue with the Apple T2 based 2018 controllers seem to be
 that they blow up (and shut the machine down) if there's a tag
@@ -21,17 +21,17 @@ Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
 ---
  drivers/nvme/host/nvme.h |  5 +++++
- drivers/nvme/host/pci.c  | 31 ++++++++++++++++++++++++++++++-
- 2 files changed, 35 insertions(+), 1 deletion(-)
+ drivers/nvme/host/pci.c  | 30 +++++++++++++++++++++++++++++-
+ 2 files changed, 34 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/nvme/host/nvme.h b/drivers/nvme/host/nvme.h
-index 21eb48d3385d..624c3ea2134c 100644
+index b9553061b..74e73b6ca 100644
 --- a/drivers/nvme/host/nvme.h
 +++ b/drivers/nvme/host/nvme.h
-@@ -104,6 +104,11 @@ enum nvme_quirks {
+@@ -107,6 +107,11 @@ enum nvme_quirks {
  	 * Use non-standard 128 bytes SQEs.
  	 */
- 	NVME_QUIRK_128_BYTES_SQES		= (1 << 11),
+ 	NVME_QUIRK_128_BYTES_SQES		= (1 << 12),
 +
 +	/*
 +	 * Prevent tag overlap between queues
@@ -41,7 +41,7 @@ index 21eb48d3385d..624c3ea2134c 100644
  
  /*
 diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index effb79341909..77bcda68fe1a 100644
+index 376abf40b..85cea7e86 100644
 --- a/drivers/nvme/host/pci.c
 +++ b/drivers/nvme/host/pci.c
 @@ -2106,6 +2106,14 @@ static int nvme_setup_io_queues(struct nvme_dev *dev)
@@ -74,7 +74,7 @@ index effb79341909..77bcda68fe1a 100644
  		ret = blk_mq_alloc_tag_set(&dev->tagset);
  		if (ret) {
  			dev_warn(dev->ctrl.device,
-@@ -2356,6 +2372,18 @@ static int nvme_pci_enable(struct nvme_dev *dev)
+@@ -2355,6 +2371,17 @@ static int nvme_pci_enable(struct nvme_dev *dev)
                          "set queue depth=%u\n", dev->q_depth);
  	}
  
@@ -89,11 +89,10 @@ index effb79341909..77bcda68fe1a 100644
 +			 dev->q_depth);
 +	}
 +
-+
  	nvme_map_cmb(dev);
  
  	pci_enable_pcie_error_reporting(pdev);
-@@ -3058,7 +3086,8 @@ static const struct pci_device_id nvme_id_table[] = {
+@@ -3064,7 +3091,8 @@ static const struct pci_device_id nvme_id_table[] = {
  	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2003) },
  	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2005),
  		.driver_data = NVME_QUIRK_SINGLE_VECTOR |

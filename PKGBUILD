@@ -4,7 +4,7 @@
 # Contributor: Thomas Baechler <thomas@archlinux.org>
 
 pkgbase=linux-mbp
-pkgver=5.2.17
+pkgver=5.3.1
 _srcname=linux-${pkgver}
 pkgrel=1
 arch=(x86_64)
@@ -48,7 +48,7 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('7b3b8ad09ea936b4216dd02c5fc2ef39c8f58935d0a81ab9690f0fc451102df9'
+sha256sums=('9890b5a909d316211d045a95f5f0680e39749f2319cb26d7cd067efaa692f858'
             'SKIP'
             'ca03f3e65af0c4bfde88a864deac18a1b3afdb3fcc88339114272f693bbfadda'
             'ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21'
@@ -57,9 +57,9 @@ sha256sums=('7b3b8ad09ea936b4216dd02c5fc2ef39c8f58935d0a81ab9690f0fc451102df9'
             '2219e0cc40e12f8db3c0df774276156be058bba5913972ca1507c13a4791a50c'
             'd8a77f1feaa5e2c8c9e9b91604060aeee0bf3cf8fd4296088a105bac40743ac3'
             'db8ca5a3cf93522c5a93853acc44ef24cf1c41d0a6682c9f87cd918dcee96eb8'
-            '15824843737696c0914c6a5720e7d869bc3375f646f62c699e736da79619d655'
-            'cfda9f963272aa81dcf0632f6367ef5149fdfb75444f72bc37a8bad554d63d92'
-            '8cd292bf560d89858a29e34fe6dc477df461350aa50b3a89d01db1ee5c576b78'
+            'cecd08dd1d1409ad127d4cf02ed60624c47e61822d7ccad4eb4d2603b233246e'
+            'de60694a3f9f75adb45d7383be2c50ea4a2a421d205f211c2eb7f33e2a862d4e'
+            '361481c3c683c6dbfe03c79c9115c9263f7e81ac34ea6f55111a250691af1698'
             '594ee36c0bc7eee93df824017bc32c3f5afb13b14f1a396f28b665c97dc1d7c0'
             'c2ce62bae7063636c4352b1d6a48656df938822b2c77b3560782b628c864546b'
             '717f7fc70a3e3fcfa5ffbac505c8259c1d86718ca1ca6593e8925dac3d29a835'

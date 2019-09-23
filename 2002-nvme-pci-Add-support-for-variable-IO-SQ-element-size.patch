@@ -1,7 +1,8 @@
-From c1e0cc7e1d319936271dfdd0a9405275c8091381 Mon Sep 17 00:00:00 2001
-From: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-Date: Wed, 7 Aug 2019 17:51:20 +1000
-Subject: [PATCH 2/4] nvme-pci: Add support for variable IO SQ element size
+From e6b2ecc57c2ec0f7751e211caa3618a41135e0a2 Mon Sep 17 00:00:00 2001
+From: Caio Quirino <caioquirino@gmail.com>
+Date: Mon, 23 Sep 2019 18:44:06 +0200
+Subject: [PATCH] [PATCH 2/4] nvme-pci: Add support for variable IO SQ element
+ size
 
 The size of a submission queue element should always be 6 (64 bytes)
 by spec.
@@ -11,7 +12,6 @@ the standard and require a different size.
 
 This provides the ground work for the subsequent quirks for these
 controllers.
-
 Signed-off-by: Benjamin Herrenschmidt <benh@kernel.crashing.org>
 Reviewed-by: Minwoo Im <minwoo.im.dev@gmail.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
@@ -22,7 +22,7 @@ Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
  2 files changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index a09e6c4e3434..eee93e138c2c 100644
+index 0b3df5386..9446c3ee1 100644
 --- a/drivers/nvme/host/pci.c
 +++ b/drivers/nvme/host/pci.c
 @@ -28,7 +28,7 @@
@@ -38,7 +38,7 @@ index a09e6c4e3434..eee93e138c2c 100644
  	unsigned io_queues[HCTX_MAX_TYPES];
  	unsigned int num_vecs;
  	int q_depth;
-+	int io_sqes;
++        int io_sqes;
  	u32 db_stride;
  	void __iomem *bar;
  	unsigned long bar_mapped_size;
@@ -77,8 +77,8 @@ index a09e6c4e3434..eee93e138c2c 100644
  	nvmeq->q_depth = depth;
  	nvmeq->cqes = dma_alloc_coherent(dev->dev, CQ_SIZE(nvmeq),
  					 &nvmeq->cq_dma_addr, GFP_KERNEL);
-@@ -2317,6 +2321,7 @@ static int nvme_pci_enable(struct nvme_dev *dev)
- 	dev->ctrl.sqsize = dev->q_depth - 1; /* 0's based queue depth */
+@@ -2316,6 +2320,7 @@ static int nvme_pci_enable(struct nvme_dev *dev)
+ 				io_queue_depth);
  	dev->db_stride = 1 << NVME_CAP_STRIDE(dev->ctrl.cap);
  	dev->dbs = dev->bar + 4096;
 +	dev->io_sqes = NVME_NVM_IOSQES;
@@ -86,14 +86,14 @@ index a09e6c4e3434..eee93e138c2c 100644
  	/*
  	 * Temporary fix for the Apple controller found in the MacBook8,1 and
 diff --git a/include/linux/nvme.h b/include/linux/nvme.h
-index 32c25b46ae63..f61d6906e59d 100644
+index 01aa6a6c2..9393d6d9d 100644
 --- a/include/linux/nvme.h
 +++ b/include/linux/nvme.h
 @@ -140,6 +140,7 @@ enum {
   * Submission and Completion Queue Entry Sizes for the NVM command set.
   * (In bytes and specified as a power of two (2^n)).
   */
-+#define NVME_ADM_SQES       6
++#define NVME_ADM_SQES		6
  #define NVME_NVM_IOSQES		6
  #define NVME_NVM_IOCQES		4
  
