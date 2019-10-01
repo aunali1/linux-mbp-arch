@@ -4,7 +4,7 @@
 # Contributor: Thomas Baechler <thomas@archlinux.org>
 
 pkgbase=linux-mbp
-pkgver=5.2.17
+pkgver=5.2.18
 _srcname=linux-${pkgver}
 pkgrel=1
 arch=(x86_64)
@@ -48,7 +48,7 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('7b3b8ad09ea936b4216dd02c5fc2ef39c8f58935d0a81ab9690f0fc451102df9'
+sha256sums=('6d090f866c9739403f78b08470209d1e825c44ce5dbaa237a4a2c8c6609dca60'
             'SKIP'
             'ca03f3e65af0c4bfde88a864deac18a1b3afdb3fcc88339114272f693bbfadda'
             'ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21'
@@ -103,6 +103,7 @@ _package() {
   [[ $pkgbase = linux ]] && groups=(base)
   depends=(coreutils linux-firmware kmod mkinitcpio)
   optdepends=('crda: to set the correct wireless channels of your country')
+  provides=('linux')
   backup=("etc/mkinitcpio.d/$pkgbase.preset")
   install=linux.install
 
@@ -156,6 +157,7 @@ _package() {
 
 _package-headers() {
   pkgdesc="Header files and scripts for building modules for ${pkgbase/linux/Linux} kernel"
+  provides=('linux-headers')
 
   local builddir="$pkgdir/usr/lib/modules/$(<version)/build"
 
@@ -237,6 +239,7 @@ _package-headers() {
 
 _package-docs() {
   pkgdesc="Kernel hackers manual - HTML documentation that comes with the ${pkgbase/linux/Linux} kernel"
+  provides=('linux-docs')
 
   local builddir="$pkgdir/usr/lib/modules/$(<version)/build"
 
