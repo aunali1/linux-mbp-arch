@@ -103,6 +103,7 @@ _package() {
   [[ $pkgbase = linux ]] && groups=(base)
   depends=(coreutils linux-firmware kmod mkinitcpio)
   optdepends=('crda: to set the correct wireless channels of your country')
+  provides=('linux')
   backup=("etc/mkinitcpio.d/$pkgbase.preset")
   install=linux.install
 
@@ -156,6 +157,7 @@ _package() {
 
 _package-headers() {
   pkgdesc="Header files and scripts for building modules for ${pkgbase/linux/Linux} kernel"
+  provides=('linux-headers')
 
   local builddir="$pkgdir/usr/lib/modules/$(<version)/build"
 
@@ -237,6 +239,7 @@ _package-headers() {
 
 _package-docs() {
   pkgdesc="Kernel hackers manual - HTML documentation that comes with the ${pkgbase/linux/Linux} kernel"
+  provides=('linux-docs')
 
   local builddir="$pkgdir/usr/lib/modules/$(<version)/build"
 
