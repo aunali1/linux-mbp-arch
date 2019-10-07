@@ -18,7 +18,7 @@ index c173503234d8..d3fded06d829 100644
  
  #define APPLE_FLAG_FKEY		0x01
  
-@@ -51,11 +53,18 @@ MODULE_PARM_DESC(swap_opt_cmd, "Swap the Option (\"Alt\") and Command (\"Flag\")
+@@ -51,10 +53,17 @@ MODULE_PARM_DESC(swap_opt_cmd, "Swap the Option (\"Alt\") and Command (\"Flag\")
  		"(For people who want to keep Windows PC keyboard muscle memory. "
  		"[0] = as-is, Mac layout. 1 = swapped, Windows layout.)");
  
@@ -31,7 +31,6 @@ index c173503234d8..d3fded06d829 100644
  struct apple_sc {
  	unsigned long quirks;
  	unsigned int fn_on;
- 	DECLARE_BITMAP(pressed_fn, KEY_CNT);
  	DECLARE_BITMAP(pressed_numlock, KEY_CNT);
 +	struct apple_sc_backlight *backlight;
  };

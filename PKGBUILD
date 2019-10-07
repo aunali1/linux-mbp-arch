@@ -4,7 +4,7 @@
 # Contributor: Thomas Baechler <thomas@archlinux.org>
 
 pkgbase=linux-mbp
-pkgver=5.2.19
+pkgver=5.2.20
 _srcname=linux-${pkgver}
 pkgrel=1
 arch=(x86_64)
@@ -27,6 +27,7 @@ source=(
   # Arch Linux patches
   0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch
   0002-ZEN-Add-CONFIG-for-unprivileged_userns_clone.patch
+  0003-Bluetooth-hidp-Fix-assumptions-on-the-return-value-o.patch
 
   # MBP ANS2 NVME Controller support
   2001-nvme-pci-Pass-the-queue-to-SQ_SIZE-CQ_SIZE-macros.patch
@@ -48,20 +49,21 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('de98e4c28e08cd992c3aadc32450b3fa738b6101c509093192bb344f4f41b18a'
+sha256sums=('b121e2497cb6d1752f8f041f1385a72edf9fcf273cb505250e0c0135bb56ad69'
             'SKIP'
             'ca03f3e65af0c4bfde88a864deac18a1b3afdb3fcc88339114272f693bbfadda'
             'ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21'
             'c043f3033bb781e2688794a59f6d1f7ed49ef9b13eb77ff9a425df33a244a636'
             'ad6344badc91ad0630caacde83f7f9b97276f80d26a20619a87952be65492c65'
-            '2219e0cc40e12f8db3c0df774276156be058bba5913972ca1507c13a4791a50c'
-            'd8a77f1feaa5e2c8c9e9b91604060aeee0bf3cf8fd4296088a105bac40743ac3'
+            '2ee1b64731951b24c9ab032e5500b4e330dbe137987d09b4f50a727230abb900'
+            'f93d061c9acfbac0e6a06b5cbc8c339476a817014295a13ca456c0bba329ccca'
+            '3e07d34da91f32f6fc787fca66354af8ec21f1f262d874882dae9ddcd838b021'
             'db8ca5a3cf93522c5a93853acc44ef24cf1c41d0a6682c9f87cd918dcee96eb8'
             '15824843737696c0914c6a5720e7d869bc3375f646f62c699e736da79619d655'
             'cfda9f963272aa81dcf0632f6367ef5149fdfb75444f72bc37a8bad554d63d92'
             '8cd292bf560d89858a29e34fe6dc477df461350aa50b3a89d01db1ee5c576b78'
             '594ee36c0bc7eee93df824017bc32c3f5afb13b14f1a396f28b665c97dc1d7c0'
-            'c2ce62bae7063636c4352b1d6a48656df938822b2c77b3560782b628c864546b'
+            '41afb414a69dc9e2b022605e0e63a9e14738c8e8c87984b95969aa8ab3584d77'
             '717f7fc70a3e3fcfa5ffbac505c8259c1d86718ca1ca6593e8925dac3d29a835'
             '217c81919200903070d235098a9e8ba0039bb1ed10017ad86ae4c3fc8e0f46b7')
 

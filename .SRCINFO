@@ -1,5 +1,5 @@
 pkgbase = linux-mbp
-	pkgver = 5.2.19
+	pkgver = 5.2.20
 	pkgrel = 1
 	url = https://git.archlinux.org/linux.git/log/?h=v
 	arch = x86_64
@@ -15,14 +15,15 @@ pkgbase = linux-mbp
 	makedepends = graphviz
 	makedepends = imagemagick
 	options = !strip
-	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.2.19.tar.xz
-	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.2.19.tar.sign
+	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.2.20.tar.xz
+	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.2.20.tar.sign
 	source = config
 	source = 60-linux.hook
 	source = 90-linux.hook
 	source = linux.preset
 	source = 0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch
 	source = 0002-ZEN-Add-CONFIG-for-unprivileged_userns_clone.patch
+	source = 0003-Bluetooth-hidp-Fix-assumptions-on-the-return-value-o.patch
 	source = 2001-nvme-pci-Pass-the-queue-to-SQ_SIZE-CQ_SIZE-macros.patch
 	source = 2002-nvme-pci-Add-support-for-variable-IO-SQ-element-size.patch
 	source = 2003-nvme-pci-Add-support-for-Apple-2018-models.patch
@@ -33,20 +34,21 @@ pkgbase = linux-mbp
 	source = wifi.patch
 	validpgpkeys = ABAF11C65A2970B130ABE3C479BE3E4300411886
 	validpgpkeys = 647F28654894E3BD457199BE38DBBDC86092693E
-	sha256sums = de98e4c28e08cd992c3aadc32450b3fa738b6101c509093192bb344f4f41b18a
+	sha256sums = b121e2497cb6d1752f8f041f1385a72edf9fcf273cb505250e0c0135bb56ad69
 	sha256sums = SKIP
 	sha256sums = ca03f3e65af0c4bfde88a864deac18a1b3afdb3fcc88339114272f693bbfadda
 	sha256sums = ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21
 	sha256sums = c043f3033bb781e2688794a59f6d1f7ed49ef9b13eb77ff9a425df33a244a636
 	sha256sums = ad6344badc91ad0630caacde83f7f9b97276f80d26a20619a87952be65492c65
-	sha256sums = 2219e0cc40e12f8db3c0df774276156be058bba5913972ca1507c13a4791a50c
-	sha256sums = d8a77f1feaa5e2c8c9e9b91604060aeee0bf3cf8fd4296088a105bac40743ac3
+	sha256sums = 2ee1b64731951b24c9ab032e5500b4e330dbe137987d09b4f50a727230abb900
+	sha256sums = f93d061c9acfbac0e6a06b5cbc8c339476a817014295a13ca456c0bba329ccca
+	sha256sums = 3e07d34da91f32f6fc787fca66354af8ec21f1f262d874882dae9ddcd838b021
 	sha256sums = db8ca5a3cf93522c5a93853acc44ef24cf1c41d0a6682c9f87cd918dcee96eb8
 	sha256sums = 15824843737696c0914c6a5720e7d869bc3375f646f62c699e736da79619d655
 	sha256sums = cfda9f963272aa81dcf0632f6367ef5149fdfb75444f72bc37a8bad554d63d92
 	sha256sums = 8cd292bf560d89858a29e34fe6dc477df461350aa50b3a89d01db1ee5c576b78
 	sha256sums = 594ee36c0bc7eee93df824017bc32c3f5afb13b14f1a396f28b665c97dc1d7c0
-	sha256sums = c2ce62bae7063636c4352b1d6a48656df938822b2c77b3560782b628c864546b
+	sha256sums = 41afb414a69dc9e2b022605e0e63a9e14738c8e8c87984b95969aa8ab3584d77
 	sha256sums = 717f7fc70a3e3fcfa5ffbac505c8259c1d86718ca1ca6593e8925dac3d29a835
 	sha256sums = 217c81919200903070d235098a9e8ba0039bb1ed10017ad86ae4c3fc8e0f46b7
 
@@ -58,14 +60,14 @@ pkgname = linux-mbp
 	depends = kmod
 	depends = mkinitcpio
 	optdepends = crda: to set the correct wireless channels of your country
-	provides = linux=5.2.19
+	provides = linux=5.2.20
 	backup = etc/mkinitcpio.d/linux-mbp.preset
 
 pkgname = linux-mbp-headers
 	pkgdesc = Header files and scripts for building modules for Linux-mbp kernel
-	provides = linux-headers=5.2.19
+	provides = linux-headers=5.2.20
 
 pkgname = linux-mbp-docs
 	pkgdesc = Kernel hackers manual - HTML documentation that comes with the Linux-mbp kernel
-	provides = linux-docs=5.2.19
+	provides = linux-docs=5.2.20
 
