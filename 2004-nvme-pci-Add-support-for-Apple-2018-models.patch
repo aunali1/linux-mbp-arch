@@ -1,7 +1,7 @@
-From 66341331ba0d2de4ff421cdc401a1e34de50502a Mon Sep 17 00:00:00 2001
+From 4de18719d1de2da8a93b1508c66d9dc1a30d70ea Mon Sep 17 00:00:00 2001
 From: Benjamin Herrenschmidt <benh@kernel.crashing.org>
 Date: Wed, 7 Aug 2019 17:51:21 +1000
-Subject: [PATCH 3/4] nvme-pci: Add support for Apple 2018+ models
+Subject: [PATCH 4/5] nvme-pci: Add support for Apple 2018+ models
 
 Based on reverse engineering and original patch by
 
@@ -22,28 +22,28 @@ Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
  2 files changed, 30 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/nvme/host/nvme.h b/drivers/nvme/host/nvme.h
-index 9656f863ea40..21eb48d3385d 100644
+index 2d678fb968c7..3d7aed5435d9 100644
 --- a/drivers/nvme/host/nvme.h
 +++ b/drivers/nvme/host/nvme.h
-@@ -94,6 +94,16 @@ enum nvme_quirks {
- 	 * Broken Write Zeroes.
+@@ -97,6 +97,16 @@ enum nvme_quirks {
+ 	 * Force simple suspend/resume path.
  	 */
- 	NVME_QUIRK_DISABLE_WRITE_ZEROES		= (1 << 9),
+ 	NVME_QUIRK_SIMPLE_SUSPEND		= (1 << 10),
 +
 +	/*
 +	 * Use only one interrupt vector for all queues
 +	 */
-+	NVME_QUIRK_SINGLE_VECTOR		= (1 << 10),
++	NVME_QUIRK_SINGLE_VECTOR                = (1 << 11),
 +
 +	/*
 +	 * Use non-standard 128 bytes SQEs.
 +	 */
-+	NVME_QUIRK_128_BYTES_SQES		= (1 << 11),
++	NVME_QUIRK_128_BYTES_SQES               = (1 << 12),
  };
  
  /*
 diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index eee93e138c2c..effb79341909 100644
+index c7e3a2496407..6092a117eb40 100644
 --- a/drivers/nvme/host/pci.c
 +++ b/drivers/nvme/host/pci.c
 @@ -2081,6 +2081,13 @@ static int nvme_setup_irqs(struct nvme_dev *dev, unsigned int nr_io_queues)
@@ -78,7 +78,7 @@ index eee93e138c2c..effb79341909 100644
  
  	/*
  	 * Temporary fix for the Apple controller found in the MacBook8,1 and
-@@ -3040,6 +3056,9 @@ static const struct pci_device_id nvme_id_table[] = {
+@@ -3047,6 +3063,9 @@ static const struct pci_device_id nvme_id_table[] = {
  	{ PCI_DEVICE_CLASS(PCI_CLASS_STORAGE_EXPRESS, 0xffffff) },
  	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2001) },
  	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2003) },

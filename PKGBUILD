@@ -4,7 +4,7 @@
 # Contributor: Thomas Baechler <thomas@archlinux.org>
 
 pkgbase=linux-mbp
-pkgver=5.2.20
+pkgver=5.3.5
 _srcname=linux-${pkgver}
 pkgrel=1
 arch=(x86_64)
@@ -25,15 +25,15 @@ source=(
   linux.preset   # standard config files for mkinitcpio ramdisk
 
   # Arch Linux patches
-  0001-add-sysctl-to-disallow-unprivileged-CLONE_NEWUSER-by.patch
-  0002-ZEN-Add-CONFIG-for-unprivileged_userns_clone.patch
-  0003-Bluetooth-hidp-Fix-assumptions-on-the-return-value-o.patch
+  0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
+  0002-Bluetooth-hidp-Fix-assumptions-on-the-return-value-o.patch
 
   # MBP ANS2 NVME Controller support
-  2001-nvme-pci-Pass-the-queue-to-SQ_SIZE-CQ_SIZE-macros.patch
-  2002-nvme-pci-Add-support-for-variable-IO-SQ-element-size.patch
-  2003-nvme-pci-Add-support-for-Apple-2018-models.patch
-  2004-nvme-pci-Support-shared-tags-across-queues-for-Apple.patch
+  2001-nvme-pci-set-ctrl-sqsize-to-the-device-q_depth.patch
+  2002-nvme-pci-Pass-the-queue-to-SQ_SIZE-CQ_SIZE-macros.patch
+  2003-nvme-pci-Add-support-for-variable-IO-SQ-element-size.patch
+  2004-nvme-pci-Add-support-for-Apple-2018-models.patch
+  2005-nvme-pci-Support-shared-tags-across-queues-for-Apple.patch
 
   # T2 USB Keyboard/Touchpad support
   4001-touchpad.patch
@@ -49,19 +49,19 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('b121e2497cb6d1752f8f041f1385a72edf9fcf273cb505250e0c0135bb56ad69'
+sha256sums=('80ed8c5cfc298fdbccbd69f8b919c12b11d8b54d8c20f08fc8c3b1840d1e53f0'
             'SKIP'
-            'ca03f3e65af0c4bfde88a864deac18a1b3afdb3fcc88339114272f693bbfadda'
+            'e3dee46e0bca1067e60fcb2aa051a578c9b8e660acf9941e4b5220abfba8bf25'
             'ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21'
             'c043f3033bb781e2688794a59f6d1f7ed49ef9b13eb77ff9a425df33a244a636'
             'ad6344badc91ad0630caacde83f7f9b97276f80d26a20619a87952be65492c65'
-            '2ee1b64731951b24c9ab032e5500b4e330dbe137987d09b4f50a727230abb900'
-            'f93d061c9acfbac0e6a06b5cbc8c339476a817014295a13ca456c0bba329ccca'
-            '3e07d34da91f32f6fc787fca66354af8ec21f1f262d874882dae9ddcd838b021'
-            'db8ca5a3cf93522c5a93853acc44ef24cf1c41d0a6682c9f87cd918dcee96eb8'
-            '15824843737696c0914c6a5720e7d869bc3375f646f62c699e736da79619d655'
-            'cfda9f963272aa81dcf0632f6367ef5149fdfb75444f72bc37a8bad554d63d92'
-            '8cd292bf560d89858a29e34fe6dc477df461350aa50b3a89d01db1ee5c576b78'
+            'a17514bb63d7b158e0c9624ee4b4297991296b41f4fb22fc459a60bc6919c374'
+            'bd5b3887834258ac3b35a4b0c4dfdfe4fd247ab0cb1d701ac823d03eb42603c0'
+            '32dd5139306efd4fee13565da89fff4a08fa4b674ee0cdc61fe1f90e5720d000'
+            '96ae8497e2f65ff2699483b1589e1539be45ca33d32251b066a2bc22d9761d5d'
+            'a972ef8bccd1b91d4f0013a6487c2b6761a207282f1a171ec2a90f5ffac5b950'
+            '5571ee0131432fa93e8f255d2566a62be8c8ef4c246d5b85f3ecf6baa1651c54'
+            '897a8fc71fd62adec5044b5527d1447a3a646d8634e6c6a8d1fc6c749944ce0f'
             '594ee36c0bc7eee93df824017bc32c3f5afb13b14f1a396f28b665c97dc1d7c0'
             '41afb414a69dc9e2b022605e0e63a9e14738c8e8c87984b95969aa8ab3584d77'
             '717f7fc70a3e3fcfa5ffbac505c8259c1d86718ca1ca6593e8925dac3d29a835'
@@ -102,9 +102,9 @@ build() {
 
 _package() {
   pkgdesc="The ${pkgbase/linux/Linux} kernel and modules"
-  [[ $pkgbase = linux ]] && groups=(base)
-  depends=(coreutils linux-firmware kmod mkinitcpio)
-  optdepends=('crda: to set the correct wireless channels of your country')
+  depends=(coreutils kmod initramfs)
+  optdepends=('crda: to set the correct wireless channels of your country'
+              'linux-firmware: firmware images needed for some devices')
   provides=("linux=$pkgver")
   backup=("etc/mkinitcpio.d/$pkgbase.preset")
   install=linux.install
@@ -119,6 +119,9 @@ _package() {
   # https://github.com/systemd/systemd/commit/edda44605f06a41fb86b7ab8128dcf99161d2344
   install -Dm644 "$(make -s image_name)" "$modulesdir/vmlinuz"
   install -Dm644 "$modulesdir/vmlinuz" "$pkgdir/boot/vmlinuz-$pkgbase"
+
+  # Used by mkinitcpio to name the kernel
+  echo "$pkgbase" | install -Dm644 /dev/stdin "$modulesdir/pkgbase"
 
   msg2 "Installing modules..."
   make INSTALL_MOD_PATH="$pkgdir/usr" modules_install
@@ -176,9 +179,6 @@ _package-headers() {
 
   # add xfs and shmem for aufs building
   mkdir -p "$builddir"/{fs/xfs,mm}
-
-  # ???
-  mkdir "$builddir/.tmp_versions"
 
   msg2 "Installing headers..."
   cp -t "$builddir" -a include

@@ -1,7 +1,7 @@
-From c1e0cc7e1d319936271dfdd0a9405275c8091381 Mon Sep 17 00:00:00 2001
+From 34335d66bb3fc67a38e6abce0d6c1648a2e975b3 Mon Sep 17 00:00:00 2001
 From: Benjamin Herrenschmidt <benh@kernel.crashing.org>
 Date: Wed, 7 Aug 2019 17:51:20 +1000
-Subject: [PATCH 2/4] nvme-pci: Add support for variable IO SQ element size
+Subject: [PATCH 3/5] nvme-pci: Add support for variable IO SQ element size
 
 The size of a submission queue element should always be 6 (64 bytes)
 by spec.
@@ -22,7 +22,7 @@ Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
  2 files changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index a09e6c4e3434..eee93e138c2c 100644
+index 424c88c76973..c7e3a2496407 100644
 --- a/drivers/nvme/host/pci.c
 +++ b/drivers/nvme/host/pci.c
 @@ -28,7 +28,7 @@
@@ -86,7 +86,7 @@ index a09e6c4e3434..eee93e138c2c 100644
  	/*
  	 * Temporary fix for the Apple controller found in the MacBook8,1 and
 diff --git a/include/linux/nvme.h b/include/linux/nvme.h
-index 32c25b46ae63..f61d6906e59d 100644
+index 01aa6a6c241d..178da5f37331 100644
 --- a/include/linux/nvme.h
 +++ b/include/linux/nvme.h
 @@ -140,6 +140,7 @@ enum {

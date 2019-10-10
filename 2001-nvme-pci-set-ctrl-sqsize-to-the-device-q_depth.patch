@@ -1,0 +1,27 @@
+From f482ef0742c25e346bfe9654adf4bf6bfc73fe23 Mon Sep 17 00:00:00 2001
+From: Sagi Grimberg <sagi@grimberg.me>
+Date: Thu, 22 Aug 2019 10:51:17 -0700
+Subject: [PATCH 1/5] nvme-pci: set ctrl sqsize to the device q_depth
+
+Align with what the rest of the transports are doing.
+
+Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
+---
+ drivers/nvme/host/pci.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 732d5b63ec05..a4b0f04d6c3e 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -2314,6 +2314,7 @@ static int nvme_pci_enable(struct nvme_dev *dev)
+ 
+ 	dev->q_depth = min_t(int, NVME_CAP_MQES(dev->ctrl.cap) + 1,
+ 				io_queue_depth);
++	dev->ctrl.sqsize = dev->q_depth - 1; /* 0's based queue depth */
+ 	dev->db_stride = 1 << NVME_CAP_STRIDE(dev->ctrl.cap);
+ 	dev->dbs = dev->bar + 4096;
+ 
+-- 
+2.23.0
+
