@@ -4,7 +4,7 @@
 # Contributor: Thomas Baechler <thomas@archlinux.org>
 
 pkgbase=linux-mbp
-pkgver=5.3.5
+pkgver=5.3.6
 _srcname=linux-${pkgver}
 pkgrel=1
 arch=(x86_64)
@@ -49,7 +49,7 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('80ed8c5cfc298fdbccbd69f8b919c12b11d8b54d8c20f08fc8c3b1840d1e53f0'
+sha256sums=('e84021a94784de7bb10e4251fb1a87859a8d1c97bd78fb55ad47ab6ce475ec1f'
             'SKIP'
             'e3dee46e0bca1067e60fcb2aa051a578c9b8e660acf9941e4b5220abfba8bf25'
             'ae2e95db94ef7176207c690224169594d49445e04249d2499e9d2fbc117a0b21'
@@ -91,8 +91,8 @@ prepare() {
   cp ../config .config
   make olddefconfig
 
-  make -s kernelrelease > ../version
-  msg2 "Prepared %s version %s" "$pkgbase" "$(<../version)"
+  make -s kernelrelease > version
+  msg2 "Prepared %s version %s" "$pkgbase" "$(<version)"
 }
 
 build() {
@@ -109,10 +109,9 @@ _package() {
   backup=("etc/mkinitcpio.d/$pkgbase.preset")
   install=linux.install
 
+  cd $_srcname
   local kernver="$(<version)"
   local modulesdir="$pkgdir/usr/lib/modules/$kernver"
-
-  cd $_srcname
 
   msg2 "Installing boot image..."
   # systemd expects to find the kernel here to allow hibernation
@@ -126,13 +125,6 @@ _package() {
   msg2 "Installing modules..."
   make INSTALL_MOD_PATH="$pkgdir/usr" modules_install
 
-  # a place for external modules,
-  # with version file for building modules and running depmod from hook
-  local extramodules="extramodules$_kernelname"
-  local extradir="$pkgdir/usr/lib/modules/$extramodules"
-  install -Dt "$extradir" -m644 ../version
-  ln -sr "$extradir" "$modulesdir/extramodules"
-
   # remove build and source links
   rm "$modulesdir"/{source,build}
 
@@ -141,7 +133,6 @@ _package() {
   local subst="
     s|%PKGBASE%|$pkgbase|g
     s|%KERNVER%|$kernver|g
-    s|%EXTRAMODULES%|$extramodules|g
   "
 
   # hack to allow specifying an initially nonexisting install file
@@ -164,12 +155,12 @@ _package-headers() {
   pkgdesc="Header files and scripts for building modules for ${pkgbase/linux/Linux} kernel"
   provides=("linux-headers=$pkgver")
 
+  cd $_srcname
   local builddir="$pkgdir/usr/lib/modules/$(<version)/build"
 
-  cd $_srcname
-
   msg2 "Installing build files..."
-  install -Dt "$builddir" -m644 Makefile .config Module.symvers System.map vmlinux
+  install -Dt "$builddir" -m644 .config Makefile Module.symvers System.map \
+    localversion.* version vmlinux
   install -Dt "$builddir/kernel" -m644 kernel/Makefile
   install -Dt "$builddir/arch/x86" -m644 arch/x86/Makefile
   cp -t "$builddir" -a scripts
@@ -233,7 +224,7 @@ _package-headers() {
 
   msg2 "Adding symlink..."
   mkdir -p "$pkgdir/usr/src"
-  ln -sr "$builddir" "$pkgdir/usr/src/$pkgbase-$pkgver"
+  ln -sr "$builddir" "$pkgdir/usr/src/$pkgbase"
 
   msg2 "Fixing permissions..."
   chmod -Rc u=rwX,go=rX "$pkgdir"
@@ -243,9 +234,8 @@ _package-docs() {
   pkgdesc="Kernel hackers manual - HTML documentation that comes with the ${pkgbase/linux/Linux} kernel"
   provides=("linux-docs=$pkgver")
 
-  local builddir="$pkgdir/usr/lib/modules/$(<version)/build"
-
   cd $_srcname
+  local builddir="$pkgdir/usr/lib/modules/$(<version)/build"
 
   msg2 "Installing documentation..."
   mkdir -p "$builddir"
