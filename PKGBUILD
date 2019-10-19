@@ -4,9 +4,9 @@
 # Contributor: Thomas Baechler <thomas@archlinux.org>
 
 pkgbase=linux-mbp
-pkgver=5.3.6
+pkgver=5.3.7
 _srcname=linux-${pkgver}
-pkgrel=2
+pkgrel=1
 arch=(x86_64)
 url="https://git.archlinux.org/linux.git/log/?h=v$_srcver"
 license=(GPL2)
@@ -49,7 +49,7 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('e84021a94784de7bb10e4251fb1a87859a8d1c97bd78fb55ad47ab6ce475ec1f'
+sha256sums=('c6c9714e21531c825c306b107bc6f6c7bfa2d5270a14bad170f8de5a73d34802'
             'SKIP'
             'e3dee46e0bca1067e60fcb2aa051a578c9b8e660acf9941e4b5220abfba8bf25'
             '452b8d4d71e1565ca91b1bebb280693549222ef51c47ba8964e411b2d461699c'

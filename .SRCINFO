@@ -1,6 +1,6 @@
 pkgbase = linux-mbp
-	pkgver = 5.3.6
-	pkgrel = 2
+	pkgver = 5.3.7
+	pkgrel = 1
 	url = https://git.archlinux.org/linux.git/log/?h=v
 	arch = x86_64
 	license = GPL2
@@ -15,8 +15,8 @@ pkgbase = linux-mbp
 	makedepends = graphviz
 	makedepends = imagemagick
 	options = !strip
-	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.3.6.tar.xz
-	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.3.6.tar.sign
+	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.3.7.tar.xz
+	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.3.7.tar.sign
 	source = config
 	source = 60-linux.hook
 	source = 90-linux.hook
@@ -34,7 +34,7 @@ pkgbase = linux-mbp
 	source = wifi.patch
 	validpgpkeys = ABAF11C65A2970B130ABE3C479BE3E4300411886
 	validpgpkeys = 647F28654894E3BD457199BE38DBBDC86092693E
-	sha256sums = e84021a94784de7bb10e4251fb1a87859a8d1c97bd78fb55ad47ab6ce475ec1f
+	sha256sums = c6c9714e21531c825c306b107bc6f6c7bfa2d5270a14bad170f8de5a73d34802
 	sha256sums = SKIP
 	sha256sums = e3dee46e0bca1067e60fcb2aa051a578c9b8e660acf9941e4b5220abfba8bf25
 	sha256sums = 452b8d4d71e1565ca91b1bebb280693549222ef51c47ba8964e411b2d461699c
@@ -60,14 +60,14 @@ pkgname = linux-mbp
 	depends = initramfs
 	optdepends = crda: to set the correct wireless channels of your country
 	optdepends = linux-firmware: firmware images needed for some devices
-	provides = linux=5.3.6
+	provides = linux=5.3.7
 	backup = etc/mkinitcpio.d/linux-mbp.preset
 
 pkgname = linux-mbp-headers
 	pkgdesc = Header files and scripts for building modules for Linux-mbp kernel
-	provides = linux-headers=5.3.6
+	provides = linux-headers=5.3.7
 
 pkgname = linux-mbp-docs
 	pkgdesc = Kernel hackers manual - HTML documentation that comes with the Linux-mbp kernel
-	provides = linux-docs=5.3.6
+	provides = linux-docs=5.3.7
 
