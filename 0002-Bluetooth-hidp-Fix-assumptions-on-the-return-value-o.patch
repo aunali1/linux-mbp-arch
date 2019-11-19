@@ -1,4 +1,4 @@
-From edb90eeb9b2c018d0314132b56a6519c71ac84d2 Mon Sep 17 00:00:00 2001
+From bd20b50ea137e295b017567d94d15416a2daf9cc Mon Sep 17 00:00:00 2001
 From: Dan Elkouby <streetwalkermc@gmail.com>
 Date: Fri, 6 Sep 2019 14:06:44 +0300
 Subject: [PATCH 2/2] Bluetooth: hidp: Fix assumptions on the return value of
@@ -24,7 +24,7 @@ Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/hid/hid-microsoft.c b/drivers/hid/hid-microsoft.c
-index 8b3a922bdad3..2cf83856f2e4 100644
+index 572b5789d20f..2d8b589201a4 100644
 --- a/drivers/hid/hid-microsoft.c
 +++ b/drivers/hid/hid-microsoft.c
 @@ -303,7 +303,7 @@ static void ms_ff_worker(struct work_struct *work)
@@ -59,5 +59,5 @@ index 8d889969ae7e..bef84b95e2c4 100644
  
  	/* Wait for the ACK from the device. */
 -- 
-2.23.0
+2.24.0
 

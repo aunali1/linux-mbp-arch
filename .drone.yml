@@ -48,12 +48,12 @@ steps:
     host: tel.aunali1.com
     username:
       from_secret: ingress_user
-    password:
-      from_secret: ingress_password
+    key:
+      from_secret: ingress_key
     port: 22
     rm: true
     strip_components: 2
-    target: /srv/ftp/ingress/mbp
+    target: /srv/storage/ingress/mbp
     source:
       - /tmp/products/*
   when:
@@ -68,8 +68,8 @@ steps:
     host: tel.aunali1.com
     username:
       from_secret: ingress_user
-    password:
-      from_secret: ingress_password
+    key:
+      from_secret: ingress_key
     port: 22
     script:
       - ./update_mbp_repo.sh
