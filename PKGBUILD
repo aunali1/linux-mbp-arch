@@ -93,7 +93,7 @@ prepare() {
 
 build() {
   cd $_srcname
-  make bzImage modules htmldocs
+  make bzImage modules htmldocs > /dev/null
 }
 
 _package() {
