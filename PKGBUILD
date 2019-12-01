@@ -4,7 +4,7 @@
 pkgbase=linux-mbp
 pkgver=5.3.14
 _srcname=linux-${pkgver}
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux for MBP'
 _srctag=v${pkgver%.*}-${pkgver##*.}
 url="https://git.archlinux.org/linux.git/log/?h=v$_srctag"
@@ -93,7 +93,7 @@ prepare() {
 
 build() {
   cd $_srcname
-  make bzImage modules htmldocs > /dev/null
+  make bzImage modules htmldocs
 }
 
 _package() {
