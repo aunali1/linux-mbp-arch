@@ -3,7 +3,7 @@ name: arch-kernel-package
 
 steps:
 - name: build
-  image: archlinux/base
+  image: archlinux
   pull: always
   volumes:
     - name: build-products

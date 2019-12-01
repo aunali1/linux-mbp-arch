@@ -1,8 +1,8 @@
 pkgbase = linux-mbp
 	pkgdesc = Linux for MBP
-	pkgver = 5.3.11
+	pkgver = 5.3.14
 	pkgrel = 1
-	url = https://git.archlinux.org/linux.git/log/?h=vv5.3-11
+	url = https://git.archlinux.org/linux.git/log/?h=vv5.3-14
 	arch = x86_64
 	license = GPL2
 	makedepends = xmlto
@@ -16,8 +16,8 @@ pkgbase = linux-mbp
 	makedepends = imagemagick
 	makedepends = git
 	options = !strip
-	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.3.11.tar.xz
-	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.3.11.tar.sign
+	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.3.14.tar.xz
+	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.3.14.tar.sign
 	source = config
 	source = 0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
 	source = 0002-Bluetooth-hidp-Fix-assumptions-on-the-return-value-o.patch
@@ -32,9 +32,9 @@ pkgbase = linux-mbp
 	source = wifi.patch
 	validpgpkeys = ABAF11C65A2970B130ABE3C479BE3E4300411886
 	validpgpkeys = 647F28654894E3BD457199BE38DBBDC86092693E
-	sha256sums = 6e7156946d1d72e24786d09a47511e44c3abe5d4da757f4f68f2da482880aeb7
+	sha256sums = 955712688c7256675383ec5be4ee044dbb59116a9a1f24e8689d12a6f95f7932
 	sha256sums = SKIP
-	sha256sums = 0fdd436a462de81d3d20d53ff7b7ed4005c334db5495114133bec7baeac26903
+	sha256sums = f95a45217dd6773768b913abaa299398b8435887c99cd56cf8bc8af4395884e7
 	sha256sums = 78859015e7ef94e31a21c84b32085641adfe8e6f3f227c9a634668661343ebb4
 	sha256sums = 5d53f91d271aba76118c8b65ef19ff3b50f171a8adf0768ab107fac48fd357c0
 	sha256sums = 32dd5139306efd4fee13565da89fff4a08fa4b674ee0cdc61fe1f90e5720d000
@@ -54,13 +54,13 @@ pkgname = linux-mbp
 	depends = initramfs
 	optdepends = crda: to set the correct wireless channels of your country
 	optdepends = linux-firmware: firmware images needed for some devices
-	provides = linux=5.3.11
+	provides = linux=5.3.14
 
 pkgname = linux-mbp-headers
 	pkgdesc = Headers and scripts for building modules for the Linux for MBP kernel
-	provides = linux-headers=5.3.11
+	provides = linux-headers=5.3.14
 
 pkgname = linux-mbp-docs
 	pkgdesc = Kernel hacker's manual for the Linux for MBP kernel
-	provides = linux-docs=5.3.11
+	provides = linux-docs=5.3.14
 
