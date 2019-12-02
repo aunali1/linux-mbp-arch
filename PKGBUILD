@@ -33,6 +33,14 @@ source=(
   2004-nvme-pci-Add-support-for-Apple-2018-models.patch
   2005-nvme-pci-Support-shared-tags-across-queues-for-Apple.patch
 
+  # Apple SMC ACPI support
+  3001-applesmc-convert-static-structures-to-drvdata.patch
+  3002-applesmc-make-io-port-base-addr-dynamic.patch
+  3003-applesmc-switch-to-acpi_device-from-platform.patch
+  3004-applesmc-key-interface-wrappers.patch
+  3005-applesmc-basic-mmio-interface-implementation.patch
+  3006-applesmc-fan-support-on-T2-Macs.patch
+
   # T2 USB Keyboard/Touchpad support
   4001-touchpad.patch
   4002-keyboard-backlight.patch
@@ -57,6 +65,12 @@ sha256sums=('955712688c7256675383ec5be4ee044dbb59116a9a1f24e8689d12a6f95f7932'
             'a972ef8bccd1b91d4f0013a6487c2b6761a207282f1a171ec2a90f5ffac5b950'
             '5571ee0131432fa93e8f255d2566a62be8c8ef4c246d5b85f3ecf6baa1651c54'
             '897a8fc71fd62adec5044b5527d1447a3a646d8634e6c6a8d1fc6c749944ce0f'
+            '7255b4ce6aaa4fdea3623d6be01258580ff6ea04f80e6860db7b2187aff48e22'
+            'dc7cf7462f8615df2a6555e2451ee186fb1eb500c6307765af5fce3a321a861c'
+            '12d7b4dfb93442ed1288dea15a0a48c5db47b2985947f41f3020568586575713'
+            'd24d4ecafca6a9719502d99ce9932b01713737570211408cde05eda57a7c178d'
+            '29470448c0443c81a7b4510a6d52cc56958111daa3d7f5198d68ad7516a867a0'
+            '9cacf0a7f5a43ef3ed807f050dec7e247b6fbf33cfcdf74ee091f00956165b20'
             '594ee36c0bc7eee93df824017bc32c3f5afb13b14f1a396f28b665c97dc1d7c0'
             '41afb414a69dc9e2b022605e0e63a9e14738c8e8c87984b95969aa8ab3584d77'
             '717f7fc70a3e3fcfa5ffbac505c8259c1d86718ca1ca6593e8925dac3d29a835'
