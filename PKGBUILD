@@ -4,7 +4,7 @@
 pkgbase=linux-mbp
 pkgver=5.3.14
 _srcname=linux-${pkgver}
-pkgrel=3
+pkgrel=4
 pkgdesc='Linux for MBP'
 _srctag=v${pkgver%.*}-${pkgver##*.}
 url="https://git.archlinux.org/linux.git/log/?h=v$_srctag"
@@ -55,7 +55,7 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('5aff24af50101ec4ea9696d971e3c7c5102826a8b601a93fdd92abbf71c93900'
+sha256sums=('955712688c7256675383ec5be4ee044dbb59116a9a1f24e8689d12a6f95f7932'
             'SKIP'
             '45a0b6d1217f6a70a9fa84197503aed342b386777f142f1624fd127ad8d4228e'
             '78859015e7ef94e31a21c84b32085641adfe8e6f3f227c9a634668661343ebb4'
