@@ -2,17 +2,17 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.3.14
+pkgver=5.4.3
 _srcname=linux-${pkgver}
-pkgrel=4
+pkgrel=1
 pkgdesc='Linux for MBP'
 _srctag=v${pkgver%.*}-${pkgver##*.}
 url="https://git.archlinux.org/linux.git/log/?h=v$_srctag"
 arch=(x86_64)
 license=(GPL2)
 makedepends=(
-  xmlto kmod inetutils bc libelf
-  python-sphinx python-sphinx_rtd_theme graphviz imagemagick
+  bc kmod libelf
+  xmlto python-sphinx python-sphinx_rtd_theme graphviz imagemagick
   git
 )
 options=('!strip')
@@ -24,14 +24,12 @@ source=(
 
   # Arch Linux patches
   0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
-  0002-Bluetooth-hidp-Fix-assumptions-on-the-return-value-o.patch
-
-  # MBP ANS2 NVME Controller support
-  2001-nvme-pci-set-ctrl-sqsize-to-the-device-q_depth.patch
-  2002-nvme-pci-Pass-the-queue-to-SQ_SIZE-CQ_SIZE-macros.patch
-  2003-nvme-pci-Add-support-for-variable-IO-SQ-element-size.patch
-  2004-nvme-pci-Add-support-for-Apple-2018-models.patch
-  2005-nvme-pci-Support-shared-tags-across-queues-for-Apple.patch
+  0002-lib-devres-add-a-helper-function-for-ioremap_uc.patch
+  0003-mfd-intel-lpss-Use-devm_ioremap_uc-for-MMIO.patch
+  0004-PCI-pciehp-Do-not-disable-interrupt-twice-on-suspend.patch
+  0005-PCI-pciehp-Prevent-deadlock-on-disconnect.patch
+  0006-ACPI-EC-Rework-flushing-of-pending-work.patch
+  0007-ACPI-PM-s2idle-Rework-ACPI-events-synchronization.patch
 
   # Apple SMC ACPI support
   3001-applesmc-convert-static-structures-to-drvdata.patch
@@ -55,16 +53,16 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('955712688c7256675383ec5be4ee044dbb59116a9a1f24e8689d12a6f95f7932'
+sha256sums=('6731682f32e1b1ee53b0e7f66b8dc263d25a0e809e78e2139cb0ed77c378ee51'
             'SKIP'
-            '45a0b6d1217f6a70a9fa84197503aed342b386777f142f1624fd127ad8d4228e'
-            '78859015e7ef94e31a21c84b32085641adfe8e6f3f227c9a634668661343ebb4'
-            '5d53f91d271aba76118c8b65ef19ff3b50f171a8adf0768ab107fac48fd357c0'
-            '32dd5139306efd4fee13565da89fff4a08fa4b674ee0cdc61fe1f90e5720d000'
-            '96ae8497e2f65ff2699483b1589e1539be45ca33d32251b066a2bc22d9761d5d'
-            'a972ef8bccd1b91d4f0013a6487c2b6761a207282f1a171ec2a90f5ffac5b950'
-            '5571ee0131432fa93e8f255d2566a62be8c8ef4c246d5b85f3ecf6baa1651c54'
-            '897a8fc71fd62adec5044b5527d1447a3a646d8634e6c6a8d1fc6c749944ce0f'
+            'a828df82305a606f08c12e21afb38b1fdb5fb78824797b4fc37dcd4ada0223ab'
+            '37bfc59584d04ef9956063dd87a1f0a41d34f1a5f0d0c9c441835296ffc45327'
+            '537516e8cdd497dfd6836d52bbc268a94f21aee5f5a51c4e897d42e6f532bc6e'
+            '9df631725e71098f832bfdadd6b67f149cb5692b09e947e60ec5cde525a26636'
+            'b354ae6c603246c969a18e222d553ac8ffbd3b29aa042672ab1d9ba2da0d7faa'
+            '7a8e3f627be2616c9fbb1fd1c34502584b2f99fc674f1d5ca705cb67248e6d8f'
+            'b5d17e2d8cf139742ddb6e30085f931deee128b1ca71e755df01b950c289208a'
+            '36097057a002e851ed8b42aaa5d2a6f1ce56e1a33ccc11618cf951b6d4bba620'
             '7255b4ce6aaa4fdea3623d6be01258580ff6ea04f80e6860db7b2187aff48e22'
             'dc7cf7462f8615df2a6555e2451ee186fb1eb500c6307765af5fce3a321a861c'
             '12d7b4dfb93442ed1288dea15a0a48c5db47b2985947f41f3020568586575713'
@@ -219,27 +217,18 @@ _package-headers() {
 }
 
 _package-docs() {
-  pkgdesc="Kernel hacker's manual for the $pkgdesc kernel"
-  provides=("linux-docs=$pkgver")
+  pkgdesc="Documentation for the $pkgdesc kernel"
 
   cd $_srcname
   local builddir="$pkgdir/usr/lib/modules/$(<version)/build"
 
   msg2 "Installing documentation..."
-  mkdir -p "$builddir"
-  cp -t "$builddir" -a Documentation
-
-  msg2 "Removing unneeded files..."
-  rm -rv "$builddir"/Documentation/{,output/}.[^.]*
-
-  msg2 "Moving HTML docs..."
   local src dst
   while read -rd '' src; do
-    dst="$builddir/Documentation/${src#$builddir/Documentation/output/}"
-    mkdir -p "${dst%/*}"
-    mv "$src" "$dst"
-    rmdir -p --ignore-fail-on-non-empty "${src%/*}"
-  done < <(find "$builddir/Documentation/output" -type f -print0)
+    dst="${src#Documentation/}"
+    dst="$builddir/Documentation/${dst#output/}"
+    install -Dm644 "$src" "$dst"
+  done < <(find Documentation -name '.*' -prune -o ! -type d -print0)
 
   msg2 "Adding symlink..."
   mkdir -p "$pkgdir/usr/share/doc"
