@@ -2,7 +2,7 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.4.3
+pkgver=5.4.6
 _srcname=linux-${pkgver}
 pkgrel=1
 pkgdesc='Linux for MBP'
@@ -28,8 +28,7 @@ source=(
   0003-mfd-intel-lpss-Use-devm_ioremap_uc-for-MMIO.patch
   0004-PCI-pciehp-Do-not-disable-interrupt-twice-on-suspend.patch
   0005-PCI-pciehp-Prevent-deadlock-on-disconnect.patch
-  0006-ACPI-EC-Rework-flushing-of-pending-work.patch
-  0007-ACPI-PM-s2idle-Rework-ACPI-events-synchronization.patch
+  0006-ACPI-PM-s2idle-Rework-ACPI-events-synchronization.patch
 
   # Apple SMC ACPI support
   3001-applesmc-convert-static-structures-to-drvdata.patch
@@ -53,16 +52,15 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('6731682f32e1b1ee53b0e7f66b8dc263d25a0e809e78e2139cb0ed77c378ee51'
+sha256sums=('fda561bcdea397ddd59656319c53871002938b19b554f30efed90affa30989c8'
             'SKIP'
             'a828df82305a606f08c12e21afb38b1fdb5fb78824797b4fc37dcd4ada0223ab'
-            '37bfc59584d04ef9956063dd87a1f0a41d34f1a5f0d0c9c441835296ffc45327'
-            '537516e8cdd497dfd6836d52bbc268a94f21aee5f5a51c4e897d42e6f532bc6e'
-            '9df631725e71098f832bfdadd6b67f149cb5692b09e947e60ec5cde525a26636'
-            'b354ae6c603246c969a18e222d553ac8ffbd3b29aa042672ab1d9ba2da0d7faa'
-            '7a8e3f627be2616c9fbb1fd1c34502584b2f99fc674f1d5ca705cb67248e6d8f'
-            'b5d17e2d8cf139742ddb6e30085f931deee128b1ca71e755df01b950c289208a'
-            '36097057a002e851ed8b42aaa5d2a6f1ce56e1a33ccc11618cf951b6d4bba620'
+            '9f7849fe31ef5368d55e214c57477e711ac04530311fcda2d63ac490666b3813'
+            'c55f8a588673ff343a04af2f6c4a0fdb8506bb07db75bcd2dd480a2bf82f7379'
+            'c20e2d70cc485c1443bc3855d230167ccc8dc48adfc488feb4b9f6c0497a66c9'
+            '87fff991322988652a9091020cf112723c1bdaca1b56845351a82faa4ba2bba8'
+            '6b319202768989f33bf78a910d9008818238ddc89e16d1bf6065dc738b2627d4'
+            '2d5bf46ff48aecfa0b950e5b374222641da6c4f8a12879ad15de69a86c26dfdb'
             '7255b4ce6aaa4fdea3623d6be01258580ff6ea04f80e6860db7b2187aff48e22'
             'dc7cf7462f8615df2a6555e2451ee186fb1eb500c6307765af5fce3a321a861c'
             '12d7b4dfb93442ed1288dea15a0a48c5db47b2985947f41f3020568586575713'
