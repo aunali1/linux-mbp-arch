@@ -2,7 +2,7 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.4.6
+pkgver=5.4.7
 _srcname=linux-${pkgver}
 pkgrel=1
 pkgdesc='Linux for MBP'
@@ -29,6 +29,13 @@ source=(
   0004-PCI-pciehp-Do-not-disable-interrupt-twice-on-suspend.patch
   0005-PCI-pciehp-Prevent-deadlock-on-disconnect.patch
   0006-ACPI-PM-s2idle-Rework-ACPI-events-synchronization.patch
+  0007-Revert-iwlwifi-assign-directly-to-iwl_trans-cfg-in-Q.patch
+  0008-iwlwifi-pcie-restore-support-for-Killer-Qu-C0-NICs.patch
+  0009-x86-intel-Disable-HPET-on-Intel-Ice-Lake-platforms.patch
+  0010-drm-i915-save-AUD_FREQ_CNTRL-state-at-audio-domain-s.patch
+  0011-drm-i915-Fix-audio-power-up-sequence-for-gen10-displ.patch
+  0012-drm-i915-extend-audio-CDCLK-2-BCLK-constraint-to-mor.patch
+  0013-drm-i915-gt-Detect-if-we-miss-WaIdleLiteRestore.patch
 
   # Apple SMC ACPI support
   3001-applesmc-convert-static-structures-to-drvdata.patch
@@ -52,15 +59,22 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('fda561bcdea397ddd59656319c53871002938b19b554f30efed90affa30989c8'
+sha256sums=('abc9b21d9146d95853dac35f4c4489a0199aff53ee6eee4b0563d1b37079fcc9'
             'SKIP'
-            'a828df82305a606f08c12e21afb38b1fdb5fb78824797b4fc37dcd4ada0223ab'
-            '9f7849fe31ef5368d55e214c57477e711ac04530311fcda2d63ac490666b3813'
-            'c55f8a588673ff343a04af2f6c4a0fdb8506bb07db75bcd2dd480a2bf82f7379'
-            'c20e2d70cc485c1443bc3855d230167ccc8dc48adfc488feb4b9f6c0497a66c9'
-            '87fff991322988652a9091020cf112723c1bdaca1b56845351a82faa4ba2bba8'
-            '6b319202768989f33bf78a910d9008818238ddc89e16d1bf6065dc738b2627d4'
-            '2d5bf46ff48aecfa0b950e5b374222641da6c4f8a12879ad15de69a86c26dfdb'
+            'a11412b57ebfff89b50edd327c75c1dbfac953621a7f0ad623d8ebc123e8e094'
+            '94967963fe8aa3396810fe0671bb4e541d113526edf5b8054f5ed27d3942fe5e'
+            '1679dad9564fc076dbc107bf08428b80468ac026a72fc2acc3d99fe66e1409dd'
+            '44174296f271d5849c0ac10154be53fc1d7857176f267c690741f9d551ffac68'
+            '02ee6fe15c8860bf2db5fd40e30b7c7d99f3be3cd61eaa4a6e2de782344a37d5'
+            'b65337d6dda720bfa6a7aac1fa6a49250e67397d9abf93f7343efd900aea0164'
+            '54561b837af40245d3e123e2ef383b0ff1d1987e36bb38169906a6d43368b154'
+            '3c8bf20e3e50bf5688822852bc475f8b49f1f270aef0533b954f3289e4aa6703'
+            'ad23e1472471ff4c05a8bc8b85cca5744e93ef4a4c4d36370866c23061dde4ff'
+            '5c01fdf31bef427d37031a476576db6e2a8f4b3324daaae010a6a2be5bed0a10'
+            'd23fdde3bc2cd8da6542470b599d6cb8a83e36cd976c499f75d659efa1f8df89'
+            '8e37506a0e8bdfdf6be8f55a06e3990911c97988d5396aa733ce1721a74d682a'
+            '8f1dcea8929b30e426138a52595b2e575c0a0ee392f8dbd1f64cfeaf7304da7e'
+            '939f4eca240ab600d77720f65ad98e2ae7eba4dfb65ebc178b10ff6d822bf13d'
             '7255b4ce6aaa4fdea3623d6be01258580ff6ea04f80e6860db7b2187aff48e22'
             'dc7cf7462f8615df2a6555e2451ee186fb1eb500c6307765af5fce3a321a861c'
             '12d7b4dfb93442ed1288dea15a0a48c5db47b2985947f41f3020568586575713'

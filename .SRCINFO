@@ -1,8 +1,8 @@
 pkgbase = linux-mbp
 	pkgdesc = Linux for MBP
-	pkgver = 5.4.6
+	pkgver = 5.4.7
 	pkgrel = 1
-	url = https://git.archlinux.org/linux.git/log/?h=vv5.4-6
+	url = https://git.archlinux.org/linux.git/log/?h=vv5.4-7
 	arch = x86_64
 	license = GPL2
 	makedepends = bc
@@ -15,8 +15,8 @@ pkgbase = linux-mbp
 	makedepends = imagemagick
 	makedepends = git
 	options = !strip
-	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.4.6.tar.xz
-	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.4.6.tar.sign
+	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.4.7.tar.xz
+	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.4.7.tar.sign
 	source = config
 	source = 0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
 	source = 0002-lib-devres-add-a-helper-function-for-ioremap_uc.patch
@@ -24,6 +24,13 @@ pkgbase = linux-mbp
 	source = 0004-PCI-pciehp-Do-not-disable-interrupt-twice-on-suspend.patch
 	source = 0005-PCI-pciehp-Prevent-deadlock-on-disconnect.patch
 	source = 0006-ACPI-PM-s2idle-Rework-ACPI-events-synchronization.patch
+	source = 0007-Revert-iwlwifi-assign-directly-to-iwl_trans-cfg-in-Q.patch
+	source = 0008-iwlwifi-pcie-restore-support-for-Killer-Qu-C0-NICs.patch
+	source = 0009-x86-intel-Disable-HPET-on-Intel-Ice-Lake-platforms.patch
+	source = 0010-drm-i915-save-AUD_FREQ_CNTRL-state-at-audio-domain-s.patch
+	source = 0011-drm-i915-Fix-audio-power-up-sequence-for-gen10-displ.patch
+	source = 0012-drm-i915-extend-audio-CDCLK-2-BCLK-constraint-to-mor.patch
+	source = 0013-drm-i915-gt-Detect-if-we-miss-WaIdleLiteRestore.patch
 	source = 3001-applesmc-convert-static-structures-to-drvdata.patch
 	source = 3002-applesmc-make-io-port-base-addr-dynamic.patch
 	source = 3003-applesmc-switch-to-acpi_device-from-platform.patch
@@ -36,15 +43,22 @@ pkgbase = linux-mbp
 	source = wifi.patch
 	validpgpkeys = ABAF11C65A2970B130ABE3C479BE3E4300411886
 	validpgpkeys = 647F28654894E3BD457199BE38DBBDC86092693E
-	sha256sums = fda561bcdea397ddd59656319c53871002938b19b554f30efed90affa30989c8
+	sha256sums = abc9b21d9146d95853dac35f4c4489a0199aff53ee6eee4b0563d1b37079fcc9
 	sha256sums = SKIP
-	sha256sums = a828df82305a606f08c12e21afb38b1fdb5fb78824797b4fc37dcd4ada0223ab
-	sha256sums = 9f7849fe31ef5368d55e214c57477e711ac04530311fcda2d63ac490666b3813
-	sha256sums = c55f8a588673ff343a04af2f6c4a0fdb8506bb07db75bcd2dd480a2bf82f7379
-	sha256sums = c20e2d70cc485c1443bc3855d230167ccc8dc48adfc488feb4b9f6c0497a66c9
-	sha256sums = 87fff991322988652a9091020cf112723c1bdaca1b56845351a82faa4ba2bba8
-	sha256sums = 6b319202768989f33bf78a910d9008818238ddc89e16d1bf6065dc738b2627d4
-	sha256sums = 2d5bf46ff48aecfa0b950e5b374222641da6c4f8a12879ad15de69a86c26dfdb
+	sha256sums = a11412b57ebfff89b50edd327c75c1dbfac953621a7f0ad623d8ebc123e8e094
+	sha256sums = 94967963fe8aa3396810fe0671bb4e541d113526edf5b8054f5ed27d3942fe5e
+	sha256sums = 1679dad9564fc076dbc107bf08428b80468ac026a72fc2acc3d99fe66e1409dd
+	sha256sums = 44174296f271d5849c0ac10154be53fc1d7857176f267c690741f9d551ffac68
+	sha256sums = 02ee6fe15c8860bf2db5fd40e30b7c7d99f3be3cd61eaa4a6e2de782344a37d5
+	sha256sums = b65337d6dda720bfa6a7aac1fa6a49250e67397d9abf93f7343efd900aea0164
+	sha256sums = 54561b837af40245d3e123e2ef383b0ff1d1987e36bb38169906a6d43368b154
+	sha256sums = 3c8bf20e3e50bf5688822852bc475f8b49f1f270aef0533b954f3289e4aa6703
+	sha256sums = ad23e1472471ff4c05a8bc8b85cca5744e93ef4a4c4d36370866c23061dde4ff
+	sha256sums = 5c01fdf31bef427d37031a476576db6e2a8f4b3324daaae010a6a2be5bed0a10
+	sha256sums = d23fdde3bc2cd8da6542470b599d6cb8a83e36cd976c499f75d659efa1f8df89
+	sha256sums = 8e37506a0e8bdfdf6be8f55a06e3990911c97988d5396aa733ce1721a74d682a
+	sha256sums = 8f1dcea8929b30e426138a52595b2e575c0a0ee392f8dbd1f64cfeaf7304da7e
+	sha256sums = 939f4eca240ab600d77720f65ad98e2ae7eba4dfb65ebc178b10ff6d822bf13d
 	sha256sums = 7255b4ce6aaa4fdea3623d6be01258580ff6ea04f80e6860db7b2187aff48e22
 	sha256sums = dc7cf7462f8615df2a6555e2451ee186fb1eb500c6307765af5fce3a321a861c
 	sha256sums = 12d7b4dfb93442ed1288dea15a0a48c5db47b2985947f41f3020568586575713
@@ -63,11 +77,11 @@ pkgname = linux-mbp
 	depends = initramfs
 	optdepends = crda: to set the correct wireless channels of your country
 	optdepends = linux-firmware: firmware images needed for some devices
-	provides = linux=5.4.6
+	provides = linux=5.4.7
 
 pkgname = linux-mbp-headers
 	pkgdesc = Headers and scripts for building modules for the Linux for MBP kernel
-	provides = linux-headers=5.4.6
+	provides = linux-headers=5.4.7
 
 pkgname = linux-mbp-docs
 	pkgdesc = Documentation for the Linux for MBP kernel
