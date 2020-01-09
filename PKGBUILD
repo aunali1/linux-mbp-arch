@@ -2,7 +2,7 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.4.8
+pkgver=5.4.10
 _srcname=linux-${pkgver}
 pkgrel=1
 pkgdesc='Linux for MBP'
@@ -36,6 +36,8 @@ source=(
   0011-drm-i915-extend-audio-CDCLK-2-BCLK-constraint-to-mor.patch
   0012-drm-i915-gt-Detect-if-we-miss-WaIdleLiteRestore.patch
   0013-pinctrl-sunrisepoint-Add-missing-Interrupt-Status-re.patch
+  0014-Revert-iwlwifi-mvm-fix-scan-config-command-size.patch
+  0015-e1000e-Revert-e1000e-Make-watchdog-use-delayed-work.patch
 
   # Apple SMC ACPI support
   3001-applesmc-convert-static-structures-to-drvdata.patch
@@ -59,22 +61,24 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('42c414c902193f9e8a1b70c728ca440de02d85dc29102f52ef98cfbf20d29a52'
+sha256sums=('f23c0218a5e3b363bb5a880972f507bb4dc4a290a787a7da08be07ea12042edd'
             'SKIP'
             'a11412b57ebfff89b50edd327c75c1dbfac953621a7f0ad623d8ebc123e8e094'
-            'ef048f988d97f3c75b8b02d47a28f97859f84413eb990636c6a6c33db2efe857'
-            'bbdcf98efddcaa40012c1220aec9134943f2afd00668ed4a7a96e64c7bd75629'
-            '86cb7d220b18ba7de003057ed019e39852ffe96850c3fcdb38d831cd4f510e95'
-            '92854e03766672916ab377d6e0dee68aa68de544c1fc810972daab7f76cc6a98'
-            '64f376f775e3aaf87169a9545dfb574c81f2e72c3f5add8081c533b822e5068c'
-            '5a1e6ab195f970a63d8ad1f0377c910b029313957953186f8b211ae6a27c38cf'
-            '0f1ad8d85c7095ef74f28b6f23a2e24c56674cd4e1fd68a22436c975172a0755'
-            '7771b153a2e36488e1105d917d6948cba8beeca9cdc24de2c28f9aaa0c924931'
-            'd0d20bfb41d866e6e69b84a04751319e4fe98578b949da553678d31ddf9afb23'
-            '5180cc08a4bdc9e90ccddf99c4ecbda0e4d31728b9c41d595d6ac4e85434b177'
-            'b7e204d2761b5ec19da04d1419df2867dcc18bfedeb3fdc87c2ecfe058b55563'
-            '4aaa08158cc31a9c5178a9b864197d6f2d6828505421de5c1b342e3781e5b183'
-            '43242e46c83cb988e0a48b22de456a7aec354258a06c4b373ea8806e79ee4a03'
+            '4352e7f6fec8972bf728312bd5923ab5fa5815f4d29a797b5eb70c7ef88c8fc4'
+            '261b3d6b13603d8df7f058b2ba19f8334905ac0c4d2b8970a698b1fec9a39deb'
+            'cda71e3d276a72773b4040bd549b229d998071ec7fd2ce2bd0ace15aabeab008'
+            '8d101e12018996051c470ab1639e0b230b93486aa601e674af4deefc17b65268'
+            '3613b97e2363ee874f0bc240de535832b5afbac3f8d6be91f0a78f258f799b35'
+            '82447b66a70b6db74ed465b039f2a4eeb0be2999a6208c4537bace4adea587b9'
+            '3c44ce05d1948fba71dc33f96bc736f896156ad7275eb97cf1ff63d5efbbc583'
+            '1d59d620e3c9d94f07f230630ffba01ed247bc6ed7172779b4c9da2135f582f0'
+            '518cbe8a099791acce532231fbf3c6746ac13884b2421413af22709c5d474922'
+            '08ce5f6a4f582ff2074ac49cad1a5526dcebc422a5c3891f6b958d060a7fbdf6'
+            'd43a8993791a039f6faf39c60f310ffee6c635476d6ab4ae6e5ecabed061e93a'
+            'de0d054f66c3ba29ce2a4f6b3b6ce3ec67192fff3750d8bf04cf88b594b9760c'
+            'e35ceb6c1da2b4755ea4e339fb909c12485c1881d28bf98374aa0a00b363ca6b'
+            '8336dcf392a5653c7cc9f4b181723c9b53026216011853b22519b7dd7ca27edb'
+            '8056c23f76cda6ff676d338b2d9184c885f6685f5338f33f063d5efd69f2b442'
             '7255b4ce6aaa4fdea3623d6be01258580ff6ea04f80e6860db7b2187aff48e22'
             'dc7cf7462f8615df2a6555e2451ee186fb1eb500c6307765af5fce3a321a861c'
             '12d7b4dfb93442ed1288dea15a0a48c5db47b2985947f41f3020568586575713'
