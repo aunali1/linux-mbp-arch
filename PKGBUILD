@@ -4,7 +4,7 @@
 pkgbase=linux-mbp
 pkgver=5.4.10
 _srcname=linux-${pkgver}
-pkgrel=2
+pkgrel=3
 pkgdesc='Linux for MBP'
 _srctag=v${pkgver%.*}-${pkgver##*.}
 url="https://git.archlinux.org/linux.git/log/?h=v$_srctag"
@@ -92,7 +92,7 @@ sha256sums=('f23c0218a5e3b363bb5a880972f507bb4dc4a290a787a7da08be07ea12042edd'
             '594ee36c0bc7eee93df824017bc32c3f5afb13b14f1a396f28b665c97dc1d7c0'
             '41afb414a69dc9e2b022605e0e63a9e14738c8e8c87984b95969aa8ab3584d77'
             '0318952f59efdce4dc72703adc764940db6fdff184960c27a23a80c3413d8a60'
-            '89e1cc266131398309840696ec70cec1315f3ad46d65b3ea393ea14f0673f3b5'
+            'e632f2959efca848fd28acb5e278cc476f8fb54d70ca95272b0a76add47e474e'
             '717f7fc70a3e3fcfa5ffbac505c8259c1d86718ca1ca6593e8925dac3d29a835'
             'c33b7bb818b3b81fc4db3ed7f15545ee1e38107788daed07d7d2a19700968f9d')
 
