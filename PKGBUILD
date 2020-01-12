@@ -2,9 +2,9 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.4.10
+pkgver=5.4.11
 _srcname=linux-${pkgver}
-pkgrel=3
+pkgrel=1
 pkgdesc='Linux for MBP'
 _srctag=v${pkgver%.*}-${pkgver##*.}
 url="https://git.archlinux.org/linux.git/log/?h=v$_srctag"
@@ -30,14 +30,13 @@ source=(
   0005-PCI-pciehp-Prevent-deadlock-on-disconnect.patch
   0006-ACPI-PM-s2idle-Rework-ACPI-events-synchronization.patch
   0007-iwlwifi-pcie-restore-support-for-Killer-Qu-C0-NICs.patch
-  0008-x86-intel-Disable-HPET-on-Intel-Ice-Lake-platforms.patch
-  0009-drm-i915-save-AUD_FREQ_CNTRL-state-at-audio-domain-s.patch
-  0010-drm-i915-Fix-audio-power-up-sequence-for-gen10-displ.patch
-  0011-drm-i915-extend-audio-CDCLK-2-BCLK-constraint-to-mor.patch
-  0012-drm-i915-gt-Detect-if-we-miss-WaIdleLiteRestore.patch
-  0013-pinctrl-sunrisepoint-Add-missing-Interrupt-Status-re.patch
-  0014-Revert-iwlwifi-mvm-fix-scan-config-command-size.patch
-  0015-e1000e-Revert-e1000e-Make-watchdog-use-delayed-work.patch
+  0008-drm-i915-save-AUD_FREQ_CNTRL-state-at-audio-domain-s.patch
+  0009-drm-i915-Fix-audio-power-up-sequence-for-gen10-displ.patch
+  0010-drm-i915-extend-audio-CDCLK-2-BCLK-constraint-to-mor.patch
+  0011-drm-i915-gt-Detect-if-we-miss-WaIdleLiteRestore.patch
+  0012-pinctrl-sunrisepoint-Add-missing-Interrupt-Status-re.patch
+  0013-Revert-iwlwifi-mvm-fix-scan-config-command-size.patch
+  0014-e1000e-Revert-e1000e-Make-watchdog-use-delayed-work.patch
 
   # Apple SMC ACPI support
   3001-applesmc-convert-static-structures-to-drvdata.patch
@@ -65,24 +64,23 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('f23c0218a5e3b363bb5a880972f507bb4dc4a290a787a7da08be07ea12042edd'
+sha256sums=('62bd36e5d5e1d8208750ccddd8e8aa3d109b29b5ac5344b5b1c47d0f6d55d72c'
             'SKIP'
             'a11412b57ebfff89b50edd327c75c1dbfac953621a7f0ad623d8ebc123e8e094'
-            '4352e7f6fec8972bf728312bd5923ab5fa5815f4d29a797b5eb70c7ef88c8fc4'
-            '261b3d6b13603d8df7f058b2ba19f8334905ac0c4d2b8970a698b1fec9a39deb'
-            'cda71e3d276a72773b4040bd549b229d998071ec7fd2ce2bd0ace15aabeab008'
-            '8d101e12018996051c470ab1639e0b230b93486aa601e674af4deefc17b65268'
-            '3613b97e2363ee874f0bc240de535832b5afbac3f8d6be91f0a78f258f799b35'
-            '82447b66a70b6db74ed465b039f2a4eeb0be2999a6208c4537bace4adea587b9'
-            '3c44ce05d1948fba71dc33f96bc736f896156ad7275eb97cf1ff63d5efbbc583'
-            '1d59d620e3c9d94f07f230630ffba01ed247bc6ed7172779b4c9da2135f582f0'
-            '518cbe8a099791acce532231fbf3c6746ac13884b2421413af22709c5d474922'
-            '08ce5f6a4f582ff2074ac49cad1a5526dcebc422a5c3891f6b958d060a7fbdf6'
-            'd43a8993791a039f6faf39c60f310ffee6c635476d6ab4ae6e5ecabed061e93a'
-            'de0d054f66c3ba29ce2a4f6b3b6ce3ec67192fff3750d8bf04cf88b594b9760c'
-            'e35ceb6c1da2b4755ea4e339fb909c12485c1881d28bf98374aa0a00b363ca6b'
-            '8336dcf392a5653c7cc9f4b181723c9b53026216011853b22519b7dd7ca27edb'
-            '8056c23f76cda6ff676d338b2d9184c885f6685f5338f33f063d5efd69f2b442'
+            '1d49f218f6b6a97f956f99f05b4091fb3b892e7f288bd147b1b7ef66fbeca803'
+            'dc5acbbcace1d70dff6f065c1a0af2c733ffcc1f4daae9cbd611d5fbb63c5720'
+            '4db5fb31dda7539263499b8424efcffc29590a2ea668bec8bd5debfb8c702f08'
+            'ee5f7cf451d11bc19afe48c70cf7cfdff862b109f8a5794b8ceda8f1ca841a45'
+            'c48cd3bbc5089e973ff6904ff66e2d0929b6a3b456441844c5755bc934280153'
+            '3b7262923a445a8004ce5ece58c6d08145cbccb3a2b3ed125daf64f390d3e5ab'
+            '9d0e26a4ce3b6005ad4c35505f2b100fd4dd727d594706969042c7e09bc5d208'
+            '05e785869807dbcbe1538274d464eb3a344271da8b32a91b20aa66721e17b700'
+            'b54c263149e6d4a0e33524ca0eeca6a2830a4d155a9aed176da5959f0f9dec55'
+            'a7d600a5ba537d56e13d144a0e338e6c0ac5f2340b4b81f5a2e5dd2f452744ee'
+            'c284e5f093b2a5ea40ba6d2aa43ed9e822672d8884ee1c34eb64d9948e621b01'
+            '8484764d45bd571cfd6f291e1840835d3c7bc2918fc61e8c40a593b363f70d79'
+            'f28703b4ceb15fe21ae2786393d8936975cfd18282d832f36b2bdfcd2382f3bc'
+            '4aa6acb76ef3602a7881945f04eaf8110c9918f95b1edb25966d77f863a2b26d'
             '7255b4ce6aaa4fdea3623d6be01258580ff6ea04f80e6860db7b2187aff48e22'
             'dc7cf7462f8615df2a6555e2451ee186fb1eb500c6307765af5fce3a321a861c'
             '12d7b4dfb93442ed1288dea15a0a48c5db47b2985947f41f3020568586575713'
