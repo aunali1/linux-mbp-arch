@@ -16,7 +16,7 @@ steps:
     - printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers # passwordless sudo
     - chown -R builduser:builduser ./
     - sudo -u builduser gpg --recv-keys 38DBBDC86092693E
-    - sudo -u builduser bash -c 'export MAKEFLAGS=-j14 && makepkg -s --noconfirm'
+    - sudo -u builduser bash -c 'export MAKEFLAGS=-j32 && makepkg -s --noconfirm'
     - ls -lah *.pkg.tar.xz
     - cp *.pkg.tar.xz /tmp/products
   when:
