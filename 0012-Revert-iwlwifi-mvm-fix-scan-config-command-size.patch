@@ -1,7 +1,7 @@
-From bb8bf48f4e9ab555fe824358d8d01da52f7d8255 Mon Sep 17 00:00:00 2001
+From 035f023824c651cf18369bd971503bcb1ddddfd4 Mon Sep 17 00:00:00 2001
 From: Mehmet Akif Tasova <makiftasova@gmail.com>
 Date: Mon, 30 Dec 2019 15:48:16 +0200
-Subject: [PATCH 13/14] Revert "iwlwifi: mvm: fix scan config command size"
+Subject: [PATCH 12/14] Revert "iwlwifi: mvm: fix scan config command size"
 
 Since v5.4-rc1 was released, iwlwifi started throwing errors when scan
 commands were sent to the firmware with certain devices (depending on
@@ -44,5 +44,5 @@ index fcafa22ec6ce..8aa567d7912c 100644
  	cfg = kzalloc(cmd_size, GFP_KERNEL);
  	if (!cfg)
 -- 
-2.24.1
+2.25.0
 
