@@ -2,7 +2,7 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.4.15
+pkgver=5.4.18
 _srcname=linux-${pkgver}
 pkgrel=1
 pkgdesc='Linux for MBP'
@@ -33,9 +33,6 @@ source=(
   0008-drm-i915-Fix-audio-power-up-sequence-for-gen10-displ.patch
   0009-drm-i915-extend-audio-CDCLK-2-BCLK-constraint-to-mor.patch
   0010-drm-i915-Limit-audio-CDCLK-2-BCLK-constraint-back-to.patch
-  0011-pinctrl-sunrisepoint-Add-missing-Interrupt-Status-re.patch
-  0012-Revert-iwlwifi-mvm-fix-scan-config-command-size.patch
-  0013-e1000e-Revert-e1000e-Make-watchdog-use-delayed-work.patch
   0014-drm-amdgpu-Add-DC-feature-mask-to-disable-fractional.patch
 
   # Apple SMC ACPI support
@@ -64,7 +61,7 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('6407222f850f685b346011bd696a3216d5df0f37e0184099100d2724396d94b1'
+sha256sums=('92e9f1fd69543e9ce2a9e6eb918823b1846d2dd99246a74456263cd5ad234d89'
             'SKIP'
             'c8fb03d47fa5503cbd1be5df2292203358d645dc88e2f05a0dc511537e75c8d9'
             'f06d4ef4b223f12222e7f9696b97a8dcf3db16593413444739ad341002b60781'
@@ -77,9 +74,6 @@ sha256sums=('6407222f850f685b346011bd696a3216d5df0f37e0184099100d2724396d94b1'
             '4d05e1eb5fb2ea694af025b3180b0a7a24543e7be31da16e31210928252f9d20'
             '3370caf7ddb12bc1bbb8d82c3af6abb88c65c66bffa905d3fec3a04291929e4c'
             '6a76f719fb380ba63133bcbd092e8fe8c4b7ca53d64f411680d85e1bf333f5a7'
-            'e925eb17ca5ea45c2d12008a7c68f3f7142894a917f6e76c86617438281b03ff'
-            'd868aa2bab9a21faea0feb5a858020170879937664a9329f8e589a5193b47558'
-            '5bd1571aee45a5f219607669f603546db2ee54b32f31c59177ad5a0e55d4ac43'
             '5e312b09df3bf7c7e3da3b120d7876de444cc84ddab2da5d6a013fb1cc550434'
             '7255b4ce6aaa4fdea3623d6be01258580ff6ea04f80e6860db7b2187aff48e22'
             'dc7cf7462f8615df2a6555e2451ee186fb1eb500c6307765af5fce3a321a861c'
