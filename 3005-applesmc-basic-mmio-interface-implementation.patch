@@ -1,4 +1,4 @@
-From 70289ea0310a7ae0ab7c0e3fb499089e7b8d55e5 Mon Sep 17 00:00:00 2001
+From 9b452e07d79c0f702f7d22ccc5a12b672d290627 Mon Sep 17 00:00:00 2001
 From: Paul Pawlowski <paul@mrarm.io>
 Date: Sun, 17 Nov 2019 23:12:16 +0100
 Subject: [PATCH 5/6] applesmc: basic mmio interface implementation
@@ -17,7 +17,7 @@ key by index and getting key info).
  1 file changed, 215 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/hwmon/applesmc.c b/drivers/hwmon/applesmc.c
-index c623dc37bf07..516eb22e866f 100644
+index eda11a6bb327..0cb095ef41a1 100644
 --- a/drivers/hwmon/applesmc.c
 +++ b/drivers/hwmon/applesmc.c
 @@ -41,6 +41,18 @@
@@ -233,7 +233,7 @@ index c623dc37bf07..516eb22e866f 100644
  	mutex_init(&smc->reg.mutex);
  
  	dev_set_drvdata(&dev->dev, smc);
-@@ -760,6 +910,20 @@ static acpi_status applesmc_walk_resources(struct acpi_resource *res,
+@@ -764,6 +914,20 @@ static acpi_status applesmc_walk_resources(struct acpi_resource *res,
  			}
  			return AE_OK;
  
@@ -254,7 +254,7 @@ index c623dc37bf07..516eb22e866f 100644
  		case ACPI_RESOURCE_TYPE_END_TAG:
  			if (smc->port_base_set)
  				return AE_OK;
-@@ -771,6 +935,8 @@ static acpi_status applesmc_walk_resources(struct acpi_resource *res,
+@@ -775,6 +939,8 @@ static acpi_status applesmc_walk_resources(struct acpi_resource *res,
  	}
  }
  
@@ -263,7 +263,7 @@ index c623dc37bf07..516eb22e866f 100644
  static int applesmc_init_resources(struct applesmc_device *smc)
  {
  	int ret;
-@@ -783,11 +949,54 @@ static int applesmc_init_resources(struct applesmc_device *smc)
+@@ -787,11 +953,54 @@ static int applesmc_init_resources(struct applesmc_device *smc)
  	if (!request_region(smc->port_base, APPLESMC_NR_PORTS, "applesmc"))
  		return -ENXIO;
  
@@ -319,5 +319,5 @@ index c623dc37bf07..516eb22e866f 100644
  }
  
 -- 
-2.23.0
+2.25.0
 

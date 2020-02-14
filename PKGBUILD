@@ -2,7 +2,7 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.4.18
+pkgver=5.5.3
 _srcname=linux-${pkgver}
 pkgrel=1
 pkgdesc='Linux for MBP'
@@ -24,16 +24,11 @@ source=(
 
   # Arch Linux patches
   0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
-  0002-lib-devres-add-a-helper-function-for-ioremap_uc.patch
-  0003-mfd-intel-lpss-Use-devm_ioremap_uc-for-MMIO.patch
-  0004-PCI-pciehp-Prevent-deadlock-on-disconnect.patch
-  0005-ACPI-PM-s2idle-Rework-ACPI-events-synchronization.patch
-  0006-iwlwifi-pcie-restore-support-for-Killer-Qu-C0-NICs.patch
-  0007-drm-i915-save-AUD_FREQ_CNTRL-state-at-audio-domain-s.patch
-  0008-drm-i915-Fix-audio-power-up-sequence-for-gen10-displ.patch
-  0009-drm-i915-extend-audio-CDCLK-2-BCLK-constraint-to-mor.patch
-  0010-drm-i915-Limit-audio-CDCLK-2-BCLK-constraint-back-to.patch
-  0014-drm-amdgpu-Add-DC-feature-mask-to-disable-fractional.patch
+  0002-iwlwifi-pcie-restore-support-for-Killer-Qu-C0-NICs.patch
+  0003-iwlwifi-mvm-Do-not-require-PHY_SKU-NVM-section-for-3.patch
+  0004-drm-i915-Wean-off-drm_pci_alloc-drm_pci_free.patch
+  0005-drm-Remove-PageReserved-manipulation-from-drm_pci_al.patch
+  0006-drm-i915-execlists-Always-force-a-context-reload-whe.patch
 
   # Apple SMC ACPI support
   3001-applesmc-convert-static-structures-to-drvdata.patch
@@ -61,26 +56,21 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('92e9f1fd69543e9ce2a9e6eb918823b1846d2dd99246a74456263cd5ad234d89'
+sha256sums=('2bef3edcf44c746383045f4a809b2013e18c52319c827875ed8e89138951cab2'
             'SKIP'
-            'c8fb03d47fa5503cbd1be5df2292203358d645dc88e2f05a0dc511537e75c8d9'
-            'f06d4ef4b223f12222e7f9696b97a8dcf3db16593413444739ad341002b60781'
-            '3329705c0408ee96089e1102e92606802522ed8cf5c90917513cc516e99889a8'
-            '953be54f48e9f16e0bb956d7d084aaff358e88313243f19c572484bce63aab72'
-            'b9d4d230638a17c78188824a209f25ecc7251a3044665527c1dc388a595a4c2d'
-            '77daf968aaf29cae5abc2d63561736f95424cc1d2a0e9e58fa6a5a15da939cbc'
-            '37f357d9f5db3d6b19190d7d2219fa7f94c74eaf2e4d031808264e1bc93c80ad'
-            'e52260ac9e7666e3f91b3991e3e348ebba53f3a8b45692f9be7e16ab96e71269'
-            '4d05e1eb5fb2ea694af025b3180b0a7a24543e7be31da16e31210928252f9d20'
-            '3370caf7ddb12bc1bbb8d82c3af6abb88c65c66bffa905d3fec3a04291929e4c'
-            '6a76f719fb380ba63133bcbd092e8fe8c4b7ca53d64f411680d85e1bf333f5a7'
-            '5e312b09df3bf7c7e3da3b120d7876de444cc84ddab2da5d6a013fb1cc550434'
-            '7255b4ce6aaa4fdea3623d6be01258580ff6ea04f80e6860db7b2187aff48e22'
-            'dc7cf7462f8615df2a6555e2451ee186fb1eb500c6307765af5fce3a321a861c'
-            '12d7b4dfb93442ed1288dea15a0a48c5db47b2985947f41f3020568586575713'
-            'd24d4ecafca6a9719502d99ce9932b01713737570211408cde05eda57a7c178d'
-            '29470448c0443c81a7b4510a6d52cc56958111daa3d7f5198d68ad7516a867a0'
-            '9cacf0a7f5a43ef3ed807f050dec7e247b6fbf33cfcdf74ee091f00956165b20'
+            'a9266acc82fae18ed90c165288e10d03c62b8b964b3916e710d5ab6f7a639bf3'
+            '41ed95f8ca1044ff4d4b0469ded34644def169b5d4074b58eec678a6566a55b1'
+            '877e22204411f70c4b8e2e700608cc4b9b3a9b68811dcfbbe6840f60255f65cb'
+            '606e02ff7fae7a3b9b8fcfb0ce5e27436f46a0c2a3550ff5d96c6da2837659fb'
+            'cc03acb4dee2f6cef9f386cfed3413a41ed972c41cd93d085e02995ee13a4935'
+            '64869d0d5629b6529eff86bbc70f9aa498d6fd17931dcbca4a534a5c5c86655b'
+            'ea1f0beeb4a6c2181f49abae9d3a7fa6fcc1f65c79e016d03e57290cfbcee686'
+            '25e1aac0d44d72e377f08e4f4b90351cffcacc0be63e02a4033cb99f10cc9fe7'
+            'c70118659c5cf6a5c7f060c941d46fdd3b1e6d28f2b62c24a941745f2b3c4732'
+            '3855aa07fab97d202900216951225b6952d7c716258a3c3727df8e6277289ee0'
+            '9e5e0b45fe007ed214049b26b44174ee8f61376076e80fd33bba9fdac001e157'
+            '3c8a361370ed3ee094e2c8af1ff5360fd78f24e387c250904031fb70e8f2bb6e'
+            '8e43d95104301913737e5d73860f0e21bb0e5e25dcfd0f16d48a0715b38c98a1'
             '594ee36c0bc7eee93df824017bc32c3f5afb13b14f1a396f28b665c97dc1d7c0'
             '41afb414a69dc9e2b022605e0e63a9e14738c8e8c87984b95969aa8ab3584d77'
             '0318952f59efdce4dc72703adc764940db6fdff184960c27a23a80c3413d8a60'
@@ -114,7 +104,7 @@ prepare() {
   make olddefconfig
 
   make -s kernelrelease > version
-  echo "Prepared %s version %s" "$pkgbase" "$(<version)"
+  echo "Prepared $pkgbase version $(<version)"
 }
 
 build() {

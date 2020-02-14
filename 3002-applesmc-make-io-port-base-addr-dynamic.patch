@@ -1,4 +1,4 @@
-From fad950da91f04f252d453eee6288464da46f1746 Mon Sep 17 00:00:00 2001
+From d5ed50c64ea3b02207c4e1de961c019b974d008d Mon Sep 17 00:00:00 2001
 From: Paul Pawlowski <paul@mrarm.io>
 Date: Sun, 17 Nov 2019 23:11:56 +0100
 Subject: [PATCH 2/6] applesmc: make io port base addr dynamic
@@ -14,7 +14,7 @@ address is still 0x300 on T2 Macs.
  1 file changed, 39 insertions(+), 33 deletions(-)
 
 diff --git a/drivers/hwmon/applesmc.c b/drivers/hwmon/applesmc.c
-index 7f8e56b9afd7..be4d1d8e50ed 100644
+index b890eec4b9cd..975e7bdc3299 100644
 --- a/drivers/hwmon/applesmc.c
 +++ b/drivers/hwmon/applesmc.c
 @@ -34,10 +34,11 @@
@@ -232,7 +232,7 @@ index 7f8e56b9afd7..be4d1d8e50ed 100644
  	if (ret)
  		return ret;
  
-@@ -1417,7 +1423,7 @@ static int __init applesmc_init(void)
+@@ -1427,7 +1433,7 @@ static int __init applesmc_init(void)
  		goto out;
  	}
  
@@ -241,7 +241,7 @@ index 7f8e56b9afd7..be4d1d8e50ed 100644
  								"applesmc")) {
  		ret = -ENXIO;
  		goto out;
-@@ -1439,7 +1445,7 @@ static int __init applesmc_init(void)
+@@ -1449,7 +1455,7 @@ static int __init applesmc_init(void)
  out_driver:
  	platform_driver_unregister(&applesmc_driver);
  out_region:
@@ -250,7 +250,7 @@ index 7f8e56b9afd7..be4d1d8e50ed 100644
  out:
  	pr_warn("driver init failed (ret=%d)!\n", ret);
  	return ret;
-@@ -1449,7 +1455,7 @@ static void __exit applesmc_exit(void)
+@@ -1459,7 +1465,7 @@ static void __exit applesmc_exit(void)
  {
  	platform_device_unregister(pdev);
  	platform_driver_unregister(&applesmc_driver);
@@ -260,5 +260,5 @@ index 7f8e56b9afd7..be4d1d8e50ed 100644
  
  module_init(applesmc_init);
 -- 
-2.23.0
+2.25.0
 

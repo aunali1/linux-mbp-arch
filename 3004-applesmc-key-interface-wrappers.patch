@@ -1,4 +1,4 @@
-From 8e804eaad082da6552c17629eb66c14f33806a3d Mon Sep 17 00:00:00 2001
+From cf96571bf95a197b5ae83e60225421251178937b Mon Sep 17 00:00:00 2001
 From: Paul Pawlowski <paul@mrarm.io>
 Date: Sun, 17 Nov 2019 23:12:14 +0100
 Subject: [PATCH 4/6] applesmc: key interface wrappers
@@ -18,7 +18,7 @@ separated.
  1 file changed, 65 insertions(+), 28 deletions(-)
 
 diff --git a/drivers/hwmon/applesmc.c b/drivers/hwmon/applesmc.c
-index 406b12023d58..c623dc37bf07 100644
+index e683ec6ad0ca..eda11a6bb327 100644
 --- a/drivers/hwmon/applesmc.c
 +++ b/drivers/hwmon/applesmc.c
 @@ -164,7 +164,7 @@ static const int debug;
@@ -227,5 +227,5 @@ index 406b12023d58..c623dc37bf07 100644
  
  out:
 -- 
-2.23.0
+2.25.0
 

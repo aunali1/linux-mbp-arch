@@ -1,4 +1,4 @@
-From 47234ab70dd98b63c15c3ae1129c2e8d6c5d25a9 Mon Sep 17 00:00:00 2001
+From da6e0b9063b8839497594d32051399d3033d61f4 Mon Sep 17 00:00:00 2001
 From: Paul Pawlowski <paul@mrarm.io>
 Date: Sun, 17 Nov 2019 23:12:08 +0100
 Subject: [PATCH 3/6] applesmc: switch to acpi_device (from platform)
@@ -15,11 +15,11 @@ looks for the specified ACPI device to resolve
 its memory regions, and therefore this change
 should not result in any incompatibilities.
 ---
- drivers/hwmon/applesmc.c | 124 ++++++++++++++++++++++++++-------------
- 1 file changed, 84 insertions(+), 40 deletions(-)
+ drivers/hwmon/applesmc.c | 125 ++++++++++++++++++++++++++-------------
+ 1 file changed, 85 insertions(+), 40 deletions(-)
 
 diff --git a/drivers/hwmon/applesmc.c b/drivers/hwmon/applesmc.c
-index be4d1d8e50ed..406b12023d58 100644
+index 975e7bdc3299..e683ec6ad0ca 100644
 --- a/drivers/hwmon/applesmc.c
 +++ b/drivers/hwmon/applesmc.c
 @@ -19,7 +19,7 @@
@@ -28,7 +28,7 @@ index be4d1d8e50ed..406b12023d58 100644
  #include <linux/delay.h>
 -#include <linux/platform_device.h>
 +#include <linux/acpi.h>
- #include <linux/input-polldev.h>
+ #include <linux/input.h>
  #include <linux/kernel.h>
  #include <linux/slab.h>
 @@ -34,7 +34,6 @@
@@ -85,7 +85,7 @@ index be4d1d8e50ed..406b12023d58 100644
  	applesmc_device_init(smc);
  
  	ret = applesmc_create_modules(smc);
-@@ -680,24 +688,72 @@ static int applesmc_probe(struct platform_device *dev)
+@@ -680,20 +688,23 @@ static int applesmc_probe(struct platform_device *dev)
  
  out_reg:
  	applesmc_destroy_smcreg(smc);
@@ -105,11 +105,14 @@ index be4d1d8e50ed..406b12023d58 100644
  {
 -	struct applesmc_device *smc = platform_get_drvdata(dev);
 +	struct applesmc_device *smc = dev_get_drvdata(&dev->dev);
+ 
  	applesmc_destroy_modules(smc);
  	applesmc_destroy_smcreg(smc);
 +	applesmc_free_resources(smc);
+ 
  	mutex_destroy(&smc->reg.mutex);
  	kfree(smc);
+@@ -701,6 +712,52 @@ static int applesmc_remove(struct platform_device *dev)
  	return 0;
  }
  
@@ -117,6 +120,7 @@ index be4d1d8e50ed..406b12023d58 100644
 +	void *data)
 +{
 +	struct applesmc_device *smc = data;
++
 +	switch (res->type) {
 +		case ACPI_RESOURCE_TYPE_IO:
 +			if (!smc->port_base_set) {
@@ -161,7 +165,7 @@ index be4d1d8e50ed..406b12023d58 100644
  /* Synchronize device with memorized backlight state */
  static int applesmc_pm_resume(struct device *dev)
  {
-@@ -715,18 +771,28 @@ static int applesmc_pm_restore(struct device *dev)
+@@ -722,18 +779,28 @@ static int applesmc_pm_restore(struct device *dev)
  	return applesmc_pm_resume(dev);
  }
  
@@ -196,24 +200,24 @@ index be4d1d8e50ed..406b12023d58 100644
  };
  
  /*
-@@ -1211,7 +1277,6 @@ static int applesmc_create_accelerometer(struct applesmc_device *smc)
+@@ -1220,7 +1287,6 @@ static int applesmc_create_nodes(struct applesmc_device *smc,
+ static int applesmc_create_accelerometer(struct applesmc_device *smc)
  {
- 	struct input_dev *idev;
  	int ret;
 -
  	if (!smc->reg.has_accelerometer)
  		return 0;
  
-@@ -1411,8 +1476,6 @@ static void applesmc_destroy_modules(struct applesmc_device *smc)
+@@ -1421,8 +1487,6 @@ static void applesmc_destroy_modules(struct applesmc_device *smc)
+ 	applesmc_destroy_nodes(smc, info_group);
  }
- 
  
 -static struct platform_device *pdev;
 -
  static int __init applesmc_init(void)
  {
  	int ret;
-@@ -1423,29 +1486,12 @@ static int __init applesmc_init(void)
+@@ -1433,29 +1497,12 @@ static int __init applesmc_init(void)
  		goto out;
  	}
  
@@ -229,7 +233,7 @@ index be4d1d8e50ed..406b12023d58 100644
 -		goto out_region;
 -
 -	pdev = platform_device_register_simple("applesmc", APPLESMC_DATA_PORT,
--						   NULL, 0);
+-					       NULL, 0);
 -	if (IS_ERR(pdev)) {
 -		ret = PTR_ERR(pdev);
 -		goto out_driver;
@@ -245,7 +249,7 @@ index be4d1d8e50ed..406b12023d58 100644
  out:
  	pr_warn("driver init failed (ret=%d)!\n", ret);
  	return ret;
-@@ -1453,9 +1499,7 @@ static int __init applesmc_init(void)
+@@ -1463,9 +1510,7 @@ static int __init applesmc_init(void)
  
  static void __exit applesmc_exit(void)
  {
@@ -257,5 +261,5 @@ index be4d1d8e50ed..406b12023d58 100644
  
  module_init(applesmc_init);
 -- 
-2.23.0
+2.25.0
 
