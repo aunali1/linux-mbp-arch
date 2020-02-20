@@ -2,7 +2,7 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.5.3
+pkgver=5.5.4
 _srcname=linux-${pkgver}
 pkgrel=1
 pkgdesc='Linux for MBP'
@@ -29,6 +29,16 @@ source=(
   0004-drm-i915-Wean-off-drm_pci_alloc-drm_pci_free.patch
   0005-drm-Remove-PageReserved-manipulation-from-drm_pci_al.patch
   0006-drm-i915-execlists-Always-force-a-context-reload-whe.patch
+  0007-drm-i915-Serialise-i915_active_acquire-with-__active.patch
+  0008-drm-i915-gem-Take-runtime-pm-wakeref-prior-to-unbind.patch
+  0009-drm-i915-gem-Avoid-parking-the-vma-as-we-unbind.patch
+  0010-drm-i915-gem-Try-to-flush-pending-unbind-events.patch
+  0011-drm-i915-gem-Reinitialise-the-local-list-before-repe.patch
+  0012-drm-i915-Add-a-simple-is-bound-check-before-unbindin.patch
+  0013-drm-i915-Introduce-a-vma.kref.patch
+
+  # Linux 5.5+ Broadcom HCI Bluetooth detection temporary fix
+  2001-Revert-serdev-Add-ACPI-devices-by-ResourceSource-fie.patch
 
   # Apple SMC ACPI support
   3001-applesmc-convert-static-structures-to-drvdata.patch
@@ -56,23 +66,31 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('2bef3edcf44c746383045f4a809b2013e18c52319c827875ed8e89138951cab2'
+sha256sums=('ea40fd0deb0ba043c628ad4039c67ca9e4d8adc88d67d8b8c5a20f264403a6fb'
             'SKIP'
             'a9266acc82fae18ed90c165288e10d03c62b8b964b3916e710d5ab6f7a639bf3'
-            '41ed95f8ca1044ff4d4b0469ded34644def169b5d4074b58eec678a6566a55b1'
-            '877e22204411f70c4b8e2e700608cc4b9b3a9b68811dcfbbe6840f60255f65cb'
-            '606e02ff7fae7a3b9b8fcfb0ce5e27436f46a0c2a3550ff5d96c6da2837659fb'
-            'cc03acb4dee2f6cef9f386cfed3413a41ed972c41cd93d085e02995ee13a4935'
-            '64869d0d5629b6529eff86bbc70f9aa498d6fd17931dcbca4a534a5c5c86655b'
-            'ea1f0beeb4a6c2181f49abae9d3a7fa6fcc1f65c79e016d03e57290cfbcee686'
+            'b807695ba1aca350fdacfca5f1bb5c42d0f3c5555ddf6e1085ad1119fc81dcb2'
+            '269d365586702e75e9ba3d3d2f60ec7467fec9aeb470d9e950195b8d757feb14'
+            'f693d9fb6a6cdd1e2d3e49bd0620e9d93124dccf7869f3939e63c27b1a0d4745'
+            'c5e3c5952b3f3c4e37de8fde9d6944ed4961464fa64604bd9f8e62dc31b69507'
+            'caf6ec87f917e63f1e6216749663828c394e5f5d204aa75eb7afc74a64dcc347'
+            '506a45b8895a756dc7b43fc888558ddd585b7624f27fffa2c95c96ffb3bd25fb'
+            '54bec87394d8b0cf06a8ae85dd990f8854cc91248aca06dac5e0299315ea9bc4'
+            '7386bc06b1278cbefb6a307f4e8dbb2c1147e223fbee88897b8fb0ecc5aad1f2'
+            'b84a3b101a02cd60b752efb1a773c88dc582c91c782de61b98aef11bf6d2bfbd'
+            'ed9ceee244f062ca46ddc071a01e9705ea0889f89c49f7fae5d1bb22f3c2fdaf'
+            '09ac926426e37686a1d3c6538cc71a3981b2ffd6371878ffeca3b54c531369b7'
+            '24f3384534d7a7356cfb5e2f766ef371c624c0c6a9b5169673c0c192f12aa577'
+            'd8ddcb59c9258ada79538d964e60ee0834462fc75b81d49186539dda991e1b4b'
+            '9e44fa7656963c5cd08ad646636b6d5ab63db5f629e002d6714474d0ec00fc97'
             '25e1aac0d44d72e377f08e4f4b90351cffcacc0be63e02a4033cb99f10cc9fe7'
             'c70118659c5cf6a5c7f060c941d46fdd3b1e6d28f2b62c24a941745f2b3c4732'
             '3855aa07fab97d202900216951225b6952d7c716258a3c3727df8e6277289ee0'
             '9e5e0b45fe007ed214049b26b44174ee8f61376076e80fd33bba9fdac001e157'
             '3c8a361370ed3ee094e2c8af1ff5360fd78f24e387c250904031fb70e8f2bb6e'
             '8e43d95104301913737e5d73860f0e21bb0e5e25dcfd0f16d48a0715b38c98a1'
-            '594ee36c0bc7eee93df824017bc32c3f5afb13b14f1a396f28b665c97dc1d7c0'
-            '41afb414a69dc9e2b022605e0e63a9e14738c8e8c87984b95969aa8ab3584d77'
+            'e1d72fdb0a7a66a6f3fc8afb6fe056f28cfa088c1cc9c799b93405b62a274b96'
+            'a6c070d7b7444d711d9cb6b28bccb774228864132ef83dd3a291df3353e85465'
             '0318952f59efdce4dc72703adc764940db6fdff184960c27a23a80c3413d8a60'
             'e632f2959efca848fd28acb5e278cc476f8fb54d70ca95272b0a76add47e474e'
             '717f7fc70a3e3fcfa5ffbac505c8259c1d86718ca1ca6593e8925dac3d29a835'
