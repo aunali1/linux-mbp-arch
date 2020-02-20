@@ -1,5 +1,5 @@
 diff --git a/drivers/hid/hid-apple.c b/drivers/hid/hid-apple.c
-index c173503234d8..d3fded06d829 100644
+index b1143139599a..73d3c083112e 100644
 --- a/drivers/hid/hid-apple.c
 +++ b/drivers/hid/hid-apple.c
 @@ -7,6 +7,7 @@
@@ -36,7 +36,7 @@ index c173503234d8..d3fded06d829 100644
  };
  
  struct apple_key_translation {
-@@ -163,6 +172,19 @@ static const struct apple_key_translation swapped_option_cmd_keys[] = {
+@@ -162,6 +171,19 @@ static const struct apple_key_translation swapped_option_cmd_keys[] = {
  	{ }
  };
  
@@ -56,7 +56,7 @@ index c173503234d8..d3fded06d829 100644
  static const struct apple_key_translation *apple_find_translation(
  		const struct apple_key_translation *table, u16 from)
  {
-@@ -363,6 +385,101 @@ static int apple_input_mapped(struct hid_device *hdev, struct hid_input *hi,
+@@ -370,6 +392,101 @@ static int apple_input_mapped(struct hid_device *hdev, struct hid_input *hi,
  	return 0;
  }
  
@@ -158,7 +158,7 @@ index c173503234d8..d3fded06d829 100644
  static int apple_probe(struct hid_device *hdev,
  		const struct hid_device_id *id)
  {
-@@ -398,6 +515,12 @@ static int apple_probe(struct hid_device *hdev,
+@@ -405,6 +522,12 @@ static int apple_probe(struct hid_device *hdev,
  		return ret;
  	}
  
@@ -171,7 +171,7 @@ index c173503234d8..d3fded06d829 100644
  	return 0;
  }
  
-@@ -555,13 +678,13 @@ static const struct hid_device_id apple_devices[] = {
+@@ -562,15 +685,15 @@ static const struct hid_device_id apple_devices[] = {
  	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING9_JIS),
  		.driver_data = APPLE_HAS_FN | APPLE_RDESC_JIS },
  	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING10_T2_A),
@@ -184,6 +184,9 @@ index c173503234d8..d3fded06d829 100644
 -		.driver_data = APPLE_HAS_FN },
 +		.driver_data = APPLE_HAS_FN | APPLE_BACKLIGHT_CTL },
  	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING10_T2_D),
+-		.driver_data = APPLE_HAS_FN },
++		.driver_data = APPLE_HAS_FN | APPLE_BACKLIGHT_CTL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING11_T2),
 -		.driver_data = APPLE_HAS_FN },
 +		.driver_data = APPLE_HAS_FN | APPLE_BACKLIGHT_CTL },
  	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_ALU_WIRELESS_2009_ANSI),
