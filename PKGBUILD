@@ -2,7 +2,7 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.5.5
+pkgver=5.5.6
 _srcname=linux-${pkgver}
 pkgrel=1
 pkgdesc='Linux for MBP'
@@ -66,9 +66,9 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('7ac07bc03f2d159f924d25a79df07d1a115a13f44f67455511d3c84c15ac5087'
+sha256sums=('54cc88ab9d7517267d8592905b277424ae441f3d7209c7ad1236533c2be6ee35'
             'SKIP'
-            '8b587ed7f8ca17f21045c4da4ea73021adb0cbfaeb4368087c48ea7ddfab6a65'
+            'a5cc9786b08383d3d0cdc0d146ddeedceb4d20bd5c73092e258da9ad98121034'
             'b807695ba1aca350fdacfca5f1bb5c42d0f3c5555ddf6e1085ad1119fc81dcb2'
             '269d365586702e75e9ba3d3d2f60ec7467fec9aeb470d9e950195b8d757feb14'
             'f693d9fb6a6cdd1e2d3e49bd0620e9d93124dccf7869f3939e63c27b1a0d4745'
@@ -127,7 +127,8 @@ prepare() {
 
 build() {
   cd $_srcname
-  make bzImage modules htmldocs
+  make all
+  make htmldocs
 }
 
 _package() {

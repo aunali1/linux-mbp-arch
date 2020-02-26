@@ -1,8 +1,8 @@
 pkgbase = linux-mbp
 	pkgdesc = Linux for MBP
-	pkgver = 5.5.5
+	pkgver = 5.5.6
 	pkgrel = 1
-	url = https://git.archlinux.org/linux.git/log/?h=vv5.5-5
+	url = https://git.archlinux.org/linux.git/log/?h=vv5.5-6
 	arch = x86_64
 	license = GPL2
 	makedepends = bc
@@ -15,8 +15,8 @@ pkgbase = linux-mbp
 	makedepends = imagemagick
 	makedepends = git
 	options = !strip
-	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.5.5.tar.xz
-	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.5.5.tar.sign
+	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.5.6.tar.xz
+	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.5.6.tar.sign
 	source = config
 	source = 0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
 	source = 0002-iwlwifi-pcie-restore-support-for-Killer-Qu-C0-NICs.patch
@@ -46,9 +46,9 @@ pkgbase = linux-mbp
 	source = wifi.patch
 	validpgpkeys = ABAF11C65A2970B130ABE3C479BE3E4300411886
 	validpgpkeys = 647F28654894E3BD457199BE38DBBDC86092693E
-	sha256sums = 7ac07bc03f2d159f924d25a79df07d1a115a13f44f67455511d3c84c15ac5087
+	sha256sums = 54cc88ab9d7517267d8592905b277424ae441f3d7209c7ad1236533c2be6ee35
 	sha256sums = SKIP
-	sha256sums = 8b587ed7f8ca17f21045c4da4ea73021adb0cbfaeb4368087c48ea7ddfab6a65
+	sha256sums = a5cc9786b08383d3d0cdc0d146ddeedceb4d20bd5c73092e258da9ad98121034
 	sha256sums = b807695ba1aca350fdacfca5f1bb5c42d0f3c5555ddf6e1085ad1119fc81dcb2
 	sha256sums = 269d365586702e75e9ba3d3d2f60ec7467fec9aeb470d9e950195b8d757feb14
 	sha256sums = f693d9fb6a6cdd1e2d3e49bd0620e9d93124dccf7869f3939e63c27b1a0d4745
@@ -83,11 +83,11 @@ pkgname = linux-mbp
 	depends = initramfs
 	optdepends = crda: to set the correct wireless channels of your country
 	optdepends = linux-firmware: firmware images needed for some devices
-	provides = linux=5.5.5
+	provides = linux=5.5.6
 
 pkgname = linux-mbp-headers
 	pkgdesc = Headers and scripts for building modules for the Linux for MBP kernel
-	provides = linux-headers=5.5.5
+	provides = linux-headers=5.5.6
 
 pkgname = linux-mbp-docs
 	pkgdesc = Documentation for the Linux for MBP kernel
