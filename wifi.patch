@@ -1,16 +1,8 @@
 diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
-index dd586a96b57a..39fdaf65185c 100644
+index a795d781b4c5..03dd8c44a03f 100644
 --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
 +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
-@@ -667,6 +667,7 @@ static u32 brcmf_chip_tcm_rambase(struct brcmf_chip_priv *ci)
- {
- 	switch (ci->pub.chip) {
- 	case BRCM_CC_4345_CHIP_ID:
-+	case BRCM_CC_4377_CHIP_ID:
- 		return 0x198000;
- 	case BRCM_CC_4335_CHIP_ID:
- 	case BRCM_CC_4339_CHIP_ID:
-@@ -687,6 +688,8 @@ static u32 brcmf_chip_tcm_rambase(struct brcmf_chip_priv *ci)
+@@ -687,8 +687,12 @@ static u32 brcmf_chip_tcm_rambase(struct brcmf_chip_priv *ci)
  	case BRCM_CC_4366_CHIP_ID:
  	case BRCM_CC_43664_CHIP_ID:
  		return 0x200000;
@@ -18,9 +10,13 @@ index dd586a96b57a..39fdaf65185c 100644
 +	case BRCM_CC_4364_CHIP_ID:
  	case CY_CC_4373_CHIP_ID:
  		return 0x160000;
++	case BRCM_CC_4377_CHIP_ID:
++		return 0x170000;
  	default:
+ 		brcmf_err("unknown chip: %s\n", ci->pub.name);
+ 		break;
 diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-index 3be60aef5465..610f99412683 100644
+index f64ce5074a55..4b0817b3f4fd 100644
 --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
 +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
 @@ -48,15 +48,18 @@ enum brcmf_pcie_state {
@@ -64,7 +60,7 @@ index 3be60aef5465..610f99412683 100644
  };
  
  #define BRCMF_PCIE_FW_UP_TIMEOUT		2000 /* msec */
-@@ -2098,6 +2104,7 @@ static const struct pci_device_id brcmf_pcie_devid_table[] = {
+@@ -2096,6 +2102,7 @@ static const struct pci_device_id brcmf_pcie_devid_table[] = {
  	BRCMF_PCIE_DEVICE(BRCM_PCIE_4350_DEVICE_ID),
  	BRCMF_PCIE_DEVICE_SUB(0x4355, BRCM_PCIE_VENDOR_ID_BROADCOM, 0x4355),
  	BRCMF_PCIE_DEVICE(BRCM_PCIE_4354_RAW_DEVICE_ID),
@@ -72,7 +68,7 @@ index 3be60aef5465..610f99412683 100644
  	BRCMF_PCIE_DEVICE(BRCM_PCIE_4356_DEVICE_ID),
  	BRCMF_PCIE_DEVICE(BRCM_PCIE_43567_DEVICE_ID),
  	BRCMF_PCIE_DEVICE(BRCM_PCIE_43570_DEVICE_ID),
-@@ -2107,6 +2114,7 @@ static const struct pci_device_id brcmf_pcie_devid_table[] = {
+@@ -2105,6 +2112,7 @@ static const struct pci_device_id brcmf_pcie_devid_table[] = {
  	BRCMF_PCIE_DEVICE(BRCM_PCIE_43602_2G_DEVICE_ID),
  	BRCMF_PCIE_DEVICE(BRCM_PCIE_43602_5G_DEVICE_ID),
  	BRCMF_PCIE_DEVICE(BRCM_PCIE_43602_RAW_DEVICE_ID),
@@ -80,7 +76,7 @@ index 3be60aef5465..610f99412683 100644
  	BRCMF_PCIE_DEVICE(BRCM_PCIE_4365_DEVICE_ID),
  	BRCMF_PCIE_DEVICE(BRCM_PCIE_4365_2G_DEVICE_ID),
  	BRCMF_PCIE_DEVICE(BRCM_PCIE_4365_5G_DEVICE_ID),
-@@ -2115,6 +2123,7 @@ static const struct pci_device_id brcmf_pcie_devid_table[] = {
+@@ -2113,6 +2121,7 @@ static const struct pci_device_id brcmf_pcie_devid_table[] = {
  	BRCMF_PCIE_DEVICE(BRCM_PCIE_4366_2G_DEVICE_ID),
  	BRCMF_PCIE_DEVICE(BRCM_PCIE_4366_5G_DEVICE_ID),
  	BRCMF_PCIE_DEVICE(BRCM_PCIE_4371_DEVICE_ID),
