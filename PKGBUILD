@@ -2,7 +2,7 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.5.4
+pkgver=5.5.5
 _srcname=linux-${pkgver}
 pkgrel=1
 pkgdesc='Linux for MBP'
@@ -37,8 +37,8 @@ source=(
   0012-drm-i915-Add-a-simple-is-bound-check-before-unbindin.patch
   0013-drm-i915-Introduce-a-vma.kref.patch
 
-  # Linux 5.5+ Broadcom HCI Bluetooth detection temporary fix
-  2001-Revert-serdev-Add-ACPI-devices-by-ResourceSource-fie.patch
+  # Linux 5.5+ Broadcom HCI Bluetooth detection fix
+  2001-serdev-Fix-detection-of-UART-devices-on-Apple-machin.patch
 
   # Apple SMC ACPI support
   3001-applesmc-convert-static-structures-to-drvdata.patch
@@ -66,9 +66,9 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('ea40fd0deb0ba043c628ad4039c67ca9e4d8adc88d67d8b8c5a20f264403a6fb'
+sha256sums=('7ac07bc03f2d159f924d25a79df07d1a115a13f44f67455511d3c84c15ac5087'
             'SKIP'
-            'a9266acc82fae18ed90c165288e10d03c62b8b964b3916e710d5ab6f7a639bf3'
+            '8b587ed7f8ca17f21045c4da4ea73021adb0cbfaeb4368087c48ea7ddfab6a65'
             'b807695ba1aca350fdacfca5f1bb5c42d0f3c5555ddf6e1085ad1119fc81dcb2'
             '269d365586702e75e9ba3d3d2f60ec7467fec9aeb470d9e950195b8d757feb14'
             'f693d9fb6a6cdd1e2d3e49bd0620e9d93124dccf7869f3939e63c27b1a0d4745'
@@ -82,7 +82,7 @@ sha256sums=('ea40fd0deb0ba043c628ad4039c67ca9e4d8adc88d67d8b8c5a20f264403a6fb'
             '09ac926426e37686a1d3c6538cc71a3981b2ffd6371878ffeca3b54c531369b7'
             '24f3384534d7a7356cfb5e2f766ef371c624c0c6a9b5169673c0c192f12aa577'
             'd8ddcb59c9258ada79538d964e60ee0834462fc75b81d49186539dda991e1b4b'
-            '9e44fa7656963c5cd08ad646636b6d5ab63db5f629e002d6714474d0ec00fc97'
+            '9bb8de4cba26cf2eaa540bd9fccf1cbce00805c74fc627cab68fd265d2075570'
             '25e1aac0d44d72e377f08e4f4b90351cffcacc0be63e02a4033cb99f10cc9fe7'
             'c70118659c5cf6a5c7f060c941d46fdd3b1e6d28f2b62c24a941745f2b3c4732'
             '3855aa07fab97d202900216951225b6952d7c716258a3c3727df8e6277289ee0'
@@ -94,7 +94,7 @@ sha256sums=('ea40fd0deb0ba043c628ad4039c67ca9e4d8adc88d67d8b8c5a20f264403a6fb'
             '0318952f59efdce4dc72703adc764940db6fdff184960c27a23a80c3413d8a60'
             'e632f2959efca848fd28acb5e278cc476f8fb54d70ca95272b0a76add47e474e'
             '717f7fc70a3e3fcfa5ffbac505c8259c1d86718ca1ca6593e8925dac3d29a835'
-            'c33b7bb818b3b81fc4db3ed7f15545ee1e38107788daed07d7d2a19700968f9d')
+            '359555c0c391fdac9c57e2d0be9af5570767218ccae9be9d51175970c54cacc8')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
