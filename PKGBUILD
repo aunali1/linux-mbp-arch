@@ -2,7 +2,7 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.5.6
+pkgver=5.5.7
 _srcname=linux-${pkgver}
 pkgrel=1
 pkgdesc='Linux for MBP'
@@ -26,16 +26,14 @@ source=(
   0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
   0002-iwlwifi-pcie-restore-support-for-Killer-Qu-C0-NICs.patch
   0003-iwlwifi-mvm-Do-not-require-PHY_SKU-NVM-section-for-3.patch
-  0004-drm-i915-Wean-off-drm_pci_alloc-drm_pci_free.patch
-  0005-drm-Remove-PageReserved-manipulation-from-drm_pci_al.patch
-  0006-drm-i915-execlists-Always-force-a-context-reload-whe.patch
-  0007-drm-i915-Serialise-i915_active_acquire-with-__active.patch
-  0008-drm-i915-gem-Take-runtime-pm-wakeref-prior-to-unbind.patch
-  0009-drm-i915-gem-Avoid-parking-the-vma-as-we-unbind.patch
-  0010-drm-i915-gem-Try-to-flush-pending-unbind-events.patch
-  0011-drm-i915-gem-Reinitialise-the-local-list-before-repe.patch
-  0012-drm-i915-Add-a-simple-is-bound-check-before-unbindin.patch
-  0013-drm-i915-Introduce-a-vma.kref.patch
+  0004-drm-Remove-PageReserved-manipulation-from-drm_pci_al.patch
+  0005-drm-i915-Serialise-i915_active_acquire-with-__active.patch
+  0006-drm-i915-gem-Take-runtime-pm-wakeref-prior-to-unbind.patch
+  0007-drm-i915-gem-Avoid-parking-the-vma-as-we-unbind.patch
+  0008-drm-i915-gem-Try-to-flush-pending-unbind-events.patch
+  0009-drm-i915-gem-Reinitialise-the-local-list-before-repe.patch
+  0010-drm-i915-Add-a-simple-is-bound-check-before-unbindin.patch
+  0011-drm-i915-Introduce-a-vma.kref.patch
 
   # Linux 5.5+ Broadcom HCI Bluetooth detection fix
   2001-serdev-Fix-detection-of-UART-devices-on-Apple-machin.patch
@@ -66,22 +64,20 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('54cc88ab9d7517267d8592905b277424ae441f3d7209c7ad1236533c2be6ee35'
+sha256sums=('b843ef331290559c5cfce99616165154899e3d7906898ec7de5054efd39f7e48'
             'SKIP'
             'a5cc9786b08383d3d0cdc0d146ddeedceb4d20bd5c73092e258da9ad98121034'
-            'b807695ba1aca350fdacfca5f1bb5c42d0f3c5555ddf6e1085ad1119fc81dcb2'
-            '269d365586702e75e9ba3d3d2f60ec7467fec9aeb470d9e950195b8d757feb14'
-            'f693d9fb6a6cdd1e2d3e49bd0620e9d93124dccf7869f3939e63c27b1a0d4745'
-            'c5e3c5952b3f3c4e37de8fde9d6944ed4961464fa64604bd9f8e62dc31b69507'
-            'caf6ec87f917e63f1e6216749663828c394e5f5d204aa75eb7afc74a64dcc347'
-            '506a45b8895a756dc7b43fc888558ddd585b7624f27fffa2c95c96ffb3bd25fb'
-            '54bec87394d8b0cf06a8ae85dd990f8854cc91248aca06dac5e0299315ea9bc4'
-            '7386bc06b1278cbefb6a307f4e8dbb2c1147e223fbee88897b8fb0ecc5aad1f2'
-            'b84a3b101a02cd60b752efb1a773c88dc582c91c782de61b98aef11bf6d2bfbd'
-            'ed9ceee244f062ca46ddc071a01e9705ea0889f89c49f7fae5d1bb22f3c2fdaf'
-            '09ac926426e37686a1d3c6538cc71a3981b2ffd6371878ffeca3b54c531369b7'
-            '24f3384534d7a7356cfb5e2f766ef371c624c0c6a9b5169673c0c192f12aa577'
-            'd8ddcb59c9258ada79538d964e60ee0834462fc75b81d49186539dda991e1b4b'
+            '031da8c40d8e3883d4a3ca6e364dda6f9ff9fb06f09e1b5c6f33bde9e0403d1f'
+            'ede75f02724a78d140248bed46905b7a55aa835916101ceb9dd4a79c390a57ac'
+            'ec4b1dc9a0d55711ed118b675b33f0a0a9cdb980175fbfd2ada28482aabb371a'
+            'f8f7a9fcbd3718c4ddb8506f7e0308a9a5ad93347fbbd8d4f8328c9e5941e8a7'
+            'e92d16f56a48c65c15c10a920fdaefe127ed0bfeefe4c41673dab880d4d44792'
+            'dedd5714d6eae4fd9ef688ad60792918944b4878bdfb7e92f04ea451099b1574'
+            '9bebae617f1f8a5a0b68331a94ed504756bc18cbed899d23bfbb244309a21240'
+            '7037a82c30df8eb51997e3325b0a9f295cc6b77fd8bd045725f22fc0b470d754'
+            '77077b38c064f79abeb5cd02b77c0502eb859fd6ae23ba4c84143eccdcba543a'
+            '2a40785a40e8d1c50ada94d79fc12915ef4ad75fdc97e7132494383fb975136c'
+            '4f3b5a9f71a66fa1e6e403113ff7432a099d82c3d79ce26692bc11d30b48c3f5'
             '9bb8de4cba26cf2eaa540bd9fccf1cbce00805c74fc627cab68fd265d2075570'
             '25e1aac0d44d72e377f08e4f4b90351cffcacc0be63e02a4033cb99f10cc9fe7'
             'c70118659c5cf6a5c7f060c941d46fdd3b1e6d28f2b62c24a941745f2b3c4732'
