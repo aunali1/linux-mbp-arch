@@ -2,7 +2,7 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.5.7
+pkgver=5.5.9
 _srcname=linux-${pkgver}
 pkgrel=1
 pkgdesc='Linux for MBP'
@@ -35,9 +35,6 @@ source=(
   0010-drm-i915-Add-a-simple-is-bound-check-before-unbindin.patch
   0011-drm-i915-Introduce-a-vma.kref.patch
 
-  # Linux 5.5+ Broadcom HCI Bluetooth detection fix
-  2001-serdev-Fix-detection-of-UART-devices-on-Apple-machin.patch
-
   # Apple SMC ACPI support
   3001-applesmc-convert-static-structures-to-drvdata.patch
   3002-applesmc-make-io-port-base-addr-dynamic.patch
@@ -64,21 +61,20 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('b843ef331290559c5cfce99616165154899e3d7906898ec7de5054efd39f7e48'
+sha256sums=('a435e16950bbe80362495383c2b5e8b78a4b3879c894e2b3c38ecba6fe7ca878'
             'SKIP'
             'a5cc9786b08383d3d0cdc0d146ddeedceb4d20bd5c73092e258da9ad98121034'
-            '031da8c40d8e3883d4a3ca6e364dda6f9ff9fb06f09e1b5c6f33bde9e0403d1f'
-            'ede75f02724a78d140248bed46905b7a55aa835916101ceb9dd4a79c390a57ac'
-            'ec4b1dc9a0d55711ed118b675b33f0a0a9cdb980175fbfd2ada28482aabb371a'
-            'f8f7a9fcbd3718c4ddb8506f7e0308a9a5ad93347fbbd8d4f8328c9e5941e8a7'
-            'e92d16f56a48c65c15c10a920fdaefe127ed0bfeefe4c41673dab880d4d44792'
-            'dedd5714d6eae4fd9ef688ad60792918944b4878bdfb7e92f04ea451099b1574'
-            '9bebae617f1f8a5a0b68331a94ed504756bc18cbed899d23bfbb244309a21240'
-            '7037a82c30df8eb51997e3325b0a9f295cc6b77fd8bd045725f22fc0b470d754'
-            '77077b38c064f79abeb5cd02b77c0502eb859fd6ae23ba4c84143eccdcba543a'
-            '2a40785a40e8d1c50ada94d79fc12915ef4ad75fdc97e7132494383fb975136c'
-            '4f3b5a9f71a66fa1e6e403113ff7432a099d82c3d79ce26692bc11d30b48c3f5'
-            '9bb8de4cba26cf2eaa540bd9fccf1cbce00805c74fc627cab68fd265d2075570'
+            '5d1fffdc09330567349f63812fe4c12f692bcaf886b7751f2cc97915026326dc'
+            'bc766b65e982fba84d8fae18bb903824730e2262eeafdada7d0f05c2c67f1466'
+            '9537dc9af555aeca616c04aa3fa96198035d766b1b8c4473c869c102d2da640f'
+            '0db5e9769cbc8b7b701347b2ea35596ee712146699dd41c42f454d567d71e000'
+            '6f1e8e943a7aa841306377ca7b2017d0f58daad65bc92a6741fb77bd926133e8'
+            'c5c4c6144507278252e395c7d2c65311b0afcdb5962294a27b65153ea9afea1b'
+            '99b70559652b8dd6fd66fff23e55d54f43443e16649a92997e6cf2b4a8e64f93'
+            'b534b532a9e995daa82ba73dc1636e80925fc766f423161a76cec4fad2112aae'
+            '68ba64e05d79d42b2a9459bc7a449be1917ac228c4bd64302e14bc9bc7c5f30c'
+            'd95bb62f617165a1d9140be7417f3fd410e15774f10f0bb9dfbfcabb4dfbc87c'
+            'c64e0b2949379d153f138d3512f0b196b930c3f5569675b1b6ca1cd044d9a5b3'
             '25e1aac0d44d72e377f08e4f4b90351cffcacc0be63e02a4033cb99f10cc9fe7'
             'c70118659c5cf6a5c7f060c941d46fdd3b1e6d28f2b62c24a941745f2b3c4732'
             '3855aa07fab97d202900216951225b6952d7c716258a3c3727df8e6277289ee0'

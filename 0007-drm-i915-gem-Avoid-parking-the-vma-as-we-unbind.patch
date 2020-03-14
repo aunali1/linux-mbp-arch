@@ -1,4 +1,4 @@
-From d9f4e03a3469b8c1fce1fd5ef59708a504e5ba02 Mon Sep 17 00:00:00 2001
+From d2672eb7905aea6acff26f5769bccf4794ef418f Mon Sep 17 00:00:00 2001
 From: Chris Wilson <chris@chris-wilson.co.uk>
 Date: Tue, 3 Dec 2019 15:50:32 +0000
 Subject: [PATCH 07/11] drm/i915/gem: Avoid parking the vma as we unbind
