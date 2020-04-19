@@ -4,7 +4,7 @@
 pkgbase=linux-mbp
 pkgver=5.5.18
 _srcname=linux-${pkgver}
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux for MBP'
 _srctag=v${pkgver%.*}-${pkgver##*.}
 url="https://git.archlinux.org/linux.git/log/?h=v$_srctag"
@@ -21,6 +21,7 @@ source=(
   https://www.kernel.org/pub/linux/kernel/v${pkgver//.*}.x/linux-${pkgver}.tar.xz
   https://www.kernel.org/pub/linux/kernel/v${pkgver//.*}.x/linux-${pkgver}.tar.sign
   config         # the main kernel config file
+  sphinx-workaround.patch
 
   # Arch Linux patches
   0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
@@ -61,7 +62,8 @@ validpgpkeys=(
 
 sha256sums=('e804347326d707a68720a16d71426cf037a355ea8a8bb28c2fcc7bdd088e3106'
             'SKIP'
-            'a5cc9786b08383d3d0cdc0d146ddeedceb4d20bd5c73092e258da9ad98121034'
+            'eb06dd7027ca729b6b80e049a1fcaa2603afa76d1caa9fd5aa5cf484d2bcbd39'
+            '8cb21e0b3411327b627a9dd15b8eb773295a0d2782b1a41b2a8839d1b2f5778c'
             '4087ffdf437243ae6d75820a4b7eaf2ef60147162e3f8a324623678627be8098'
             '8b2c94102aacfd94d9c8bd62acd0504c940838695dd5e30ae628de9f3c923d9a'
             '6ba5d7fe5dd7dda67cf000f93b952eecda150bfcc3d25a94516844355947b2cd'
