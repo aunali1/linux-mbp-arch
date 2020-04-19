@@ -2,7 +2,7 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.5.13
+pkgver=5.5.18
 _srcname=linux-${pkgver}
 pkgrel=1
 pkgdesc='Linux for MBP'
@@ -25,7 +25,6 @@ source=(
   # Arch Linux patches
   0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
   0002-iwlwifi-pcie-restore-support-for-Killer-Qu-C0-NICs.patch
-  0003-drm-Remove-PageReserved-manipulation-from-drm_pci_al.patch
   0004-drm-i915-Serialise-i915_active_acquire-with-__active.patch
   0005-drm-i915-gem-Take-runtime-pm-wakeref-prior-to-unbind.patch
   0006-drm-i915-gem-Avoid-parking-the-vma-as-we-unbind.patch
@@ -33,7 +32,6 @@ source=(
   0008-drm-i915-gem-Reinitialise-the-local-list-before-repe.patch
   0009-drm-i915-Add-a-simple-is-bound-check-before-unbindin.patch
   0010-drm-i915-Introduce-a-vma.kref.patch
-  0011-iwlwifi-don-t-send-GEO_TX_POWER_LIMIT-if-no-wgds-tab.patch
 
   # Apple SMC ACPI support
   3001-applesmc-convert-static-structures-to-drvdata.patch
@@ -61,12 +59,11 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('1f3b3614a06bffc9c621c82f98d8ca88c60538a8c6dd77f96f2e7fee310a4ee2'
+sha256sums=('e804347326d707a68720a16d71426cf037a355ea8a8bb28c2fcc7bdd088e3106'
             'SKIP'
             'a5cc9786b08383d3d0cdc0d146ddeedceb4d20bd5c73092e258da9ad98121034'
             '4087ffdf437243ae6d75820a4b7eaf2ef60147162e3f8a324623678627be8098'
             '8b2c94102aacfd94d9c8bd62acd0504c940838695dd5e30ae628de9f3c923d9a'
-            '64a66811ba44de51447acee7024775c7a714c514ee8dece10af98ef9e833b080'
             '6ba5d7fe5dd7dda67cf000f93b952eecda150bfcc3d25a94516844355947b2cd'
             'cf17716306868591e5687ffa12159c3b8f61dbddba3b0d09c4d6a7dd85ebeed8'
             '42e79d06bb04794d9a98c60a9c17eeaea69cc83a466309379e254d2d6a8f0e31'
@@ -74,7 +71,6 @@ sha256sums=('1f3b3614a06bffc9c621c82f98d8ca88c60538a8c6dd77f96f2e7fee310a4ee2'
             'eb609d03ccb5d1ee7ee6ccd2883d8ee2f26329daef5c6334c80f5081e599af16'
             '528a444059ffd601253409227ed02f553d953338b1b89fd81fd12a801900fcf1'
             '6637398b8ecb8ade731529661d0675517439052268078ff1a27c22cf972ffcf9'
-            '821ef88ad6a8ba40aa5583089e3ab04c8a8b3c0a3152b6c7382d3b81e36e9602'
             '25e1aac0d44d72e377f08e4f4b90351cffcacc0be63e02a4033cb99f10cc9fe7'
             'c70118659c5cf6a5c7f060c941d46fdd3b1e6d28f2b62c24a941745f2b3c4732'
             '3855aa07fab97d202900216951225b6952d7c716258a3c3727df8e6277289ee0'
