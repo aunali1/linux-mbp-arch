@@ -1,0 +1,42 @@
+From bcac386f3d3940354e76ab6309e4279134848424 Mon Sep 17 00:00:00 2001
+From: Jonathan Corbet <corbet@lwn.net>
+Date: Wed, 22 Jan 2020 16:06:28 -0700
+Subject: [PATCH] docs: Keep up with the location of NoUri
+
+Sphinx 2.1 moved sphinx.environment.NoUri into sphinx.errors; that produced
+this warning in the docs build:
+
+  /usr/lib/python3.7/site-packages/sphinx/registry.py:473:
+    RemovedInSphinx30Warning: sphinx.environment.NoUri is deprecated.
+
+Grab NoUri from the right place and make the warning go away.  That symbol
+was only added to sphinx.errors in 2.1, so we must still import it from the
+old location when running in older versions.
+
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+---
+ Documentation/sphinx/automarkup.py | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/sphinx/automarkup.py b/Documentation/sphinx/automarkup.py
+index 5b6119ff69f4..b18236370742 100644
+--- a/Documentation/sphinx/automarkup.py
++++ b/Documentation/sphinx/automarkup.py
+@@ -5,8 +5,13 @@
+ # has been done.
+ #
+ from docutils import nodes
++import sphinx
+ from sphinx import addnodes
+-from sphinx.environment import NoUri
++if sphinx.version_info[0] < 2 or \
++   sphinx.version_info[0] == 2 and sphinx.version_info[1] < 1:
++    from sphinx.environment import NoUri
++else:
++    from sphinx.errors import NoUri
+ import re
+ 
+ #
+-- 
+2.26.1
+
