@@ -13,12 +13,14 @@ steps:
     - pacman --noconfirm --needed -S base-devel sudo
     - useradd builduser -m
     - passwd -d builduser
+    - echo "PKGEXT='.pkg.tar.zst'" | tee -a /etc/makepkg.conf
+    - echo "COMPRESSZST=(zstd -c -T0 -20 --ultra -)" | tee -a /etc/makepkg.conf
     - printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers # passwordless sudo
     - chown -R builduser:builduser ./
     - sudo -u builduser gpg --keyserver hkp://keys.gnupg.net:80 --recv-keys 38DBBDC86092693E
     - sudo -u builduser bash -c 'export MAKEFLAGS=-j32 && makepkg -s --noconfirm'
-    - ls -lah *.pkg.tar.xz
-    - cp *.pkg.tar.xz /tmp/products
+    - ls -lah *.pkg.tar.zst
+    - cp *.pkg.tar.zst /tmp/products
   when:
     event: tag
 
