@@ -2,9 +2,9 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.5.18
+pkgver=5.6.6
 _srcname=linux-${pkgver}
-pkgrel=3
+pkgrel=1
 pkgdesc='Linux for MBP'
 _srctag=v${pkgver%.*}-${pkgver##*.}
 url="https://git.archlinux.org/linux.git/log/?h=v$_srctag"
@@ -25,17 +25,6 @@ source=(
 
   # Arch Linux patches
   0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
-  0002-iwlwifi-pcie-restore-support-for-Killer-Qu-C0-NICs.patch
-  0004-drm-i915-Serialise-i915_active_acquire-with-__active.patch
-  0005-drm-i915-gem-Take-runtime-pm-wakeref-prior-to-unbind.patch
-  0006-drm-i915-gem-Avoid-parking-the-vma-as-we-unbind.patch
-  0007-drm-i915-gem-Try-to-flush-pending-unbind-events.patch
-  0008-drm-i915-gem-Reinitialise-the-local-list-before-repe.patch
-  0009-drm-i915-Add-a-simple-is-bound-check-before-unbindin.patch
-  0010-drm-i915-Introduce-a-vma.kref.patch
-
-  # Sphinx fixes
-  1001-docs-Keep-up-with-the-location-of-NoUri.patch
 
   # Apple SMC ACPI support
   3001-applesmc-convert-static-structures-to-drvdata.patch
@@ -63,20 +52,11 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('e804347326d707a68720a16d71426cf037a355ea8a8bb28c2fcc7bdd088e3106'
+sha256sums=('6484ced005e4be5696d6ab0438a9674b9eac89831b4019822f1b0155e7a66bd4'
             'SKIP'
-            'eb06dd7027ca729b6b80e049a1fcaa2603afa76d1caa9fd5aa5cf484d2bcbd39'
+            '379a7157bf6ad02a0e4ea8c613a8671369ddbdb28423154f53cb352916edf811'
             '8cb21e0b3411327b627a9dd15b8eb773295a0d2782b1a41b2a8839d1b2f5778c'
-            '4087ffdf437243ae6d75820a4b7eaf2ef60147162e3f8a324623678627be8098'
-            '8b2c94102aacfd94d9c8bd62acd0504c940838695dd5e30ae628de9f3c923d9a'
-            '6ba5d7fe5dd7dda67cf000f93b952eecda150bfcc3d25a94516844355947b2cd'
-            'cf17716306868591e5687ffa12159c3b8f61dbddba3b0d09c4d6a7dd85ebeed8'
-            '42e79d06bb04794d9a98c60a9c17eeaea69cc83a466309379e254d2d6a8f0e31'
-            '3e2e52cb1fce62914b0765773f7feaa38d88f7efb98e8beacbcb73769e1cb9be'
-            'eb609d03ccb5d1ee7ee6ccd2883d8ee2f26329daef5c6334c80f5081e599af16'
-            '528a444059ffd601253409227ed02f553d953338b1b89fd81fd12a801900fcf1'
-            '6637398b8ecb8ade731529661d0675517439052268078ff1a27c22cf972ffcf9'
-            '30a013367f333274e3cb6cfc4026775e41cc802cf3a87f4520ebea5d5ce83eb6'
+            '5928896d154d5dee525a46bc2543cbcc0c28ff1640e509c9659c92344f9f95b9'
             '25e1aac0d44d72e377f08e4f4b90351cffcacc0be63e02a4033cb99f10cc9fe7'
             'c70118659c5cf6a5c7f060c941d46fdd3b1e6d28f2b62c24a941745f2b3c4732'
             '3855aa07fab97d202900216951225b6952d7c716258a3c3727df8e6277289ee0'
@@ -88,7 +68,7 @@ sha256sums=('e804347326d707a68720a16d71426cf037a355ea8a8bb28c2fcc7bdd088e3106'
             '0318952f59efdce4dc72703adc764940db6fdff184960c27a23a80c3413d8a60'
             'e632f2959efca848fd28acb5e278cc476f8fb54d70ca95272b0a76add47e474e'
             '717f7fc70a3e3fcfa5ffbac505c8259c1d86718ca1ca6593e8925dac3d29a835'
-            '359555c0c391fdac9c57e2d0be9af5570767218ccae9be9d51175970c54cacc8')
+            '2a496b5e976e8371e5c1fa8e2102c19481fa72bcdc97df7fe224a1aef8c32609')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
@@ -130,6 +110,8 @@ _package() {
   depends=(coreutils kmod initramfs)
   optdepends=('crda: to set the correct wireless channels of your country'
               'linux-firmware: firmware images needed for some devices')
+  provides=(VIRTUALBOX-GUEST-MODULES WIREGUARD-MODULE)
+  replaces=(virtualbox-guest-modules-arch wireguard-arch)
   provides=("linux=$pkgver")
 
   cd $_srcname
@@ -149,9 +131,6 @@ _package() {
 
   # remove build and source links
   rm "$modulesdir"/{source,build}
-
-  echo "Fixing permissions..."
-  chmod -Rc u=rwX,go=rX "$pkgdir"
 }
 
 _package-headers() {
@@ -228,9 +207,6 @@ _package-headers() {
   echo "Adding symlink..."
   mkdir -p "$pkgdir/usr/src"
   ln -sr "$builddir" "$pkgdir/usr/src/$pkgbase"
-
-  echo "Fixing permissions..."
-  chmod -Rc u=rwX,go=rX "$pkgdir"
 }
 
 _package-docs() {
@@ -250,9 +226,6 @@ _package-docs() {
   echo "Adding symlink..."
   mkdir -p "$pkgdir/usr/share/doc"
   ln -sr "$builddir/Documentation" "$pkgdir/usr/share/doc/$pkgbase"
-
-  echo "Fixing permissions..."
-  chmod -Rc u=rwX,go=rX "$pkgdir"
 }
 
 pkgname=("$pkgbase" "$pkgbase-headers" "$pkgbase-docs")
