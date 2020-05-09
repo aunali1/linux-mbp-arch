@@ -2,7 +2,7 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.6.6
+pkgver=5.6.11
 _srcname=linux-${pkgver}
 pkgrel=2
 pkgdesc='Linux for MBP'
@@ -52,9 +52,9 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('6484ced005e4be5696d6ab0438a9674b9eac89831b4019822f1b0155e7a66bd4'
+sha256sums=('d6dd6cbe99429f088eddb248abce7832e8f8e45eb072cbf0d0f86b5b87221baa'
             'SKIP'
-            '379a7157bf6ad02a0e4ea8c613a8671369ddbdb28423154f53cb352916edf811'
+            '57e77a9bc994822f53af779543bc29d2a68607525b4cb0c895143613c97057e9'
             '8cb21e0b3411327b627a9dd15b8eb773295a0d2782b1a41b2a8839d1b2f5778c'
             '5928896d154d5dee525a46bc2543cbcc0c28ff1640e509c9659c92344f9f95b9'
             '25e1aac0d44d72e377f08e4f4b90351cffcacc0be63e02a4033cb99f10cc9fe7'
