@@ -1,0 +1,36 @@
+From ef48ee7726853c2c09f7eb4a4fddbdaa9ee9ae13 Mon Sep 17 00:00:00 2001
+From: Aun-Ali Zaidi <admin@kodeit.net>
+Date: Sun, 10 May 2020 09:05:16 -0400
+Subject: [PATCH] drm/amd/display: Force link_rate as LINK_RATE_RBR2
+
+The eDP link rate reported by the DP_MAX_LINK_RATE dpcd register (0xa) is contradictory
+to the highest rate supported reported by EDID (0xc = LINK_RATE_RBR2). The effects of
+this compounded with commit '4a8ca46bae8a ("drm/amd/display: Default max bpc to 16 for eDP")'
+results in no display modes being found and a dark panel.
+
+For now, simply force the panel to the maximum supported link rate until a more appropriate
+solution is found.
+
+Tested-by: Aun-Ali Zaidi <admin@kodeit.net>
+Signed-off-by: Aun-Ali Zaidi <admin@kodeit.net>
+---
+ drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c b/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
+index fd9e69634c50..817f8230406e 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
+@@ -3412,6 +3412,9 @@ static bool retrieve_link_cap(struct dc_link *link)
+ 		}
+ 	}
+ 
++	// XXX: HACK: Force DP_MAX_LINE_RATE as LINK_RATE_RBR2; needed for Apple MBP 2018+
++	link->reported_link_cap.link_rate = 0x0c;
++
+ 	core_link_read_dpcd(
+ 		link,
+ 		DP_SINK_HW_REVISION_START,
+-- 
+2.26.2
+

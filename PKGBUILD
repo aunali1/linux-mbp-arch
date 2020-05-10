@@ -2,9 +2,9 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.6.11
+pkgver=5.6.12
 _srcname=linux-${pkgver}
-pkgrel=2
+pkgrel=1
 pkgdesc='Linux for MBP'
 _srctag=v${pkgver%.*}-${pkgver##*.}
 url="https://git.archlinux.org/linux.git/log/?h=v$_srctag"
@@ -25,6 +25,14 @@ source=(
 
   # Arch Linux patches
   0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
+  0002-kvm-ioapic-Restrict-lazy-EOI-update-to-edge-triggere.patch
+  0003-gcc-plugins-drop-support-for-GCC-4.7.patch
+  0004-gcc-common.h-Update-for-GCC-10.patch
+  0005-Makefile-disallow-data-races-on-gcc-10-as-well.patch
+  0006-x86-Fix-early-boot-crash-on-gcc-10-next-try.patch
+
+  # Hack for AMD DC eDP link rate bug
+  2001-drm-amd-display-Force-link_rate-as-LINK_RATE_RBR2.patch
 
   # Apple SMC ACPI support
   3001-applesmc-convert-static-structures-to-drvdata.patch
@@ -52,11 +60,17 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('d6dd6cbe99429f088eddb248abce7832e8f8e45eb072cbf0d0f86b5b87221baa'
+sha256sums=('daea336aace63a9116475b3f698e259073c00bea57a2a545300dba1c45562221'
             'SKIP'
             '57e77a9bc994822f53af779543bc29d2a68607525b4cb0c895143613c97057e9'
             '8cb21e0b3411327b627a9dd15b8eb773295a0d2782b1a41b2a8839d1b2f5778c'
-            '5928896d154d5dee525a46bc2543cbcc0c28ff1640e509c9659c92344f9f95b9'
+            'de097233f604a7a65d985eeaa32f052e624046e6c292ae7f3d00e569b25a5f5c'
+            '0bd622b491d62dbd39552ec667128daa6843ffc3661a213c04d3b2cff8da47bc'
+            'a3881015dc796b72e795a82804e4275744bf096b588abc581a9ff32d41a66bf8'
+            '39ddb8a0e5e2d53fd58a072e855c9f0745d8be091c165b08ceeda66710b2b821'
+            '928c55de569a64da0b61a8b51b803ba1936432eab506900a5ba40e6dd4d014cd'
+            '76729e6acb2a0ff32cffd0629ee6b9c06c47316a1c5983efb9210b0e8c68e450'
+            'e0b17b0fa46e674d943d0e9d7fc9cac5dd33ec1bcd0534931e9302be1df52957'
             '25e1aac0d44d72e377f08e4f4b90351cffcacc0be63e02a4033cb99f10cc9fe7'
             'c70118659c5cf6a5c7f060c941d46fdd3b1e6d28f2b62c24a941745f2b3c4732'
             '3855aa07fab97d202900216951225b6952d7c716258a3c3727df8e6277289ee0'
