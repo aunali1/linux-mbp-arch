@@ -4,7 +4,7 @@
 pkgbase=linux-mbp
 pkgver=5.6.12
 _srcname=linux-${pkgver}
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux for MBP'
 _srctag=v${pkgver%.*}-${pkgver##*.}
 url="https://git.archlinux.org/linux.git/log/?h=v$_srctag"
@@ -32,7 +32,7 @@ source=(
   0006-x86-Fix-early-boot-crash-on-gcc-10-next-try.patch
 
   # Hack for AMD DC eDP link rate bug
-  2001-drm-amd-display-Force-link_rate-as-LINK_RATE_RBR2.patch
+  2001-drm-amd-display-Force-link_rate-as-LINK_RATE_RBR2-fo.patch
 
   # Apple SMC ACPI support
   3001-applesmc-convert-static-structures-to-drvdata.patch
@@ -70,7 +70,7 @@ sha256sums=('daea336aace63a9116475b3f698e259073c00bea57a2a545300dba1c45562221'
             '39ddb8a0e5e2d53fd58a072e855c9f0745d8be091c165b08ceeda66710b2b821'
             '928c55de569a64da0b61a8b51b803ba1936432eab506900a5ba40e6dd4d014cd'
             '76729e6acb2a0ff32cffd0629ee6b9c06c47316a1c5983efb9210b0e8c68e450'
-            'e0b17b0fa46e674d943d0e9d7fc9cac5dd33ec1bcd0534931e9302be1df52957'
+            '31bbb053b39e29ad7344acf4a325f0e63bb57fac3b7f4c28d5b27f0e175067c4'
             '25e1aac0d44d72e377f08e4f4b90351cffcacc0be63e02a4033cb99f10cc9fe7'
             'c70118659c5cf6a5c7f060c941d46fdd3b1e6d28f2b62c24a941745f2b3c4732'
             '3855aa07fab97d202900216951225b6952d7c716258a3c3727df8e6277289ee0'
