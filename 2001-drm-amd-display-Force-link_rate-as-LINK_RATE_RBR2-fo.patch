@@ -1,32 +1,35 @@
-From ef48ee7726853c2c09f7eb4a4fddbdaa9ee9ae13 Mon Sep 17 00:00:00 2001
+From a24c049212a6de8374891b872052d1ccccb16ec6 Mon Sep 17 00:00:00 2001
 From: Aun-Ali Zaidi <admin@kodeit.net>
-Date: Sun, 10 May 2020 09:05:16 -0400
-Subject: [PATCH] drm/amd/display: Force link_rate as LINK_RATE_RBR2
+Date: Mon, 11 May 2020 00:17:50 -0500
+Subject: [PATCH] drm/amd/display: Force link_rate as LINK_RATE_RBR2 for Apple
+ Retina panels
 
 The eDP link rate reported by the DP_MAX_LINK_RATE dpcd register (0xa) is contradictory
 to the highest rate supported reported by EDID (0xc = LINK_RATE_RBR2). The effects of
 this compounded with commit '4a8ca46bae8a ("drm/amd/display: Default max bpc to 16 for eDP")'
 results in no display modes being found and a dark panel.
 
-For now, simply force the panel to the maximum supported link rate until a more appropriate
-solution is found.
+For now, simply force the maximum supported link rate for the eDP attached
+Apple Retina panel.
 
 Tested-by: Aun-Ali Zaidi <admin@kodeit.net>
 Signed-off-by: Aun-Ali Zaidi <admin@kodeit.net>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c b/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
-index fd9e69634c50..817f8230406e 100644
+index fd9e69634c50..eaddb74b36ac 100644
 --- a/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
 +++ b/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
-@@ -3412,6 +3412,9 @@ static bool retrieve_link_cap(struct dc_link *link)
+@@ -3412,6 +3412,11 @@ static bool retrieve_link_cap(struct dc_link *link)
  		}
  	}
  
-+	// XXX: HACK: Force DP_MAX_LINE_RATE as LINK_RATE_RBR2; needed for Apple MBP 2018+
-+	link->reported_link_cap.link_rate = 0x0c;
++	/* Quirk for Apple Retina panels: Wrong DP_MAX_LINK_RATE */
++	if ((link->dpcd_caps.sink_dev_id == 0x0010fa) &&
++	     dc_is_embedded_signal(link->connector_signal))
++		link->reported_link_cap.link_rate = LINK_RATE_RBR2;
 +
  	core_link_read_dpcd(
  		link,
