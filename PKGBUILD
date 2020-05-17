@@ -2,9 +2,9 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.6.12
+pkgver=5.6.13
 _srcname=linux-${pkgver}
-pkgrel=2
+pkgrel=1
 pkgdesc='Linux for MBP'
 _srctag=v${pkgver%.*}-${pkgver##*.}
 url="https://git.archlinux.org/linux.git/log/?h=v$_srctag"
@@ -25,11 +25,10 @@ source=(
 
   # Arch Linux patches
   0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
-  0002-kvm-ioapic-Restrict-lazy-EOI-update-to-edge-triggere.patch
-  0003-gcc-plugins-drop-support-for-GCC-4.7.patch
-  0004-gcc-common.h-Update-for-GCC-10.patch
-  0005-Makefile-disallow-data-races-on-gcc-10-as-well.patch
-  0006-x86-Fix-early-boot-crash-on-gcc-10-next-try.patch
+  0002-gcc-plugins-drop-support-for-GCC-4.7.patch
+  0003-gcc-common.h-Update-for-GCC-10.patch
+  0004-Makefile-disallow-data-races-on-gcc-10-as-well.patch
+  0005-x86-Fix-early-boot-crash-on-gcc-10-next-try.patch
 
   # Hack for AMD DC eDP link rate bug
   2001-drm-amd-display-Force-link_rate-as-LINK_RATE_RBR2-fo.patch
@@ -60,16 +59,15 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('daea336aace63a9116475b3f698e259073c00bea57a2a545300dba1c45562221'
+sha256sums=('f125d79c8f6974213638787adcad6b575bbd35a05851802fd83f622ec18ff987'
             'SKIP'
             '57e77a9bc994822f53af779543bc29d2a68607525b4cb0c895143613c97057e9'
             '8cb21e0b3411327b627a9dd15b8eb773295a0d2782b1a41b2a8839d1b2f5778c'
-            'de097233f604a7a65d985eeaa32f052e624046e6c292ae7f3d00e569b25a5f5c'
-            '0bd622b491d62dbd39552ec667128daa6843ffc3661a213c04d3b2cff8da47bc'
-            'a3881015dc796b72e795a82804e4275744bf096b588abc581a9ff32d41a66bf8'
-            '39ddb8a0e5e2d53fd58a072e855c9f0745d8be091c165b08ceeda66710b2b821'
-            '928c55de569a64da0b61a8b51b803ba1936432eab506900a5ba40e6dd4d014cd'
-            '76729e6acb2a0ff32cffd0629ee6b9c06c47316a1c5983efb9210b0e8c68e450'
+            '9639f308cd90e1a05ee45be16dff7d7874a075e257e30411d89af7fe88feb5e8'
+            '62ece62106c5b20908e85fd13084cc24b4c62e3196858b3a77f386a6ff9aca8b'
+            '42ac6f4cedddf5696022b1651c8378c2f2c0508f4df981b171325771bd6222dc'
+            '547e8fb50e8256645d09779160d1efb51b1817cb185db3c491fad8a623d33258'
+            'cb762f8d2b971b2c9189c003cd5b59430b1c930e64216a066a5330640a9dbe66'
             '31bbb053b39e29ad7344acf4a325f0e63bb57fac3b7f4c28d5b27f0e175067c4'
             '25e1aac0d44d72e377f08e4f4b90351cffcacc0be63e02a4033cb99f10cc9fe7'
             'c70118659c5cf6a5c7f060c941d46fdd3b1e6d28f2b62c24a941745f2b3c4732'
