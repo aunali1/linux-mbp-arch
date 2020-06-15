@@ -1,39 +1,53 @@
-From a24c049212a6de8374891b872052d1ccccb16ec6 Mon Sep 17 00:00:00 2001
+From 3782d6c018d478ba2af3cedf2d9a877bc68d74c2 Mon Sep 17 00:00:00 2001
 From: Aun-Ali Zaidi <admin@kodeit.net>
-Date: Mon, 11 May 2020 00:17:50 -0500
-Subject: [PATCH] drm/amd/display: Force link_rate as LINK_RATE_RBR2 for Apple
- Retina panels
+Date: Mon, 15 Jun 2020 01:04:37 -0500
+Subject: [PATCH] drm/amd/display: Force link_rate as LINK_RATE_RBR2 for 2018
+ 15" Apple Retina panels
 
 The eDP link rate reported by the DP_MAX_LINK_RATE dpcd register (0xa) is contradictory
 to the highest rate supported reported by EDID (0xc = LINK_RATE_RBR2). The effects of
 this compounded with commit '4a8ca46bae8a ("drm/amd/display: Default max bpc to 16 for eDP")'
 results in no display modes being found and a dark panel.
 
-For now, simply force the maximum supported link rate for the eDP attached
-Apple Retina panel.
+For now, simply force the maximum supported link rate for the eDP attached 2018
+15" Apple Retina panels.
+
+Additionally, we must also check the firwmare revision since the device ID reported
+by the DPCD is identical to that of the more capable 16,1, incorrectly quirking it.
 
 Tested-by: Aun-Ali Zaidi <admin@kodeit.net>
 Signed-off-by: Aun-Ali Zaidi <admin@kodeit.net>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
 diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c b/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
-index fd9e69634c50..eaddb74b36ac 100644
+index fbcd979438e2..a8700ff01503 100644
 --- a/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
 +++ b/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
-@@ -3412,6 +3412,11 @@ static bool retrieve_link_cap(struct dc_link *link)
- 		}
- 	}
+@@ -3465,6 +3465,22 @@ static bool retrieve_link_cap(struct dc_link *link)
+ 		dp_hw_fw_revision.ieee_fw_rev,
+ 		sizeof(dp_hw_fw_revision.ieee_fw_rev));
  
-+	/* Quirk for Apple Retina panels: Wrong DP_MAX_LINK_RATE */
-+	if ((link->dpcd_caps.sink_dev_id == 0x0010fa) &&
-+	     dc_is_embedded_signal(link->connector_signal))
-+		link->reported_link_cap.link_rate = LINK_RATE_RBR2;
++	/* Quirk for Apple MBP 2018 15" Retina panels: wrong DP_MAX_LINK_RATE */
++	{
++		uint8_t str_mbp_2018[] = { 101, 68, 21, 103, 98, 97 };
++		uint8_t fwrev_mbp_2018[] = { 7, 4 };
 +
- 	core_link_read_dpcd(
- 		link,
- 		DP_SINK_HW_REVISION_START,
++		// We also check for the firmware revision as 16,1 models have an
++		// identical device id and are incorrectly quirked otherwise.
++		if ((link->dpcd_caps.sink_dev_id == 0x0010fa) &&
++		    !memcmp(link->dpcd_caps.sink_dev_id_str, str_mbp_2018,
++			     sizeof(str_mbp_2018)) &&
++		    !memcmp(link->dpcd_caps.sink_fw_revision, fwrev_mbp_2018,
++			     sizeof(fwrev_mbp_2018))) {
++			link->reported_link_cap.link_rate = LINK_RATE_RBR2;
++		}
++	}
++
+ 	memset(&link->dpcd_caps.dsc_caps, '\0',
+ 			sizeof(link->dpcd_caps.dsc_caps));
+ 	memset(&link->dpcd_caps.fec_cap, '\0', sizeof(link->dpcd_caps.fec_cap));
 -- 
-2.26.2
+2.27.0
 
