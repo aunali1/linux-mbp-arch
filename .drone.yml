@@ -21,8 +21,6 @@ steps:
     - sudo -u builduser bash -c 'export MAKEFLAGS=-j32 && makepkg -s --noconfirm'
     - ls -lah *.pkg.tar.zst
     - cp *.pkg.tar.zst /tmp/products
-  when:
-    event: tag
 
 - name: sign
   image: plugins/gpgsign
