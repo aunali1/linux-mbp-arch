@@ -2,7 +2,7 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.6.18
+pkgver=5.7.6
 _srcname=linux-${pkgver}
 pkgrel=3
 pkgdesc='Linux for MBP'
@@ -55,9 +55,9 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('1041f4e50b4efaef98fb21de492dc9f612b0a89afa285ac1f7626b61f2f7f132'
+sha256sums=('9fd4c93dc6df53efa904134aa2ede6100f7453c11383490dd32ebbed84f610e6'
             'SKIP'
-            'f1b857254e03ea7ea3427105d791e120c0861bbb6ed6dbcac1aa662fa1780795'
+            '08b0c8b29ca725a84dbc4a2a28d5a09d183069a91402a7b725933d0e5ad2e6ea'
             '8cb21e0b3411327b627a9dd15b8eb773295a0d2782b1a41b2a8839d1b2f5778c'
             'ceb2fda4c029b306d8771e391ce5c31e103c122542fb80db4f052b79f2513301'
             '8e8fb392a95f71ae63df14199b9671a75a7e819e75d54a6e2767d6ea5b86bc6a'
@@ -72,7 +72,7 @@ sha256sums=('1041f4e50b4efaef98fb21de492dc9f612b0a89afa285ac1f7626b61f2f7f132'
             '0318952f59efdce4dc72703adc764940db6fdff184960c27a23a80c3413d8a60'
             'e632f2959efca848fd28acb5e278cc476f8fb54d70ca95272b0a76add47e474e'
             '717f7fc70a3e3fcfa5ffbac505c8259c1d86718ca1ca6593e8925dac3d29a835'
-            '2a496b5e976e8371e5c1fa8e2102c19481fa72bcdc97df7fe224a1aef8c32609')
+            'b0277f01f844cc071b13c29d14a3b8d8d8a1e29184a28228c810724c4f2ba140')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
