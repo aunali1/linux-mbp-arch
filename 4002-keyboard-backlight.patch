@@ -1,5 +1,5 @@
 diff --git a/drivers/hid/hid-apple.c b/drivers/hid/hid-apple.c
-index b1143139599a..73d3c083112e 100644
+index 9c7f68bb0b99..85560293d45e 100644
 --- a/drivers/hid/hid-apple.c
 +++ b/drivers/hid/hid-apple.c
 @@ -7,6 +7,7 @@
@@ -18,7 +18,7 @@ index b1143139599a..73d3c083112e 100644
  
  #define APPLE_FLAG_FKEY		0x01
  
-@@ -51,10 +53,17 @@ MODULE_PARM_DESC(swap_opt_cmd, "Swap the Option (\"Alt\") and Command (\"Flag\")
+@@ -51,11 +53,18 @@ MODULE_PARM_DESC(swap_opt_cmd, "Swap the Option (\"Alt\") and Command (\"Flag\")
  		"(For people who want to keep Windows PC keyboard muscle memory. "
  		"[0] = as-is, Mac layout. 1 = swapped, Windows layout.)");
  
@@ -31,12 +31,13 @@ index b1143139599a..73d3c083112e 100644
  struct apple_sc {
  	unsigned long quirks;
  	unsigned int fn_on;
+ 	unsigned int fn_found;
  	DECLARE_BITMAP(pressed_numlock, KEY_CNT);
 +	struct apple_sc_backlight *backlight;
  };
  
  struct apple_key_translation {
-@@ -162,6 +171,19 @@ static const struct apple_key_translation swapped_option_cmd_keys[] = {
+@@ -163,6 +172,19 @@ static const struct apple_key_translation swapped_option_cmd_keys[] = {
  	{ }
  };
  
@@ -56,7 +57,7 @@ index b1143139599a..73d3c083112e 100644
  static const struct apple_key_translation *apple_find_translation(
  		const struct apple_key_translation *table, u16 from)
  {
-@@ -370,6 +392,101 @@ static int apple_input_mapped(struct hid_device *hdev, struct hid_input *hi,
+@@ -388,6 +410,101 @@ static int apple_input_configured(struct hid_device *hdev,
  	return 0;
  }
  
@@ -158,7 +159,7 @@ index b1143139599a..73d3c083112e 100644
  static int apple_probe(struct hid_device *hdev,
  		const struct hid_device_id *id)
  {
-@@ -405,6 +522,12 @@ static int apple_probe(struct hid_device *hdev,
+@@ -423,6 +540,12 @@ static int apple_probe(struct hid_device *hdev,
  		return ret;
  	}
  
@@ -171,7 +172,7 @@ index b1143139599a..73d3c083112e 100644
  	return 0;
  }
  
-@@ -562,15 +685,15 @@ static const struct hid_device_id apple_devices[] = {
+@@ -580,15 +703,15 @@ static const struct hid_device_id apple_devices[] = {
  	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING9_JIS),
  		.driver_data = APPLE_HAS_FN | APPLE_RDESC_JIS },
  	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING10_T2_A),

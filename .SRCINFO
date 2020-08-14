@@ -1,13 +1,14 @@
 pkgbase = linux-mbp
 	pkgdesc = Linux for MBP
-	pkgver = 5.6.18
-	pkgrel = 4
-	url = https://git.archlinux.org/linux.git/log/?h=vv5.6-18
+	pkgver = 5.7.15
+	pkgrel = 1
+	url = https://git.archlinux.org/linux.git/log/?h=vv5.7-15
 	arch = x86_64
 	license = GPL2
 	makedepends = bc
 	makedepends = kmod
 	makedepends = libelf
+	makedepends = pahole
 	makedepends = xmlto
 	makedepends = python-sphinx
 	makedepends = python-sphinx_rtd_theme
@@ -15,11 +16,13 @@ pkgbase = linux-mbp
 	makedepends = imagemagick
 	makedepends = git
 	options = !strip
-	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.6.18.tar.xz
-	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.6.18.tar.sign
+	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.7.15.tar.xz
+	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.7.15.tar.sign
 	source = config
 	source = sphinx-workaround.patch
 	source = 0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
+	source = 0002-PCI-EDR-Log-only-ACPI_NOTIFY_DISCONNECT_RECOVER-even.patch
+	source = 0003-virt-vbox-Add-support-for-the-new-VBG_IOCTL_ACQUIRE_.patch
 	source = 2001-drm-amd-display-Force-link_rate-as-LINK_RATE_RBR2-fo.patch
 	source = 3001-applesmc-convert-static-structures-to-drvdata.patch
 	source = 3002-applesmc-make-io-port-base-addr-dynamic.patch
@@ -35,11 +38,13 @@ pkgbase = linux-mbp
 	source = wifi.patch
 	validpgpkeys = ABAF11C65A2970B130ABE3C479BE3E4300411886
 	validpgpkeys = 647F28654894E3BD457199BE38DBBDC86092693E
-	sha256sums = 1041f4e50b4efaef98fb21de492dc9f612b0a89afa285ac1f7626b61f2f7f132
+	sha256sums = 0eeb17448973bc591d8dbbfb064a88474e6db148ccc2ccadbbd285c6eb3e5212
 	sha256sums = SKIP
-	sha256sums = f1b857254e03ea7ea3427105d791e120c0861bbb6ed6dbcac1aa662fa1780795
+	sha256sums = 17f81d9d03fbaefeafacfe1fe2f737c8f4dfeccfeb037170523021d9a0354ed7
 	sha256sums = 8cb21e0b3411327b627a9dd15b8eb773295a0d2782b1a41b2a8839d1b2f5778c
-	sha256sums = ceb2fda4c029b306d8771e391ce5c31e103c122542fb80db4f052b79f2513301
+	sha256sums = d831e9dc07901a1ca581afc18a12690fcedc208609a560b6486acfd6b333cf19
+	sha256sums = 72363eb41f7efca92a068f6ba7805a566f58531709c0e3b37357dece562feab6
+	sha256sums = 49363f975a5c5888afad5d2734fb76fe6b49df48a2f49d050f9e50d7dda65289
 	sha256sums = 1c2363d3f577b58c5d6b2b7919b0d77a8615701adc36fdf31d63c46e61c73e01
 	sha256sums = 25e1aac0d44d72e377f08e4f4b90351cffcacc0be63e02a4033cb99f10cc9fe7
 	sha256sums = c70118659c5cf6a5c7f060c941d46fdd3b1e6d28f2b62c24a941745f2b3c4732
@@ -48,11 +53,11 @@ pkgbase = linux-mbp
 	sha256sums = 3c8a361370ed3ee094e2c8af1ff5360fd78f24e387c250904031fb70e8f2bb6e
 	sha256sums = 8e43d95104301913737e5d73860f0e21bb0e5e25dcfd0f16d48a0715b38c98a1
 	sha256sums = e1d72fdb0a7a66a6f3fc8afb6fe056f28cfa088c1cc9c799b93405b62a274b96
-	sha256sums = a6c070d7b7444d711d9cb6b28bccb774228864132ef83dd3a291df3353e85465
+	sha256sums = 6785a219662672430af11fdc650c19bf7d2073ae696247a37635a30f28bcb693
 	sha256sums = 0318952f59efdce4dc72703adc764940db6fdff184960c27a23a80c3413d8a60
 	sha256sums = e632f2959efca848fd28acb5e278cc476f8fb54d70ca95272b0a76add47e474e
 	sha256sums = 717f7fc70a3e3fcfa5ffbac505c8259c1d86718ca1ca6593e8925dac3d29a835
-	sha256sums = 2a496b5e976e8371e5c1fa8e2102c19481fa72bcdc97df7fe224a1aef8c32609
+	sha256sums = 17f11a531e975f401449e5a0e230c596cdaff51c95a9e7b70bc7ce9455a1f0e1
 
 pkgname = linux-mbp
 	pkgdesc = The Linux for MBP kernel and modules
@@ -61,13 +66,13 @@ pkgname = linux-mbp
 	depends = initramfs
 	optdepends = crda: to set the correct wireless channels of your country
 	optdepends = linux-firmware: firmware images needed for some devices
-	provides = linux=5.6.18
+	provides = linux=5.7.15
 	replaces = virtualbox-guest-modules-arch
 	replaces = wireguard-arch
 
 pkgname = linux-mbp-headers
 	pkgdesc = Headers and scripts for building modules for the Linux for MBP kernel
-	provides = linux-headers=5.6.18
+	provides = linux-headers=5.7.15
 
 pkgname = linux-mbp-docs
 	pkgdesc = Documentation for the Linux for MBP kernel
