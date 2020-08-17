@@ -18,10 +18,21 @@ index 9c7f68bb0b99..85560293d45e 100644
  
  #define APPLE_FLAG_FKEY		0x01
  
-@@ -51,11 +53,18 @@ MODULE_PARM_DESC(swap_opt_cmd, "Swap the Option (\"Alt\") and Command (\"Flag\")
+@@ -51,11 +53,29 @@ MODULE_PARM_DESC(swap_opt_cmd, "Swap the Option (\"Alt\") and Command (\"Flag\")
  		"(For people who want to keep Windows PC keyboard muscle memory. "
  		"[0] = as-is, Mac layout. 1 = swapped, Windows layout.)");
  
++static unsigned int swap_fn_leftctrl;
++module_param(swap_fn_leftctrl, uint, 0644);
++MODULE_PARM_DESC(swap_fn_leftctrl, "Swap the Fn and left Control keys. "
++		"(For people who want to keep PC keyboard muscle memory. "
++		"[0] = as-is, Mac layout, 1 = swapped, PC layout)");
++
++static unsigned int rightalt_as_rightctrl;
++module_param(rightalt_as_rightctrl, uint, 0644);
++MODULE_PARM_DESC(rightalt_as_rightctrl, "Use the right Alt key as a right Ctrl key. "
++		"[0] = as-is, Mac layout. 1 = Right Alt is right Ctrl");
++
 +struct apple_sc_backlight {
 +	struct led_classdev cdev;
 +	struct hid_device *hdev;
@@ -37,10 +48,20 @@ index 9c7f68bb0b99..85560293d45e 100644
  };
  
  struct apple_key_translation {
-@@ -163,6 +172,19 @@ static const struct apple_key_translation swapped_option_cmd_keys[] = {
+@@ -163,6 +183,29 @@ static const struct apple_key_translation swapped_option_cmd_keys[] = {
  	{ }
  };
  
++static const struct apple_key_translation swapped_fn_leftctrl_keys[] = {
++	{ KEY_FN, KEY_LEFTCTRL },
++	{ }
++};
++
++static const struct apple_key_translation rightalt_as_rightctrl_keys[] = {
++	{ KEY_RIGHTALT, KEY_RIGHTCTRL },
++	{ }
++};
++
 +struct apple_backlight_config_report {
 +	u8 report_id;
 +	u8 version;
@@ -57,7 +78,61 @@ index 9c7f68bb0b99..85560293d45e 100644
  static const struct apple_key_translation *apple_find_translation(
  		const struct apple_key_translation *table, u16 from)
  {
-@@ -388,6 +410,101 @@ static int apple_input_configured(struct hid_device *hdev,
+@@ -184,9 +227,11 @@
+ 	bool do_translate;
+ 	u16 code = 0;
+
+-	if (usage->code == KEY_FN) {
++    u16 fn_keycode = (swap_fn_leftctrl) ? (KEY_LEFTCTRL) : (KEY_FN);
++
++	if (usage->code == fn_keycode) {
+ 		asc->fn_on = !!value;
+-		input_event(input, usage->type, usage->code, value);
++		input_event(input, usage->type, KEY_FN, value);
+ 		return 1;
+ 	}
+
+@@ -271,7 +316,21 @@
+ 		}
+ 	}
+
+-	return 0;
++    if (rightalt_as_rightctrl) {
++    	trans = apple_find_translation(rightalt_as_rightctrl_keys, usage->code);
++    	if (trans) {
++    		input_event(input, usage->type, trans->to, value);
++    		return 1;
++    	}
++    }
++    if (swap_fn_leftctrl) {
++    	trans = apple_find_translation(swapped_fn_leftctrl_keys, usage->code);
++    	if (trans) {
++    		input_event(input, usage->type, trans->to, value);
++    		return 1;
++    	}
++    }
++    	return 0;
+ }
+
+ static int apple_event(struct hid_device *hdev, struct hid_field *field,
+@@ -334,6 +393,16 @@
+
+ 	for (trans = apple_iso_keyboard; trans->from; trans++)
+ 		set_bit(trans->to, input->keybit);
++
++    if (swap_fn_leftctrl) {
++		for (trans = swapped_fn_leftctrl_keys; trans->from; trans++)
++			set_bit(trans->to, input->keybit);
++	}
++
++	if (rightalt_as_rightctrl) {
++		for (trans = rightalt_as_rightctrl_keys; trans->from; trans++)
++			set_bit(trans->to, input->keybit);
++	}
+ }
+
+ static int apple_input_mapping(struct hid_device *hdev, struct hid_input *hi,
+@@ -388,6 +457,101 @@ static int apple_input_configured(struct hid_device *hdev,
  	return 0;
  }
  
@@ -159,7 +234,7 @@ index 9c7f68bb0b99..85560293d45e 100644
  static int apple_probe(struct hid_device *hdev,
  		const struct hid_device_id *id)
  {
-@@ -423,6 +540,12 @@ static int apple_probe(struct hid_device *hdev,
+@@ -423,6 +587,12 @@ static int apple_probe(struct hid_device *hdev,
  		return ret;
  	}
  
