@@ -52,43 +52,40 @@ steps:
   when:
     event: tag
 
-- name: publish-server
-  image: appleboy/drone-scp
+- name: publish-repo
+  image: archlinux
+  pull: always
   volumes:
     - name: build-products
       path: /tmp/products
-  settings:
-    host: tel.aunali1.com
-    username:
-      from_secret: ingress_user
-    key:
-      from_secret: ingress_key
-    port: 22
-    rm: true
-    strip_components: 2
-    target: /srv/storage/ingress/mbp
-    source:
-      - /tmp/products/*
-  when:
-    event: tag
-
-- name: update-repo
-  image: appleboy/drone-ssh
-  volumes:
-    - name: build-products
-      path: /tmp/products
-  settings:
-    host: tel.aunali1.com
-    username:
-      from_secret: ingress_user
-    key:
-      from_secret: ingress_key
-    port: 22
-    script:
-      - ./update_mbp_repo.sh
+    - name: temp-repo
+      path: /tmp/repo
+  environment:
+    S3_ACCESS_ID:
+      from_secret: s3_access_id
+    S3_SECRET:
+      from_secret: s3_secret
+    S3_REGION
+      from_secret: s3_region
+    S3_HOST:
+      from_secret: s3_host
+    S3_BUCKET_HOST:
+      from_secret: s3_bucket_host
+    S3_BUCKET:
+      from_secret: s3_bucket
+  commands:
+    - pacman --noconfirm -Syyu
+    - pacman --noconfirm -S pacman-tools s3cmd
+    - s3cmd -s --region=${S3_REGION} --host=${S3_HOST} --host-bucket="${S3_BUCKET_HOST}" --access_key="${S3_ACCESS_ID}" --secret_key="${S3_SECRET}" sync --follow-symlinks s3://${S3_BUCKET}/archlinux/mbp/x86_64/ /tmp/repo/
+    - mv /tmp/products/* /tmp/repo/
+    - cd /tmp/repo/
+    - repo-add -n -R -p $PWD/mbp.db.tar.gz *.pkg.tar.zst* *.pkg.tar.xz*
+    - s3cmd -s --region=${S3_REGION} --host=${S3_HOST} --host-bucket="${S3_BUCKET_HOST}" --access_key="${S3_ACCESS_ID}" --secret_key="${S3_SECRET}" sync --follow-symlinks --delete-removed /tmp/repo/ s3://${S3_BUCKET}/archlinux/mbp/x86_64/
   when:
     event: tag
 
 volumes:
 - name: build-products
+  temp: {}
+- name: temp-repo
   temp: {}
