@@ -4,7 +4,7 @@
 pkgbase=linux-mbp
 pkgver=5.7.15
 _srcname=linux-${pkgver}
-pkgrel=3
+pkgrel=4
 pkgdesc='Linux for MBP'
 _srctag=v${pkgver%.*}-${pkgver##*.}
 url="https://git.archlinux.org/linux.git/log/?h=v$_srctag"
@@ -48,8 +48,8 @@ source=(
   5002-brcmfmac-Add-ability-to-manually-specify-FW-rambase-.patch
 
   # MBP Peripheral support
-  camera.patch   # UVC Camera support
-  wifi.patch     # Broadcom Wifi support  
+  6001-media-uvcvideo-Add-support-for-Apple-T2-attached-iSi.patch	# UVC Camera support
+  wifi.patch								# Broadcom Wifi support
 )
 
 validpgpkeys=(
@@ -75,7 +75,7 @@ sha256sums=('0eeb17448973bc591d8dbbfb064a88474e6db148ccc2ccadbbd285c6eb3e5212'
             '6785a219662672430af11fdc650c19bf7d2073ae696247a37635a30f28bcb693'
             '0318952f59efdce4dc72703adc764940db6fdff184960c27a23a80c3413d8a60'
             'e632f2959efca848fd28acb5e278cc476f8fb54d70ca95272b0a76add47e474e'
-            '717f7fc70a3e3fcfa5ffbac505c8259c1d86718ca1ca6593e8925dac3d29a835'
+            'eb5134e6b7415528547120e661aa58d7125cc657e982c924989d7a63d253d85e'
             '17f11a531e975f401449e5a0e230c596cdaff51c95a9e7b70bc7ce9455a1f0e1')
 
 export KBUILD_BUILD_HOST=archlinux
