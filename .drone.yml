@@ -65,7 +65,7 @@ steps:
       from_secret: s3_access_id
     S3_SECRET:
       from_secret: s3_secret
-    S3_REGION
+    S3_REGION:
       from_secret: s3_region
     S3_HOST:
       from_secret: s3_host
