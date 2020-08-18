@@ -76,11 +76,11 @@ steps:
   commands:
     - pacman --noconfirm -Syyu
     - pacman --noconfirm --needed -S base s3cmd
-    - s3cmd -s --region=${S3_REGION} --host=${S3_HOST} --host-bucket="${S3_BUCKET_HOST}" --access_key="${S3_ACCESS_ID}" --secret_key="${S3_SECRET}" sync --follow-symlinks s3://${S3_BUCKET}/archlinux/mbp/x86_64/ /tmp/repo/
+    - s3cmd -s --region=$S3_REGION --host=$S3_HOST --host-bucket="$S3_BUCKET_HOST" --access_key=$S3_ACCESS_ID --secret_key=$S3_SECRET sync --follow-symlinks s3://$S3_BUCKET/archlinux/mbp/x86_64/ /tmp/repo/
     - mv /tmp/products/* /tmp/repo/
     - cd /tmp/repo/
     - repo-add -n -R -p $PWD/mbp.db.tar.gz *.pkg.tar.zst* *.pkg.tar.xz*
-    - s3cmd -s --region=${S3_REGION} --host=${S3_HOST} --host-bucket="${S3_BUCKET_HOST}" --access_key="${S3_ACCESS_ID}" --secret_key="${S3_SECRET}" sync --follow-symlinks --delete-removed /tmp/repo/ s3://${S3_BUCKET}/archlinux/mbp/x86_64/
+    - s3cmd -s --region=$S3_REGION --host=$S3_HOST --host-bucket="$S3_BUCKET_HOST" --access_key=$S3_ACCESS_ID --secret_key=$S3_SECRET sync --follow-symlinks --delete-removed /tmp/repo/ s3://$S3_BUCKET/archlinux/mbp/x86_64/
   when:
     event: tag
 

@@ -4,7 +4,7 @@
 pkgbase=linux-mbp
 pkgver=5.7.15
 _srcname=linux-${pkgver}
-pkgrel=4
+pkgrel=5
 pkgdesc='Linux for MBP'
 _srctag=v${pkgver%.*}-${pkgver##*.}
 url="https://git.archlinux.org/linux.git/log/?h=v$_srctag"
