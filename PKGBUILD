@@ -2,9 +2,9 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.7.15
+pkgver=5.7.17
 _srcname=linux-${pkgver}
-pkgrel=6
+pkgrel=1
 pkgdesc='Linux for MBP'
 _srctag=v${pkgver%.*}-${pkgver##*.}
 url="https://git.archlinux.org/linux.git/log/?h=v$_srctag"
@@ -57,7 +57,7 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('0eeb17448973bc591d8dbbfb064a88474e6db148ccc2ccadbbd285c6eb3e5212'
+sha256sums=('cc8c3611c9bdcd29266b2606ab6c3a07a32fb64fd7f1cd731100e4eddb565225'
             'SKIP'
             '17f81d9d03fbaefeafacfe1fe2f737c8f4dfeccfeb037170523021d9a0354ed7'
             '8cb21e0b3411327b627a9dd15b8eb773295a0d2782b1a41b2a8839d1b2f5778c'

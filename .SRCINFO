@@ -1,8 +1,8 @@
 pkgbase = linux-mbp
 	pkgdesc = Linux for MBP
-	pkgver = 5.7.15
-	pkgrel = 6
-	url = https://git.archlinux.org/linux.git/log/?h=vv5.7-15
+	pkgver = 5.7.17
+	pkgrel = 1
+	url = https://git.archlinux.org/linux.git/log/?h=vv5.7-17
 	arch = x86_64
 	license = GPL2
 	makedepends = bc
@@ -16,8 +16,8 @@ pkgbase = linux-mbp
 	makedepends = imagemagick
 	makedepends = git
 	options = !strip
-	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.7.15.tar.xz
-	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.7.15.tar.sign
+	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.7.17.tar.xz
+	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.7.17.tar.sign
 	source = config
 	source = sphinx-workaround.patch
 	source = 0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
@@ -38,7 +38,7 @@ pkgbase = linux-mbp
 	source = wifi.patch
 	validpgpkeys = ABAF11C65A2970B130ABE3C479BE3E4300411886
 	validpgpkeys = 647F28654894E3BD457199BE38DBBDC86092693E
-	sha256sums = 0eeb17448973bc591d8dbbfb064a88474e6db148ccc2ccadbbd285c6eb3e5212
+	sha256sums = cc8c3611c9bdcd29266b2606ab6c3a07a32fb64fd7f1cd731100e4eddb565225
 	sha256sums = SKIP
 	sha256sums = 17f81d9d03fbaefeafacfe1fe2f737c8f4dfeccfeb037170523021d9a0354ed7
 	sha256sums = 8cb21e0b3411327b627a9dd15b8eb773295a0d2782b1a41b2a8839d1b2f5778c
@@ -66,13 +66,13 @@ pkgname = linux-mbp
 	depends = initramfs
 	optdepends = crda: to set the correct wireless channels of your country
 	optdepends = linux-firmware: firmware images needed for some devices
-	provides = linux=5.7.15
+	provides = linux=5.7.17
 	replaces = virtualbox-guest-modules-arch
 	replaces = wireguard-arch
 
 pkgname = linux-mbp-headers
 	pkgdesc = Headers and scripts for building modules for the Linux for MBP kernel
-	provides = linux-headers=5.7.15
+	provides = linux-headers=5.7.17
 
 pkgname = linux-mbp-docs
 	pkgdesc = Documentation for the Linux for MBP kernel
