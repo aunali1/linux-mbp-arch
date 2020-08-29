@@ -1,8 +1,8 @@
 diff --git a/drivers/hid/hid-apple.c b/drivers/hid/hid-apple.c
-index 6ac8becc2372..b1143139599a 100644
+index 6909c045f..9c7f68bb0 100644
 --- a/drivers/hid/hid-apple.c
 +++ b/drivers/hid/hid-apple.c
-@@ -561,6 +561,16 @@ static const struct hid_device_id apple_devices[] = {
+@@ -579,6 +579,16 @@ static const struct hid_device_id apple_devices[] = {
  		.driver_data = APPLE_HAS_FN },
  	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING9_JIS),
  		.driver_data = APPLE_HAS_FN | APPLE_RDESC_JIS },
@@ -20,7 +20,7 @@ index 6ac8becc2372..b1143139599a 100644
  		.driver_data = APPLE_NUMLOCK_EMULATION | APPLE_HAS_FN },
  	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_ALU_WIRELESS_2009_ISO),
 diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 3a400ce603c4..d7c678017b12 100644
+index 047abf731..1f2d14649 100644
 --- a/drivers/hid/hid-ids.h
 +++ b/drivers/hid/hid-ids.h
 @@ -168,6 +168,11 @@
@@ -36,10 +36,10 @@ index 3a400ce603c4..d7c678017b12 100644
  #define USB_DEVICE_ID_APPLE_GEYSER1_TP_ONLY	0x030b
  #define USB_DEVICE_ID_APPLE_IRCONTROL	0x8240
 diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index 0e7b2d998395..ba9c0dcbea9e 100644
+index 934fc0a79..f158a1f7f 100644
 --- a/drivers/hid/hid-quirks.c
 +++ b/drivers/hid/hid-quirks.c
-@@ -274,6 +274,11 @@ static const struct hid_device_id hid_have_special_driver[] = {
+@@ -278,6 +278,11 @@ static const struct hid_device_id hid_have_special_driver[] = {
  	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING9_ANSI) },
  	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING9_ISO) },
  	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING9_JIS) },
@@ -51,7 +51,7 @@ index 0e7b2d998395..ba9c0dcbea9e 100644
  	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_ALU_WIRELESS_2009_ANSI) },
  	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_ALU_WIRELESS_2009_ISO) },
  	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_ALU_WIRELESS_2009_JIS) },
-@@ -908,6 +913,11 @@ static const struct hid_device_id hid_mouse_ignore_list[] = {
+@@ -910,6 +915,11 @@ static const struct hid_device_id hid_mouse_ignore_list[] = {
  	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING9_ANSI) },
  	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING9_ISO) },
  	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING9_JIS) },
@@ -64,7 +64,7 @@ index 0e7b2d998395..ba9c0dcbea9e 100644
  	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_GEYSER1_TP_ONLY) },
  	{ }
 diff --git a/drivers/input/mouse/bcm5974.c b/drivers/input/mouse/bcm5974.c
-index 59a14505b9cd..63ab0b804a94 100644
+index 59a14505b..63ab0b804 100644
 --- a/drivers/input/mouse/bcm5974.c
 +++ b/drivers/input/mouse/bcm5974.c
 @@ -82,6 +82,17 @@

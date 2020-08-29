@@ -24,10 +24,10 @@ Signed-off-by: Aun-Ali Zaidi <admin@kodeit.net>
  1 file changed, 19 insertions(+)
 
 diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c b/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
-index fbcd979438e2..8f78f9928df6 100644
+index caa090d0b..12dca2ecd 100644
 --- a/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
 +++ b/drivers/gpu/drm/amd/display/dc/core/dc_link_dp.c
-@@ -3465,6 +3465,25 @@ static bool retrieve_link_cap(struct dc_link *link)
+@@ -3505,6 +3505,25 @@ static bool retrieve_link_cap(struct dc_link *link)
  		dp_hw_fw_revision.ieee_fw_rev,
  		sizeof(dp_hw_fw_revision.ieee_fw_rev));
  
