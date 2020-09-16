@@ -4,7 +4,7 @@
 pkgbase=linux-mbp
 pkgver=5.7.19
 _srcname=linux-${pkgver}
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux for MBP'
 _srctag=v${pkgver%.*}-${pkgver##*.}
 url="https://git.archlinux.org/linux.git/log/?h=v$_srctag"
@@ -50,6 +50,9 @@ source=(
   # MBP Peripheral support
   6001-media-uvcvideo-Add-support-for-Apple-T2-attached-iSi.patch	# UVC Camera support
   wifi.patch								# Broadcom Wifi support
+
+  # Hack for i915 overscan issues
+  7001-drm-i915-fbdev-Discard-BIOS-framebuffers-exceeding-h.patch
 )
 
 validpgpkeys=(
@@ -76,7 +79,8 @@ sha256sums=('419c6248b9ae4dfead4599787aecbfd202e88bc4124523adfa6dd2d642b99fe7'
             '0318952f59efdce4dc72703adc764940db6fdff184960c27a23a80c3413d8a60'
             'e632f2959efca848fd28acb5e278cc476f8fb54d70ca95272b0a76add47e474e'
             'eb5134e6b7415528547120e661aa58d7125cc657e982c924989d7a63d253d85e'
-            '17f11a531e975f401449e5a0e230c596cdaff51c95a9e7b70bc7ce9455a1f0e1')
+            '17f11a531e975f401449e5a0e230c596cdaff51c95a9e7b70bc7ce9455a1f0e1'
+            'c00e29fc39848422049faa341134c236589a7f1c9654695fd19fd5d4f031c1b5')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase

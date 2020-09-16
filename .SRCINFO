@@ -1,7 +1,7 @@
 pkgbase = linux-mbp
 	pkgdesc = Linux for MBP
 	pkgver = 5.7.19
-	pkgrel = 1
+	pkgrel = 2
 	url = https://git.archlinux.org/linux.git/log/?h=vv5.7-19
 	arch = x86_64
 	license = GPL2
@@ -36,6 +36,7 @@ pkgbase = linux-mbp
 	source = 5002-brcmfmac-Add-ability-to-manually-specify-FW-rambase-.patch
 	source = 6001-media-uvcvideo-Add-support-for-Apple-T2-attached-iSi.patch
 	source = wifi.patch
+	source = 7001-drm-i915-fbdev-Discard-BIOS-framebuffers-exceeding-h.patch
 	validpgpkeys = ABAF11C65A2970B130ABE3C479BE3E4300411886
 	validpgpkeys = 647F28654894E3BD457199BE38DBBDC86092693E
 	sha256sums = 419c6248b9ae4dfead4599787aecbfd202e88bc4124523adfa6dd2d642b99fe7
@@ -58,6 +59,7 @@ pkgbase = linux-mbp
 	sha256sums = e632f2959efca848fd28acb5e278cc476f8fb54d70ca95272b0a76add47e474e
 	sha256sums = eb5134e6b7415528547120e661aa58d7125cc657e982c924989d7a63d253d85e
 	sha256sums = 17f11a531e975f401449e5a0e230c596cdaff51c95a9e7b70bc7ce9455a1f0e1
+	sha256sums = c00e29fc39848422049faa341134c236589a7f1c9654695fd19fd5d4f031c1b5
 
 pkgname = linux-mbp
 	pkgdesc = The Linux for MBP kernel and modules
