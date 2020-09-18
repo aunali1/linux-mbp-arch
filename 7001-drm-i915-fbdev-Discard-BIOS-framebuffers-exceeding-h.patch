@@ -1,4 +1,4 @@
-From 506daf9b9e8b62789a2b1ca73e22a80b345aad0a Mon Sep 17 00:00:00 2001
+From 155bb242ee7f4e177386fbdec565db6d4a173d5e Mon Sep 17 00:00:00 2001
 From: Aun-Ali Zaidi <admin@kodeit.net>
 Date: Wed, 16 Sep 2020 18:31:10 -0500
 Subject: [PATCH] drm/i915/fbdev: Discard BIOS framebuffers exceeding hardware
@@ -12,25 +12,29 @@ to include the upper bound case.
 
 Signed-off-by: Aun-Ali Zaidi <admin@kodeit.net>
 ---
- drivers/gpu/drm/i915/display/intel_fbdev.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_fbdev.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/gpu/drm/i915/display/intel_fbdev.c b/drivers/gpu/drm/i915/display/intel_fbdev.c
-index 3bc804212a99..fc385d067d2f 100644
+index bd39eb6a21b8..1949526cbe20 100644
 --- a/drivers/gpu/drm/i915/display/intel_fbdev.c
 +++ b/drivers/gpu/drm/i915/display/intel_fbdev.c
-@@ -182,8 +182,10 @@ static int intelfb_create(struct drm_fb_helper *helper,
+@@ -181,10 +181,12 @@ static int intelfb_create(struct drm_fb_helper *helper,
+ 	int ret;
  
  	if (intel_fb &&
- 	    (sizes->fb_width > intel_fb->base.width ||
-+	     sizes->fb_height > intel_fb->base.height) ||
-+	    (sizes->fb_width < intel_fb->base.width ||
- 	     sizes->fb_height > intel_fb->base.height)) {
--		DRM_DEBUG_KMS("BIOS fb too small (%dx%d), we require (%dx%d),"
-+		DRM_DEBUG_KMS("BIOS fb invalid size (%dx%d), we require (%dx%d),"
- 			      " releasing it\n",
- 			      intel_fb->base.width, intel_fb->base.height,
- 			      sizes->fb_width, sizes->fb_height);
+-	    (sizes->fb_width > intel_fb->base.width ||
+-	     sizes->fb_height > intel_fb->base.height)) {
++	    ((sizes->fb_width > intel_fb->base.width ||
++	      sizes->fb_height > intel_fb->base.height) ||
++	     (sizes->fb_width < intel_fb->base.width ||
++	      sizes->fb_height < intel_fb->base.height))) {
+ 		drm_dbg_kms(&dev_priv->drm,
+-			    "BIOS fb too small (%dx%d), we require (%dx%d),"
++			    "BIOS fb invalid size (%dx%d), we require (%dx%d),"
+ 			    " releasing it\n",
+ 			    intel_fb->base.width, intel_fb->base.height,
+ 			    sizes->fb_width, sizes->fb_height);
 -- 
 2.28.0
 
