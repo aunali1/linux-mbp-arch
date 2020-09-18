@@ -1,4 +1,4 @@
-From 33db2e7a245cb25b63d010e369bba3a9e8b65bb4 Mon Sep 17 00:00:00 2001
+From 81877b47876b87e9546262c9562f1bb2c81e64c8 Mon Sep 17 00:00:00 2001
 From: Paul Pawlowski <paul@mrarm.io>
 Date: Sun, 17 Nov 2019 23:12:18 +0100
 Subject: [PATCH 6/6] applesmc: fan support on T2 Macs
@@ -13,11 +13,11 @@ A minimal soft-float implementation has been
 written for convert floats to integers (and vice
 versa).
 ---
- drivers/hwmon/applesmc.c | 115 +++++++++++++++++++++++++++++++++------
- 1 file changed, 98 insertions(+), 17 deletions(-)
+ drivers/hwmon/applesmc.c | 116 +++++++++++++++++++++++++++++++++------
+ 1 file changed, 99 insertions(+), 17 deletions(-)
 
 diff --git a/drivers/hwmon/applesmc.c b/drivers/hwmon/applesmc.c
-index 0cb095ef41a1..9106aea71323 100644
+index 3d502a131bab..ac3e1eb734a6 100644
 --- a/drivers/hwmon/applesmc.c
 +++ b/drivers/hwmon/applesmc.c
 @@ -83,6 +83,7 @@
@@ -36,7 +36,7 @@ index 0cb095ef41a1..9106aea71323 100644
  
  #define INIT_TIMEOUT_MSECS	5000	/* wait up to 5s for device init ... */
  #define INIT_WAIT_MSECS		50	/* ... in 50ms increments */
-@@ -678,6 +680,37 @@ static int applesmc_read_s16(struct applesmc_device *smc,
+@@ -684,6 +686,37 @@ static int applesmc_read_s16(struct applesmc_device *smc,
  	return 0;
  }
  
@@ -74,7 +74,7 @@ index 0cb095ef41a1..9106aea71323 100644
  /*
   * applesmc_device_init - initialize the accelerometer.  Can sleep.
   */
-@@ -1180,6 +1213,7 @@ static ssize_t applesmc_show_fan_speed(struct device *dev,
+@@ -1189,6 +1222,7 @@ static ssize_t applesmc_show_fan_speed(struct device *dev,
  				struct device_attribute *attr, char *sysfsbuf)
  {
  	struct applesmc_device *smc = dev_get_drvdata(dev);
@@ -82,12 +82,11 @@ index 0cb095ef41a1..9106aea71323 100644
  	int ret;
  	unsigned int speed = 0;
  	char newkey[5];
-@@ -1188,8 +1222,18 @@ static ssize_t applesmc_show_fan_speed(struct device *dev,
+@@ -1197,11 +1231,22 @@ static ssize_t applesmc_show_fan_speed(struct device *dev,
  	scnprintf(newkey, sizeof(newkey), fan_speed_fmt[to_option(attr)],
  		  to_index(attr));
  
 -	ret = applesmc_read_key(smc, newkey, buffer, 2);
--	speed = ((buffer[0] << 8 | buffer[1]) >> 2);
 +	ent = applesmc_get_entry_by_key(smc, newkey);
 +	if (IS_ERR(ent)) {
 +		return PTR_ERR(ent);
@@ -100,10 +99,15 @@ index 0cb095ef41a1..9106aea71323 100644
 +		ret = applesmc_read_entry(smc, ent, buffer, 2);
 +		speed = ((buffer[0] << 8 | buffer[1]) >> 2);
 +	}
- 
++
  	if (ret)
  		return ret;
-@@ -1202,6 +1246,7 @@ static ssize_t applesmc_store_fan_speed(struct device *dev,
+ 
+-	speed = ((buffer[0] << 8 | buffer[1]) >> 2);
+ 	return snprintf(sysfsbuf, PAGE_SIZE, "%u\n", speed);
+ }
+ 
+@@ -1210,6 +1255,7 @@ static ssize_t applesmc_store_fan_speed(struct device *dev,
  					const char *sysfsbuf, size_t count)
  {
  	struct applesmc_device *smc = dev_get_drvdata(dev);
@@ -111,7 +115,7 @@ index 0cb095ef41a1..9106aea71323 100644
  	int ret;
  	unsigned long speed;
  	char newkey[5];
-@@ -1213,9 +1258,19 @@ static ssize_t applesmc_store_fan_speed(struct device *dev,
+@@ -1221,9 +1267,19 @@ static ssize_t applesmc_store_fan_speed(struct device *dev,
  	scnprintf(newkey, sizeof(newkey), fan_speed_fmt[to_option(attr)],
  		  to_index(attr));
  
@@ -134,15 +138,13 @@ index 0cb095ef41a1..9106aea71323 100644
  
  	if (ret)
  		return ret;
-@@ -1230,9 +1285,22 @@ static ssize_t applesmc_show_fan_manual(struct device *dev,
+@@ -1238,12 +1294,26 @@ static ssize_t applesmc_show_fan_manual(struct device *dev,
  	int ret;
  	u16 manual = 0;
  	u8 buffer[2];
 +	char newkey[5];
 +	bool has_newkey = false;
- 
--	ret = applesmc_read_key(smc, FANS_MANUAL, buffer, 2);
--	manual = ((buffer[0] << 8 | buffer[1]) >> to_index(attr)) & 0x01;
++
 +	scnprintf(newkey, sizeof(newkey), FAN_MANUAL_FMT, to_index(attr));
 +
 +	ret = applesmc_has_key(smc, newkey, &has_newkey);
@@ -157,9 +159,15 @@ index 0cb095ef41a1..9106aea71323 100644
 +		manual = ((buffer[0] << 8 | buffer[1]) >> to_index(attr)) & 0x01;
 +	}
  
+-	ret = applesmc_read_key(smc, FANS_MANUAL, buffer, 2);
  	if (ret)
  		return ret;
-@@ -1247,26 +1315,39 @@ static ssize_t applesmc_store_fan_manual(struct device *dev,
+ 
+-	manual = ((buffer[0] << 8 | buffer[1]) >> to_index(attr)) & 0x01;
+ 	return snprintf(sysfsbuf, PAGE_SIZE, "%d\n", manual);
+ }
+ 
+@@ -1254,27 +1324,39 @@ static ssize_t applesmc_store_fan_manual(struct device *dev,
  	struct applesmc_device *smc = dev_get_drvdata(dev);
  	int ret;
  	u8 buffer[2];
@@ -172,7 +180,6 @@ index 0cb095ef41a1..9106aea71323 100644
  		return -EINVAL;
  
 -	ret = applesmc_read_key(smc, FANS_MANUAL, buffer, 2);
--	val = (buffer[0] << 8 | buffer[1]);
 +	scnprintf(newkey, sizeof(newkey), FAN_MANUAL_FMT, to_index(attr));
 +
 +	ret = applesmc_has_key(smc, newkey, &has_newkey);
@@ -180,10 +187,7 @@ index 0cb095ef41a1..9106aea71323 100644
 -		goto out;
 +		return ret;
  
--	if (input)
--		val = val | (0x01 << to_index(attr));
--	else
--		val = val & ~(0x01 << to_index(attr));
+-	val = (buffer[0] << 8 | buffer[1]);
 +	if (has_newkey) {
 +		buffer[0] = input & 1;
 +		ret = applesmc_write_key(smc, newkey, buffer, 1);
@@ -192,7 +196,11 @@ index 0cb095ef41a1..9106aea71323 100644
 +		val = (buffer[0] << 8 | buffer[1]);
 +		if (ret)
 +			goto out;
-+
+ 
+-	if (input)
+-		val = val | (0x01 << to_index(attr));
+-	else
+-		val = val & ~(0x01 << to_index(attr));
 +		if (input)
 +			val = val | (0x01 << to_index(attr));
 +		else
@@ -210,5 +218,5 @@ index 0cb095ef41a1..9106aea71323 100644
  out:
  	if (ret)
 -- 
-2.25.0
+2.28.0
 

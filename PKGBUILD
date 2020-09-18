@@ -2,9 +2,9 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.7.19
+pkgver=5.8.10
 _srcname=linux-${pkgver}
-pkgrel=2
+pkgrel=1
 pkgdesc='Linux for MBP'
 _srctag=v${pkgver%.*}-${pkgver##*.}
 url="https://git.archlinux.org/linux.git/log/?h=v$_srctag"
@@ -25,8 +25,7 @@ source=(
 
   # Arch Linux patches
   0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
-  0002-PCI-EDR-Log-only-ACPI_NOTIFY_DISCONNECT_RECOVER-even.patch
-  0003-virt-vbox-Add-support-for-the-new-VBG_IOCTL_ACQUIRE_.patch
+  0002-virt-vbox-Add-support-for-the-new-VBG_IOCTL_ACQUIRE_.patch
 
   # Hack for AMD DC eDP link rate bug
   2001-drm-amd-display-Force-link_rate-as-LINK_RATE_RBR2-fo.patch
@@ -60,20 +59,19 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('419c6248b9ae4dfead4599787aecbfd202e88bc4124523adfa6dd2d642b99fe7'
+sha256sums=('9d6e126a7fad618a477540e242f148f7d61e0116b500312f788ac63e126b5af2'
             'SKIP'
-            '17f81d9d03fbaefeafacfe1fe2f737c8f4dfeccfeb037170523021d9a0354ed7'
+            '6bb39f69df2a82dd8992ebce9967d8f19e741c1851ac97571e55dceb46d61d52'
             '8cb21e0b3411327b627a9dd15b8eb773295a0d2782b1a41b2a8839d1b2f5778c'
-            'd831e9dc07901a1ca581afc18a12690fcedc208609a560b6486acfd6b333cf19'
-            '72363eb41f7efca92a068f6ba7805a566f58531709c0e3b37357dece562feab6'
-            '49363f975a5c5888afad5d2734fb76fe6b49df48a2f49d050f9e50d7dda65289'
+            '227660f321e60d76e9e33f957f0d7eeb4a49a485c14a9da493f3e18b6f3a00fe'
+            '96c9359ad7e648f4f75ecae7aa3d116282b3afe39f66eecc4fd337e3633a9701'
             '1c2363d3f577b58c5d6b2b7919b0d77a8615701adc36fdf31d63c46e61c73e01'
-            '25e1aac0d44d72e377f08e4f4b90351cffcacc0be63e02a4033cb99f10cc9fe7'
-            'c70118659c5cf6a5c7f060c941d46fdd3b1e6d28f2b62c24a941745f2b3c4732'
-            '3855aa07fab97d202900216951225b6952d7c716258a3c3727df8e6277289ee0'
-            '9e5e0b45fe007ed214049b26b44174ee8f61376076e80fd33bba9fdac001e157'
-            '3c8a361370ed3ee094e2c8af1ff5360fd78f24e387c250904031fb70e8f2bb6e'
-            '8e43d95104301913737e5d73860f0e21bb0e5e25dcfd0f16d48a0715b38c98a1'
+            '3b9bfb4a0eaad6b0a6048586388f25ef0af0f5fbfe0251ca2bc205bc43efeda9'
+            'a458def709e61ecf770dbbabc819e04a597a9121ddae6a289f830891945ac821'
+            'b293594d9bccf380790979e79c1114425544dcd65ce3907aa3566d1b665b4e7b'
+            '2c8aaff9cca52535efd3fb4b6f31eb69f8ab403aced2552fcfd5771e247640d9'
+            'f42c1d0f6a29117644219a34ebb7b3c008a32a8f87103cf6e138e750806c9f5b'
+            'dcd8d0209e228b7e9bf9e3e922731abeb03dc9f074df34b147fc419e6adc6e63'
             'e1d72fdb0a7a66a6f3fc8afb6fe056f28cfa088c1cc9c799b93405b62a274b96'
             '6785a219662672430af11fdc650c19bf7d2073ae696247a37635a30f28bcb693'
             '0318952f59efdce4dc72703adc764940db6fdff184960c27a23a80c3413d8a60'

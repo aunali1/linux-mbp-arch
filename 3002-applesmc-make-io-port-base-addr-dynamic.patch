@@ -1,4 +1,4 @@
-From d5ed50c64ea3b02207c4e1de961c019b974d008d Mon Sep 17 00:00:00 2001
+From ccfc286b24936704e000f741a7ff9bd45df81080 Mon Sep 17 00:00:00 2001
 From: Paul Pawlowski <paul@mrarm.io>
 Date: Sun, 17 Nov 2019 23:11:56 +0100
 Subject: [PATCH 2/6] applesmc: make io port base addr dynamic
@@ -10,11 +10,11 @@ acpi_device we can resolve the port base addr from ACPI.
 This change is not strictly required for T2 support - the base
 address is still 0x300 on T2 Macs.
 ---
- drivers/hwmon/applesmc.c | 72 ++++++++++++++++++++++------------------
- 1 file changed, 39 insertions(+), 33 deletions(-)
+ drivers/hwmon/applesmc.c | 70 ++++++++++++++++++++++------------------
+ 1 file changed, 38 insertions(+), 32 deletions(-)
 
 diff --git a/drivers/hwmon/applesmc.c b/drivers/hwmon/applesmc.c
-index b890eec4b9cd..975e7bdc3299 100644
+index 000ea53bce0d..0b4e8b6b2557 100644
 --- a/drivers/hwmon/applesmc.c
 +++ b/drivers/hwmon/applesmc.c
 @@ -34,10 +34,11 @@
@@ -40,42 +40,38 @@ index b890eec4b9cd..975e7bdc3299 100644
  	s16 rest_x;
  	s16 rest_y;
  
-@@ -161,13 +164,13 @@ static const int debug;
+@@ -161,7 +164,7 @@ static const int debug;
   * wait_read - Wait for a byte to appear on SMC port. Callers must
   * hold applesmc_lock.
   */
 -static int wait_read(void)
 +static int wait_read(struct applesmc_device *smc)
  {
+ 	unsigned long end = jiffies + (APPLESMC_MAX_WAIT * HZ) / USEC_PER_SEC;
  	u8 status;
- 	int us;
+@@ -169,7 +172,7 @@ static int wait_read(void)
+ 
  	for (us = APPLESMC_MIN_WAIT; us < APPLESMC_MAX_WAIT; us <<= 1) {
- 		udelay(us);
+ 		usleep_range(us, us * 16);
 -		status = inb(APPLESMC_CMD_PORT);
 +		status = inb(smc->port_base + APPLESMC_CMD_PORT);
  		/* read: wait for smc to settle */
  		if (status & 0x01)
  			return 0;
-@@ -181,15 +184,15 @@ static int wait_read(void)
-  * send_byte - Write to SMC port, retrying when necessary. Callers
-  * must hold applesmc_lock.
-  */
--static int send_byte(u8 cmd, u16 port)
-+static int send_byte(struct applesmc_device *smc, u8 cmd, u16 port)
- {
- 	u8 status;
+@@ -192,10 +195,10 @@ static int send_byte(u8 cmd, u16 port)
  	int us;
+ 	unsigned long end = jiffies + (APPLESMC_MAX_WAIT * HZ) / USEC_PER_SEC;
  
 -	outb(cmd, port);
 +	outb(cmd, smc->port_base + port);
  	for (us = APPLESMC_MIN_WAIT; us < APPLESMC_MAX_WAIT; us <<= 1) {
- 		udelay(us);
+ 		usleep_range(us, us * 16);
 -		status = inb(APPLESMC_CMD_PORT);
 +		status = inb(smc->port_base + APPLESMC_CMD_PORT);
  		/* write: wait for smc to settle */
  		if (status & 0x02)
  			continue;
-@@ -201,59 +204,60 @@ static int send_byte(u8 cmd, u16 port)
+@@ -207,59 +210,60 @@ static int send_byte(u8 cmd, u16 port)
  			break;
  		/* busy: long wait and resend */
  		udelay(APPLESMC_RETRY_WAIT);
@@ -148,7 +144,7 @@ index b890eec4b9cd..975e7bdc3299 100644
  	}
  	if (i)
  		pr_warn("flushed %d bytes, last value is: %d\n", i, data);
-@@ -261,22 +265,23 @@ static int read_smc(u8 cmd, const char *key, u8 *buffer, u8 len)
+@@ -267,22 +271,23 @@ static int read_smc(u8 cmd, const char *key, u8 *buffer, u8 len)
  	return 0;
  }
  
@@ -176,7 +172,7 @@ index b890eec4b9cd..975e7bdc3299 100644
  			pr_warn("%s: write data fail\n", key);
  			return -EIO;
  		}
-@@ -285,12 +290,13 @@ static int write_smc(u8 cmd, const char *key, const u8 *buffer, u8 len)
+@@ -291,12 +296,13 @@ static int write_smc(u8 cmd, const char *key, const u8 *buffer, u8 len)
  	return 0;
  }
  
@@ -192,7 +188,7 @@ index b890eec4b9cd..975e7bdc3299 100644
  	if (ret)
  		return ret;
  
-@@ -313,7 +319,7 @@ static int applesmc_read_entry(struct applesmc_device *smc,
+@@ -319,7 +325,7 @@ static int applesmc_read_entry(struct applesmc_device *smc,
  	if (entry->len != len)
  		return -EINVAL;
  	mutex_lock(&smc->reg.mutex);
@@ -201,7 +197,7 @@ index b890eec4b9cd..975e7bdc3299 100644
  	mutex_unlock(&smc->reg.mutex);
  
  	return ret;
-@@ -327,7 +333,7 @@ static int applesmc_write_entry(struct applesmc_device *smc,
+@@ -333,7 +339,7 @@ static int applesmc_write_entry(struct applesmc_device *smc,
  	if (entry->len != len)
  		return -EINVAL;
  	mutex_lock(&smc->reg.mutex);
@@ -210,7 +206,7 @@ index b890eec4b9cd..975e7bdc3299 100644
  	mutex_unlock(&smc->reg.mutex);
  	return ret;
  }
-@@ -348,10 +354,10 @@ static const struct applesmc_entry *applesmc_get_entry_by_index(
+@@ -354,10 +360,10 @@ static const struct applesmc_entry *applesmc_get_entry_by_index(
  	if (cache->valid)
  		goto out;
  	be = cpu_to_be32(index);
@@ -223,7 +219,7 @@ index b890eec4b9cd..975e7bdc3299 100644
  	if (ret)
  		goto out;
  
-@@ -549,7 +555,7 @@ static int applesmc_init_smcreg_try(struct applesmc_device *smc)
+@@ -555,7 +561,7 @@ static int applesmc_init_smcreg_try(struct applesmc_device *smc)
  	if (s->init_complete)
  		return 0;
  
@@ -232,7 +228,7 @@ index b890eec4b9cd..975e7bdc3299 100644
  	if (ret)
  		return ret;
  
-@@ -1427,7 +1433,7 @@ static int __init applesmc_init(void)
+@@ -1434,7 +1440,7 @@ static int __init applesmc_init(void)
  		goto out;
  	}
  
@@ -241,7 +237,7 @@ index b890eec4b9cd..975e7bdc3299 100644
  								"applesmc")) {
  		ret = -ENXIO;
  		goto out;
-@@ -1449,7 +1455,7 @@ static int __init applesmc_init(void)
+@@ -1456,7 +1462,7 @@ static int __init applesmc_init(void)
  out_driver:
  	platform_driver_unregister(&applesmc_driver);
  out_region:
@@ -250,7 +246,7 @@ index b890eec4b9cd..975e7bdc3299 100644
  out:
  	pr_warn("driver init failed (ret=%d)!\n", ret);
  	return ret;
-@@ -1459,7 +1465,7 @@ static void __exit applesmc_exit(void)
+@@ -1466,7 +1472,7 @@ static void __exit applesmc_exit(void)
  {
  	platform_device_unregister(pdev);
  	platform_driver_unregister(&applesmc_driver);
@@ -260,5 +256,5 @@ index b890eec4b9cd..975e7bdc3299 100644
  
  module_init(applesmc_init);
 -- 
-2.25.0
+2.28.0
 

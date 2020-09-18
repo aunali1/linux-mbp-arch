@@ -1,7 +1,7 @@
-From 2b000a2e9f06878a1a46f4822637046b0aa5876c Mon Sep 17 00:00:00 2001
+From 093dbd01a17ec943bf2e63002f1cabc0841e9206 Mon Sep 17 00:00:00 2001
 From: "Jan Alexander Steffens (heftig)" <heftig@archlinux.org>
 Date: Wed, 15 Jul 2020 22:42:07 +0200
-Subject: [PATCH 3/4] virt: vbox: Add support for the new
+Subject: [PATCH 2/2] virt: vbox: Add support for the new
  VBG_IOCTL_ACQUIRE_GUEST_CAPABILITIES ioctl
 
 https://lore.kernel.org/patchwork/cover/1270301/

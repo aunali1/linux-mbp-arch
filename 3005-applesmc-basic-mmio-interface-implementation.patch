@@ -1,4 +1,4 @@
-From 9b452e07d79c0f702f7d22ccc5a12b672d290627 Mon Sep 17 00:00:00 2001
+From ba01055ec6f03dd41a1329dc5056066872461581 Mon Sep 17 00:00:00 2001
 From: Paul Pawlowski <paul@mrarm.io>
 Date: Sun, 17 Nov 2019 23:12:16 +0100
 Subject: [PATCH 5/6] applesmc: basic mmio interface implementation
@@ -17,7 +17,7 @@ key by index and getting key info).
  1 file changed, 215 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/hwmon/applesmc.c b/drivers/hwmon/applesmc.c
-index eda11a6bb327..0cb095ef41a1 100644
+index 9ce56d783b79..3d502a131bab 100644
 --- a/drivers/hwmon/applesmc.c
 +++ b/drivers/hwmon/applesmc.c
 @@ -41,6 +41,18 @@
@@ -54,7 +54,7 @@ index eda11a6bb327..0cb095ef41a1 100644
  
  	s16 rest_x;
  	s16 rest_y;
-@@ -305,16 +320,141 @@ static int port_get_smc_key_info(struct applesmc_device *smc,
+@@ -311,16 +326,141 @@ static int port_get_smc_key_info(struct applesmc_device *smc,
  	return 0;
  }
  
@@ -198,7 +198,7 @@ index eda11a6bb327..0cb095ef41a1 100644
  }
  
  static int get_smc_key_by_index(struct applesmc_device *smc,
-@@ -322,14 +462,23 @@ static int get_smc_key_by_index(struct applesmc_device *smc,
+@@ -328,14 +468,23 @@ static int get_smc_key_by_index(struct applesmc_device *smc,
  {
  	__be32 be;
  	be = cpu_to_be32(index);
@@ -225,7 +225,7 @@ index eda11a6bb327..0cb095ef41a1 100644
  }
  
  static int read_register_count(struct applesmc_device *smc,
-@@ -703,6 +852,7 @@ static int applesmc_add(struct acpi_device *dev)
+@@ -709,6 +858,7 @@ static int applesmc_add(struct acpi_device *dev)
  	if (!smc)
  		return -ENOMEM;
  	smc->dev = dev;
@@ -233,7 +233,7 @@ index eda11a6bb327..0cb095ef41a1 100644
  	mutex_init(&smc->reg.mutex);
  
  	dev_set_drvdata(&dev->dev, smc);
-@@ -764,6 +914,20 @@ static acpi_status applesmc_walk_resources(struct acpi_resource *res,
+@@ -770,6 +920,20 @@ static acpi_status applesmc_walk_resources(struct acpi_resource *res,
  			}
  			return AE_OK;
  
@@ -254,7 +254,7 @@ index eda11a6bb327..0cb095ef41a1 100644
  		case ACPI_RESOURCE_TYPE_END_TAG:
  			if (smc->port_base_set)
  				return AE_OK;
-@@ -775,6 +939,8 @@ static acpi_status applesmc_walk_resources(struct acpi_resource *res,
+@@ -781,6 +945,8 @@ static acpi_status applesmc_walk_resources(struct acpi_resource *res,
  	}
  }
  
@@ -263,7 +263,7 @@ index eda11a6bb327..0cb095ef41a1 100644
  static int applesmc_init_resources(struct applesmc_device *smc)
  {
  	int ret;
-@@ -787,11 +953,54 @@ static int applesmc_init_resources(struct applesmc_device *smc)
+@@ -793,11 +959,54 @@ static int applesmc_init_resources(struct applesmc_device *smc)
  	if (!request_region(smc->port_base, APPLESMC_NR_PORTS, "applesmc"))
  		return -ENXIO;
  
@@ -319,5 +319,5 @@ index eda11a6bb327..0cb095ef41a1 100644
  }
  
 -- 
-2.25.0
+2.28.0
 
