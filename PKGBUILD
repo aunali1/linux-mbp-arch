@@ -48,10 +48,13 @@ source=(
 
   # MBP Peripheral support
   6001-media-uvcvideo-Add-support-for-Apple-T2-attached-iSi.patch	# UVC Camera support
-  wifi.patch								# Broadcom Wifi support
 
   # Hack for i915 overscan issues
   7001-drm-i915-fbdev-Discard-BIOS-framebuffers-exceeding-h.patch
+
+  # Broadcom WIFI/BT device support
+  8001-brcmfmac-Add-initial-support-for-the-BRCM4355.patch
+  8002-brcmfmac-Add-initial-support-for-the-BRCM4377.patch
 )
 
 validpgpkeys=(
@@ -77,8 +80,9 @@ sha256sums=('f25936177edd183dd0645dce1d81873bcfc0bab1ff1586df75d95cd12723320d'
             '0318952f59efdce4dc72703adc764940db6fdff184960c27a23a80c3413d8a60'
             'e632f2959efca848fd28acb5e278cc476f8fb54d70ca95272b0a76add47e474e'
             'eb5134e6b7415528547120e661aa58d7125cc657e982c924989d7a63d253d85e'
-            '17f11a531e975f401449e5a0e230c596cdaff51c95a9e7b70bc7ce9455a1f0e1'
-            '90a6012cdd8a64ede8e0bbaf7331960bd68f628e0973b65459188eb1ccb5b829')
+            '90a6012cdd8a64ede8e0bbaf7331960bd68f628e0973b65459188eb1ccb5b829'
+            '8ec1429712ac10f0257d8f3c0bfdca418a04f3be147a2f37b3759bd6d44f2690'
+            'edb804461e3820ef3397e1e236f7caabf906b6a13d03f406c8462ec476ecbbe5')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
