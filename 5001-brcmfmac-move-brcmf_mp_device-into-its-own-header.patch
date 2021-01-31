@@ -1,22 +1,22 @@
-From c5c75744f812e8fefa9a4a8706fe137c06c52814 Mon Sep 17 00:00:00 2001
+From 6043ba88a42bf99a1f561f4b59b35fcf1ba14413 Mon Sep 17 00:00:00 2001
 From: Aun-Ali Zaidi <admin@kodeit.net>
 Date: Fri, 10 Jan 2020 12:47:25 -0600
 Subject: [PATCH 1/2] brcmfmac: move brcmf_mp_device into its own header
 
-This commit relocates the brcmf_mp_device struct into its own header. This aids
-in utilizing the struct without the redefinition of the existing included headers
-found in common.h, such as fwil_types.h.
+This commit relocates the brcmf_mp_device struct into its own header. This
+aids in utilizing the struct without the redefinition of the existing
+included headers found in common.h, such as fwil_types.h.
 
 Tested-by: Aun-Ali Zaidi <admin@kodeit.net>
 Signed-off-by: Aun-Ali Zaidi <admin@kodeit.net>
 ---
- .../broadcom/brcm80211/brcmfmac/common.h      | 36 +++--------------
- .../broadcom/brcm80211/brcmfmac/settings.h    | 39 +++++++++++++++++++
- 2 files changed, 44 insertions(+), 31 deletions(-)
+ .../broadcom/brcm80211/brcmfmac/common.h      | 36 +++---------------
+ .../broadcom/brcm80211/brcmfmac/settings.h    | 37 +++++++++++++++++++
+ 2 files changed, 42 insertions(+), 31 deletions(-)
  create mode 100644 drivers/net/wireless/broadcom/brcm80211/brcmfmac/settings.h
 
 diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.h
-index 144cf4570bc3..3826403ec5ff 100644
+index 8b5f49997c8b..6cde5ee13e7a 100644
 --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.h
 +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.h
 @@ -8,15 +8,14 @@
@@ -74,14 +74,12 @@ index 144cf4570bc3..3826403ec5ff 100644
  struct brcmf_mp_device *brcmf_get_module_param(struct device *dev,
 diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/settings.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/settings.h
 new file mode 100644
-index 000000000000..5c4aa32fb73d
+index 000000000000..7bab0d362cdd
 --- /dev/null
 +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/settings.h
-@@ -0,0 +1,39 @@
-+// SPDX-License-Identifier: ISC
-+/*
-+ * Copyright (c) 2014 Broadcom Corporation
-+ */
+@@ -0,0 +1,37 @@
++/* SPDX-License-Identifier: ISC */
++/* Copyright (c) 2014 Broadcom Corporation */
 +
 +#ifndef BRCMFMAC_SETTINGS_H
 +#define BRCMFMAC_SETTINGS_H
@@ -92,7 +90,7 @@ index 000000000000..5c4aa32fb73d
 + */
 +
 +/**
-+ * struct brcmf_mp_device - Device module paramaters.
++ * struct brcmf_mp_device - Device module parameters.
 + *
 + * @p2p_enable: Legacy P2P0 enable (old wpa_supplicant).
 + * @feature_disable: Feature_disable bitmask.
@@ -118,5 +116,5 @@ index 000000000000..5c4aa32fb73d
 +
 +#endif /* BRCMFMAC_SETTINGS_H */
 -- 
-2.24.1
+2.30.0
 

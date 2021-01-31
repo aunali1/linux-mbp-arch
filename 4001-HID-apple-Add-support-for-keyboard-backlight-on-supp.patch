@@ -1,5 +1,22 @@
+From dea63f5efd772740758cc78cde6c94a3df2ebde8 Mon Sep 17 00:00:00 2001
+From: Paul Pawlowski <paul@mrarm.io>
+Date: Sat, 30 Jan 2021 23:42:14 -0600
+Subject: [PATCH 1/8] HID: apple: Add support for keyboard backlight on
+ supported models
+
+This commit introduces the requisite plumbing for supporting keyboard
+backlight on T2-attached, USB exposed models. The quirk mechanism was
+used to reuse the existing hid-apple driver.
+
+Devices that support this feature will be added in subsequent patches.
+
+Signed-off-by: Aun-Ali Zaidi <admin@kodeit.net>
+---
+ drivers/hid/hid-apple.c | 124 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 124 insertions(+)
+
 diff --git a/drivers/hid/hid-apple.c b/drivers/hid/hid-apple.c
-index 9c7f68bb0b99..85560293d45e 100644
+index e82f604d33e9..bcebd6ecb2f2 100644
 --- a/drivers/hid/hid-apple.c
 +++ b/drivers/hid/hid-apple.c
 @@ -7,6 +7,7 @@
@@ -18,9 +35,9 @@ index 9c7f68bb0b99..85560293d45e 100644
  
  #define APPLE_FLAG_FKEY		0x01
  
-@@ -51,11 +53,18 @@ MODULE_PARM_DESC(swap_opt_cmd, "Swap the Option (\"Alt\") and Command (\"Flag\")
- 		"(For people who want to keep Windows PC keyboard muscle memory. "
- 		"[0] = as-is, Mac layout. 1 = swapped, Windows layout.)");
+@@ -57,11 +59,18 @@ MODULE_PARM_DESC(swap_fn_leftctrl, "Swap the Fn and left Control keys. "
+ 		"(For people who want to keep PC keyboard muscle memory. "
+ 		"[0] = as-is, Mac layout, 1 = swapped, PC layout)");
  
 +struct apple_sc_backlight {
 +	struct led_classdev cdev;
@@ -33,12 +50,12 @@ index 9c7f68bb0b99..85560293d45e 100644
  	unsigned int fn_on;
  	unsigned int fn_found;
  	DECLARE_BITMAP(pressed_numlock, KEY_CNT);
-+	struct apple_sc_backlight *backlight;
++	struct apple_sc_backlight *backlight
  };
  
  struct apple_key_translation {
-@@ -163,6 +172,19 @@ static const struct apple_key_translation swapped_option_cmd_keys[] = {
- 	{ }
+@@ -70,6 +79,19 @@ struct apple_key_translation {
+ 	u8 flags;
  };
  
 +struct apple_backlight_config_report {
@@ -54,17 +71,17 @@ index 9c7f68bb0b99..85560293d45e 100644
 +	u16 rate;
 +};
 +
- static const struct apple_key_translation *apple_find_translation(
- 		const struct apple_key_translation *table, u16 from)
- {
-@@ -388,6 +410,101 @@ static int apple_input_configured(struct hid_device *hdev,
+ static const struct apple_key_translation macbookair_fn_keys[] = {
+ 	{ KEY_BACKSPACE, KEY_DELETE },
+ 	{ KEY_ENTER,	KEY_INSERT },
+@@ -414,6 +436,105 @@ static int apple_input_configured(struct hid_device *hdev,
  	return 0;
  }
  
 +static bool apple_backlight_check_support(struct hid_device *hdev)
 +{
 +	int i;
-+	unsigned hid;
++	unsigned int hid;
 +	struct hid_report *report;
 +
 +	list_for_each_entry(report, &hdev->report_enum[HID_INPUT_REPORT].report_list, list) {
@@ -92,7 +109,8 @@ index 9c7f68bb0b99..85560293d45e 100644
 +	rep->backlight = value;
 +	rep->rate = rate;
 +
-+	ret = hid_hw_raw_request(hdev, 0xB0u, (u8 *) rep, sizeof(*rep), HID_OUTPUT_REPORT, HID_REQ_SET_REPORT);
++	ret = hid_hw_raw_request(hdev, 0xB0u, (u8 *) rep, sizeof(*rep),
++				 HID_OUTPUT_REPORT, HID_REQ_SET_REPORT);
 +
 +	kfree(rep);
 +	return ret;
@@ -101,7 +119,9 @@ index 9c7f68bb0b99..85560293d45e 100644
 +static int apple_backlight_led_set(struct led_classdev *led_cdev,
 +	enum led_brightness brightness)
 +{
-+	struct apple_sc_backlight *backlight = container_of(led_cdev, struct apple_sc_backlight, cdev);
++	struct apple_sc_backlight *backlight = container_of(led_cdev,
++							    struct apple_sc_backlight, cdev);
++
 +	return apple_backlight_set(backlight->hdev, brightness, 0);
 +}
 +
@@ -118,7 +138,8 @@ index 9c7f68bb0b99..85560293d45e 100644
 +	if (rep == NULL)
 +		return -ENOMEM;
 +
-+	ret = hid_hw_raw_request(hdev, 0xBFu, (u8 *) rep, sizeof(*rep), HID_FEATURE_REPORT, HID_REQ_GET_REPORT);
++	ret = hid_hw_raw_request(hdev, 0xBFu, (u8 *) rep, sizeof(*rep),
++				 HID_FEATURE_REPORT, HID_REQ_GET_REPORT);
 +	if (ret < 0) {
 +		hid_err(hdev, "backlight request failed: %d\n", ret);
 +		goto cleanup_and_exit;
@@ -159,37 +180,16 @@ index 9c7f68bb0b99..85560293d45e 100644
  static int apple_probe(struct hid_device *hdev,
  		const struct hid_device_id *id)
  {
-@@ -423,6 +540,12 @@ static int apple_probe(struct hid_device *hdev,
+@@ -449,6 +570,9 @@ static int apple_probe(struct hid_device *hdev,
  		return ret;
  	}
  
-+	if (quirks & APPLE_BACKLIGHT_CTL) {
-+		ret = apple_backlight_init(hdev);
-+		if (ret < 0)
-+			hid_warn(hdev, "backlight init failed: %d\n", ret);
-+	}
++	if (quirks & APPLE_BACKLIGHT_CTL)
++		apple_backlight_init(hdev);
 +
  	return 0;
  }
  
-@@ -580,15 +703,15 @@ static const struct hid_device_id apple_devices[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING9_JIS),
- 		.driver_data = APPLE_HAS_FN | APPLE_RDESC_JIS },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING10_T2_A),
--		.driver_data = APPLE_HAS_FN },
-+		.driver_data = APPLE_HAS_FN | APPLE_BACKLIGHT_CTL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING10_T2_B),
--		.driver_data = APPLE_HAS_FN },
-+		.driver_data = APPLE_HAS_FN | APPLE_BACKLIGHT_CTL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING10_T2_C),
--		.driver_data = APPLE_HAS_FN },
-+		.driver_data = APPLE_HAS_FN | APPLE_BACKLIGHT_CTL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING10_T2_D),
--		.driver_data = APPLE_HAS_FN },
-+		.driver_data = APPLE_HAS_FN | APPLE_BACKLIGHT_CTL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING11_T2),
--		.driver_data = APPLE_HAS_FN },
-+		.driver_data = APPLE_HAS_FN | APPLE_BACKLIGHT_CTL },
- 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_ALU_WIRELESS_2009_ANSI),
- 		.driver_data = APPLE_NUMLOCK_EMULATION | APPLE_HAS_FN },
- 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_ALU_WIRELESS_2009_ISO),
+-- 
+2.30.0
+

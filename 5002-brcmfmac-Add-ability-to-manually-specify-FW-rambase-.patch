@@ -1,32 +1,32 @@
-From b4865b976ef02fe69bb0d03c6fda6ecb2f173bcb Mon Sep 17 00:00:00 2001
+From 014c5ccc2fefcd8ad0658d5b2b0ec575870e84d7 Mon Sep 17 00:00:00 2001
 From: Aun-Ali Zaidi <admin@kodeit.net>
 Date: Fri, 10 Jan 2020 19:41:21 -0600
 Subject: [PATCH 2/2] brcmfmac: Add ability to manually specify FW rambase
  address
 
-This commit introduces the ability to manually pass the rambase address for
-the brcmfmac chip as a kernel module option. The existing brcmf_chip_tcm_rambase()
-function is bypassed when this option is supplied. This is very useful when
-debugging support for newer chipsets that are not provided by the aforementioned
-function.
+This commit introduces the ability to manually pass the rambase address
+for the brcmfmac chip as a kernel module option. The existing
+brcmf_chip_tcm_rambase() function is bypassed when this option is
+supplied. This is very useful when debugging support for newer chipsets
+that are not provided by the aforementioned function.
 
 Tested-by: Aun-Ali Zaidi <admin@kodeit.net>
 Signed-off-by: Aun-Ali Zaidi <admin@kodeit.net>
 ---
- .../wireless/broadcom/brcm80211/brcmfmac/chip.c | 17 ++++++++++-------
- .../wireless/broadcom/brcm80211/brcmfmac/chip.h |  7 +++++--
- .../broadcom/brcm80211/brcmfmac/common.c        |  5 +++++
- .../broadcom/brcm80211/brcmfmac/common.h        |  1 -
- .../wireless/broadcom/brcm80211/brcmfmac/pcie.c |  4 ++--
- .../wireless/broadcom/brcm80211/brcmfmac/sdio.c |  2 +-
- .../broadcom/brcm80211/brcmfmac/settings.h      |  4 ++++
- 7 files changed, 27 insertions(+), 13 deletions(-)
+ .../broadcom/brcm80211/brcmfmac/chip.c        | 19 ++++++++++++-------
+ .../broadcom/brcm80211/brcmfmac/chip.h        |  7 +++++--
+ .../broadcom/brcm80211/brcmfmac/common.c      |  5 +++++
+ .../broadcom/brcm80211/brcmfmac/common.h      |  1 -
+ .../broadcom/brcm80211/brcmfmac/pcie.c        |  4 ++--
+ .../broadcom/brcm80211/brcmfmac/sdio.c        |  2 +-
+ .../broadcom/brcm80211/brcmfmac/settings.h    |  4 ++++
+ 7 files changed, 29 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
-index a795d781b4c5..e6b6f23e15a5 100644
+index a3a257089696..a532c90f02d9 100644
 --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
 +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
-@@ -696,7 +696,7 @@ static u32 brcmf_chip_tcm_rambase(struct brcmf_chip_priv *ci)
+@@ -733,7 +733,7 @@ static u32 brcmf_chip_tcm_rambase(struct brcmf_chip_priv *ci)
  	return 0;
  }
  
@@ -35,27 +35,29 @@ index a795d781b4c5..e6b6f23e15a5 100644
  {
  	struct brcmf_chip_priv *ci = container_of(pub, struct brcmf_chip_priv,
  						  pub);
-@@ -707,7 +707,8 @@ int brcmf_chip_get_raminfo(struct brcmf_chip *pub)
+@@ -744,7 +744,9 @@ int brcmf_chip_get_raminfo(struct brcmf_chip *pub)
  	if (mem) {
  		mem_core = container_of(mem, struct brcmf_core_priv, pub);
  		ci->pub.ramsize = brcmf_chip_tcm_ramsize(mem_core);
 -		ci->pub.rambase = brcmf_chip_tcm_rambase(ci);
-+		ci->pub.rambase = (settings != NULL && settings->rambase_addr > 0) ? settings->rambase_addr
-+										   : brcmf_chip_tcm_rambase(ci);
++		ci->pub.rambase = (!settings &&
++				    settings->rambase_addr > 0) ? settings->rambase_addr
++								: brcmf_chip_tcm_rambase(ci);
  		if (!ci->pub.rambase) {
  			brcmf_err("RAM base not provided with ARM CR4 core\n");
  			return -EINVAL;
-@@ -718,7 +719,8 @@ int brcmf_chip_get_raminfo(struct brcmf_chip *pub)
+@@ -755,7 +757,9 @@ int brcmf_chip_get_raminfo(struct brcmf_chip *pub)
  			mem_core = container_of(mem, struct brcmf_core_priv,
  						pub);
  			ci->pub.ramsize = brcmf_chip_sysmem_ramsize(mem_core);
 -			ci->pub.rambase = brcmf_chip_tcm_rambase(ci);
-+			ci->pub.rambase = (settings != NULL && settings->rambase_addr > 0) ? settings->rambase_addr
-+											   : brcmf_chip_tcm_rambase(ci);
++			ci->pub.rambase = (!settings &&
++					    settings->rambase_addr > 0) ? settings->rambase_addr
++								      : brcmf_chip_tcm_rambase(ci);
  			if (!ci->pub.rambase) {
  				brcmf_err("RAM base not provided with ARM CA7 core\n");
  				return -EINVAL;
-@@ -904,7 +906,7 @@ int brcmf_chip_dmp_erom_scan(struct brcmf_chip_priv *ci)
+@@ -941,7 +945,7 @@ int brcmf_chip_dmp_erom_scan(struct brcmf_chip_priv *ci)
  	return 0;
  }
  
@@ -64,7 +66,7 @@ index a795d781b4c5..e6b6f23e15a5 100644
  {
  	struct brcmf_core *core;
  	u32 regdata;
-@@ -977,7 +979,7 @@ static int brcmf_chip_recognition(struct brcmf_chip_priv *ci)
+@@ -1014,7 +1018,7 @@ static int brcmf_chip_recognition(struct brcmf_chip_priv *ci)
  		brcmf_chip_set_passive(&ci->pub);
  	}
  
@@ -73,7 +75,7 @@ index a795d781b4c5..e6b6f23e15a5 100644
  }
  
  static void brcmf_chip_disable_arm(struct brcmf_chip_priv *chip, u16 id)
-@@ -1051,7 +1053,8 @@ static int brcmf_chip_setup(struct brcmf_chip_priv *chip)
+@@ -1088,7 +1092,8 @@ static int brcmf_chip_setup(struct brcmf_chip_priv *chip)
  }
  
  struct brcmf_chip *brcmf_chip_attach(void *ctx,
@@ -83,7 +85,7 @@ index a795d781b4c5..e6b6f23e15a5 100644
  {
  	struct brcmf_chip_priv *chip;
  	int err = 0;
-@@ -1080,7 +1083,7 @@ struct brcmf_chip *brcmf_chip_attach(void *ctx,
+@@ -1117,7 +1122,7 @@ struct brcmf_chip *brcmf_chip_attach(void *ctx,
  	if (err < 0)
  		goto fail;
  
@@ -93,7 +95,7 @@ index a795d781b4c5..e6b6f23e15a5 100644
  		goto fail;
  
 diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.h
-index 7b00f6a59e89..db982154e0d3 100644
+index 8fa38658e727..7da0ef3129a0 100644
 --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.h
 +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.h
 @@ -7,6 +7,8 @@
@@ -117,9 +119,9 @@ index 7b00f6a59e89..db982154e0d3 100644
 +				     struct brcmf_mp_device *settings);
  void brcmf_chip_detach(struct brcmf_chip *chip);
  struct brcmf_core *brcmf_chip_get_core(struct brcmf_chip *chip, u16 coreid);
- struct brcmf_core *brcmf_chip_get_chipcommon(struct brcmf_chip *chip);
+ struct brcmf_core *brcmf_chip_get_d11core(struct brcmf_chip *pub, u8 unit);
 diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
-index dec25e415619..384549237cce 100644
+index e3758bd86acf..46a525278848 100644
 --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
 +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.c
 @@ -67,6 +67,10 @@ static int brcmf_iapp_enable;
@@ -142,7 +144,7 @@ index dec25e415619..384549237cce 100644
  	if (bus_type == BRCMF_BUSTYPE_SDIO)
  		settings->bus.sdio.txglomsz = brcmf_sdiod_txglomsz;
 diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.h
-index 3826403ec5ff..c7a93e04a5f5 100644
+index 6cde5ee13e7a..0da7eeeb7768 100644
 --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.h
 +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/common.h
 @@ -6,7 +6,6 @@
@@ -154,10 +156,10 @@ index 3826403ec5ff..c7a93e04a5f5 100644
  #include "settings.h"
  
 diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-index f64ce5074a55..ba42e1404683 100644
+index 39381cbde89e..a9575ae8add1 100644
 --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
 +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-@@ -1770,7 +1770,7 @@ static void brcmf_pcie_setup(struct device *dev, int ret,
+@@ -1772,7 +1772,7 @@ static void brcmf_pcie_setup(struct device *dev, int ret,
  	nvram_len = fwreq->items[BRCMF_PCIE_FW_NVRAM].nv_data.len;
  	kfree(fwreq);
  
@@ -166,7 +168,7 @@ index f64ce5074a55..ba42e1404683 100644
  	if (ret) {
  		brcmf_err(bus, "Failed to get RAM info\n");
  		goto fail;
-@@ -1882,7 +1882,7 @@ brcmf_pcie_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+@@ -1884,7 +1884,7 @@ brcmf_pcie_probe(struct pci_dev *pdev, const struct pci_device_id *id)
  
  	devinfo->pdev = pdev;
  	pcie_bus_dev = NULL;
@@ -176,10 +178,10 @@ index f64ce5074a55..ba42e1404683 100644
  		ret = PTR_ERR(devinfo->ci);
  		devinfo->ci = NULL;
 diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-index 264ad63232f8..2f0dc4002e88 100644
+index ac3ee93a2378..d4bf1c7e3c81 100644
 --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
 +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-@@ -3921,7 +3921,7 @@ brcmf_sdio_probe_attach(struct brcmf_sdio *bus)
+@@ -3962,7 +3962,7 @@ brcmf_sdio_probe_attach(struct brcmf_sdio *bus)
  		goto fail;
  	}
  
@@ -189,10 +191,10 @@ index 264ad63232f8..2f0dc4002e88 100644
  		brcmf_err("brcmf_chip_attach failed!\n");
  		bus->ci = NULL;
 diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/settings.h b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/settings.h
-index 5c4aa32fb73d..9840a4cd3b2e 100644
+index 7bab0d362cdd..160e32f32bd8 100644
 --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/settings.h
 +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/settings.h
-@@ -6,6 +6,8 @@
+@@ -4,6 +4,8 @@
  #ifndef BRCMFMAC_SETTINGS_H
  #define BRCMFMAC_SETTINGS_H
  
@@ -201,7 +203,7 @@ index 5c4aa32fb73d..9840a4cd3b2e 100644
  /* Definition for the device specific settings are defined here. One struct
   * is used called brcmf_mp_device. The device specific settings is part of
   * the drvr struct and should be initialized on every brcmf_attach.
-@@ -21,6 +23,7 @@
+@@ -19,6 +21,7 @@
   * @ignore_probe_fail: Ignore probe failure.
   * @country_codes: If available, pointer to struct for translating country codes
   * @bus: Bus specific platform data. Only SDIO at the mmoment.
@@ -209,7 +211,7 @@ index 5c4aa32fb73d..9840a4cd3b2e 100644
   */
  struct brcmf_mp_device {
  	bool		p2p_enable;
-@@ -34,6 +37,7 @@ struct brcmf_mp_device {
+@@ -32,6 +35,7 @@ struct brcmf_mp_device {
  	union {
  		struct brcmfmac_sdio_pd sdio;
  	} bus;
@@ -218,5 +220,5 @@ index 5c4aa32fb73d..9840a4cd3b2e 100644
  
  #endif /* BRCMFMAC_SETTINGS_H */
 -- 
-2.24.1
+2.30.0
 

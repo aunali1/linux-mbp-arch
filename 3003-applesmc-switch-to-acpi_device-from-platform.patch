@@ -1,4 +1,4 @@
-From c8ac81291ef2d5538e57065ae0f7f4916daf5e53 Mon Sep 17 00:00:00 2001
+From a5c057f9180d3ca3b7cac362430fcb0236873263 Mon Sep 17 00:00:00 2001
 From: Paul Pawlowski <paul@mrarm.io>
 Date: Sun, 17 Nov 2019 23:12:08 +0100
 Subject: [PATCH 3/6] applesmc: switch to acpi_device (from platform)
@@ -14,12 +14,14 @@ Additionally, on older Macs, the OS X driver also
 looks for the specified ACPI device to resolve
 its memory regions, and therefore this change
 should not result in any incompatibilities.
+
+Signed-off-by: Aun-Ali Zaidi <admin@kodeit.net>
 ---
  drivers/hwmon/applesmc.c | 125 ++++++++++++++++++++++++++-------------
  1 file changed, 85 insertions(+), 40 deletions(-)
 
 diff --git a/drivers/hwmon/applesmc.c b/drivers/hwmon/applesmc.c
-index 0b4e8b6b2557..4b76cafd430b 100644
+index 39ed0bb21365..bdaaf696f7b6 100644
 --- a/drivers/hwmon/applesmc.c
 +++ b/drivers/hwmon/applesmc.c
 @@ -19,7 +19,7 @@
@@ -31,15 +33,15 @@ index 0b4e8b6b2557..4b76cafd430b 100644
  #include <linux/input.h>
  #include <linux/kernel.h>
  #include <linux/slab.h>
-@@ -34,7 +34,6 @@
- #include <linux/workqueue.h>
+@@ -35,7 +35,6 @@
  #include <linux/err.h>
+ #include <linux/bits.h>
  
 -#define APPLESMC_PORT_BASE	0x300
  /* data port used by Apple SMC */
  #define APPLESMC_DATA_PORT	0
  /* command/status port used by Apple SMC */
-@@ -134,9 +133,10 @@ struct applesmc_registers {
+@@ -138,9 +137,10 @@ struct applesmc_registers {
  };
  
  struct applesmc_device {
@@ -51,7 +53,7 @@ index 0b4e8b6b2557..4b76cafd430b 100644
  	u16 port_base;
  
  	s16 rest_x;
-@@ -657,9 +657,13 @@ static int applesmc_init_smcreg(struct applesmc_device *smc)
+@@ -692,9 +692,13 @@ static int applesmc_init_smcreg(struct applesmc_device *smc)
  }
  
  /* Device model stuff */
@@ -66,7 +68,7 @@ index 0b4e8b6b2557..4b76cafd430b 100644
  {
  	struct applesmc_device *smc;
  	int ret;
-@@ -670,12 +674,16 @@ static int applesmc_probe(struct platform_device *dev)
+@@ -705,12 +709,16 @@ static int applesmc_probe(struct platform_device *dev)
  	smc->dev = dev;
  	mutex_init(&smc->reg.mutex);
  
@@ -85,7 +87,7 @@ index 0b4e8b6b2557..4b76cafd430b 100644
  	applesmc_device_init(smc);
  
  	ret = applesmc_create_modules(smc);
-@@ -686,20 +694,23 @@ static int applesmc_probe(struct platform_device *dev)
+@@ -721,20 +729,23 @@ static int applesmc_probe(struct platform_device *dev)
  
  out_reg:
  	applesmc_destroy_smcreg(smc);
@@ -112,7 +114,7 @@ index 0b4e8b6b2557..4b76cafd430b 100644
  
  	mutex_destroy(&smc->reg.mutex);
  	kfree(smc);
-@@ -707,6 +718,52 @@ static int applesmc_remove(struct platform_device *dev)
+@@ -742,6 +753,52 @@ static int applesmc_remove(struct platform_device *dev)
  	return 0;
  }
  
@@ -122,23 +124,23 @@ index 0b4e8b6b2557..4b76cafd430b 100644
 +	struct applesmc_device *smc = data;
 +
 +	switch (res->type) {
-+		case ACPI_RESOURCE_TYPE_IO:
-+			if (!smc->port_base_set) {
-+				if (res->data.io.address_length < APPLESMC_NR_PORTS)
-+					return AE_ERROR;
-+				smc->port_base = res->data.io.minimum;
-+				smc->port_base_set = true;
-+			}
-+			return AE_OK;
++	case ACPI_RESOURCE_TYPE_IO:
++		if (!smc->port_base_set) {
++			if (res->data.io.address_length < APPLESMC_NR_PORTS)
++				return AE_ERROR;
++			smc->port_base = res->data.io.minimum;
++			smc->port_base_set = true;
++		}
++		return AE_OK;
 +
-+		case ACPI_RESOURCE_TYPE_END_TAG:
-+			if (smc->port_base_set)
-+				return AE_OK;
-+			else
-+				return AE_NOT_FOUND;
-+
-+		default:
++	case ACPI_RESOURCE_TYPE_END_TAG:
++		if (smc->port_base_set)
 +			return AE_OK;
++		else
++			return AE_NOT_FOUND;
++
++	default:
++		return AE_OK;
 +	}
 +}
 +
@@ -165,7 +167,7 @@ index 0b4e8b6b2557..4b76cafd430b 100644
  /* Synchronize device with memorized backlight state */
  static int applesmc_pm_resume(struct device *dev)
  {
-@@ -728,18 +785,28 @@ static int applesmc_pm_restore(struct device *dev)
+@@ -763,18 +820,28 @@ static int applesmc_pm_restore(struct device *dev)
  	return applesmc_pm_resume(dev);
  }
  
@@ -192,15 +194,15 @@ index 0b4e8b6b2557..4b76cafd430b 100644
 +	.ops = {
 +		.add = applesmc_add,
 +		.remove = applesmc_remove
-+	},
+ 	},
 +	.drv = {
 +		.pm = &applesmc_pm_ops
- 	},
++	},
 +	.owner = THIS_MODULE
  };
  
  /*
-@@ -1227,7 +1294,6 @@ static int applesmc_create_nodes(struct applesmc_device *smc,
+@@ -1262,7 +1329,6 @@ static int applesmc_create_nodes(struct applesmc_device *smc,
  static int applesmc_create_accelerometer(struct applesmc_device *smc)
  {
  	int ret;
@@ -208,7 +210,7 @@ index 0b4e8b6b2557..4b76cafd430b 100644
  	if (!smc->reg.has_accelerometer)
  		return 0;
  
-@@ -1428,8 +1494,6 @@ static void applesmc_destroy_modules(struct applesmc_device *smc)
+@@ -1463,8 +1529,6 @@ static void applesmc_destroy_modules(struct applesmc_device *smc)
  	applesmc_destroy_nodes(smc, info_group);
  }
  
@@ -217,7 +219,7 @@ index 0b4e8b6b2557..4b76cafd430b 100644
  static int __init applesmc_init(void)
  {
  	int ret;
-@@ -1440,29 +1504,12 @@ static int __init applesmc_init(void)
+@@ -1475,29 +1539,12 @@ static int __init applesmc_init(void)
  		goto out;
  	}
  
@@ -249,7 +251,7 @@ index 0b4e8b6b2557..4b76cafd430b 100644
  out:
  	pr_warn("driver init failed (ret=%d)!\n", ret);
  	return ret;
-@@ -1470,9 +1517,7 @@ static int __init applesmc_init(void)
+@@ -1505,9 +1552,7 @@ static int __init applesmc_init(void)
  
  static void __exit applesmc_exit(void)
  {
@@ -261,5 +263,5 @@ index 0b4e8b6b2557..4b76cafd430b 100644
  
  module_init(applesmc_init);
 -- 
-2.28.0
+2.30.0
 

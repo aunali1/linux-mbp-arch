@@ -4,18 +4,20 @@ Date: Wed, 29 Jul 2020 08:04:54 -0500
 Subject: [PATCH] drm/amd/display: Force link_rate as LINK_RATE_RBR2 for 2018
  15" Apple Retina panels
 
-The eDP link rate reported by the DP_MAX_LINK_RATE dpcd register (0xa) is contradictory
-to the highest rate supported reported by EDID (0xc = LINK_RATE_RBR2). The effects of
-this compounded with commit '4a8ca46bae8a ("drm/amd/display: Default max bpc to 16 for eDP")'
-results in no display modes being found and a dark panel.
+The eDP link rate reported by the DP_MAX_LINK_RATE dpcd register (0xa) is
+contradictory to the highest rate supported reported by
+EDID (0xc = LINK_RATE_RBR2). The effects of this compounded with commit
+'4a8ca46bae8a ("drm/amd/display: Default max bpc to 16 for eDP")' results
+in no display modes being found and a dark panel.
 
-For now, simply force the maximum supported link rate for the eDP attached 2018
-15" Apple Retina panels.
+For now, simply force the maximum supported link rate for the eDP attached
+2018 15" Apple Retina panels.
 
-Additionally, we must also check the firwmare revision since the device ID reported
-by the DPCD is identical to that of the more capable 16,1, incorrectly quirking it.
-We also use said firmware check to quirk the refreshed 15,1 models with Vega graphics
-as the use a slightly newer firmware version.
+Additionally, we must also check the firmware revision since the device ID
+reported by the DPCD is identical to that of the more capable 16,1,
+incorrectly quirking it. We also use said firmware check to quirk the
+refreshed 15,1 models with Vega graphics as they use a slightly newer
+firmware version.
 
 Tested-by: Aun-Ali Zaidi <admin@kodeit.net>
 Signed-off-by: Aun-Ali Zaidi <admin@kodeit.net>

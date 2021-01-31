@@ -1,5 +1,5 @@
 From f4d7309ca1ecfa5c48a0d9429e0c56ff100a43a9 Mon Sep 17 00:00:00 2001
-From: Paul Pawlowski <paul@mrarm.io>
+From: Aun-Ali Zaidi <admin@kodeit.net>
 Date: Sun, 1 Nov 2020 01:26:38 -0400
 Subject: [PATCH 1/2] brcmfmac: Add initial support for the BRCM4355
 

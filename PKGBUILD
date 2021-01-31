@@ -2,7 +2,7 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.8.17
+pkgver=5.9.16
 _srcname=linux-${pkgver}
 pkgrel=1
 pkgdesc='Linux for MBP'
@@ -25,7 +25,9 @@ source=(
 
   # Arch Linux patches
   0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
-  0002-virt-vbox-Add-support-for-the-new-VBG_IOCTL_ACQUIRE_.patch
+  0002-Bluetooth-Fix-LL-PRivacy-BLE-device-fails-to-connect.patch
+  0003-Bluetooth-Fix-attempting-to-set-RPA-timeout-when-uns.patch
+  0004-HID-quirks-Add-Apple-Magic-Trackpad-2-to-hid_have_sp.patch
 
   # Hack for AMD DC eDP link rate bug
   2001-drm-amd-display-Force-link_rate-as-LINK_RATE_RBR2-fo.patch
@@ -39,8 +41,14 @@ source=(
   3006-applesmc-fan-support-on-T2-Macs.patch
 
   # T2 USB Keyboard/Touchpad support
-  4001-touchpad.patch
-  4002-keyboard-backlight.patch
+  4001-HID-apple-Add-support-for-keyboard-backlight-on-supp.patch
+  4002-HID-apple-Add-support-for-MacbookAir8-1-keyboard-tra.patch
+  4003-HID-apple-Add-support-for-MacBookPro15-2-keyboard-tr.patch
+  4004-HID-apple-Add-support-for-MacBookPro15-1-keyboard-tr.patch
+  4005-HID-apple-Add-support-for-MacBookPro15-4-keyboard-tr.patch
+  4006-HID-apple-Add-support-for-MacBookPro16-2-keyboard-tr.patch
+  4007-HID-apple-Add-support-for-MacBookAir9-1-keyboard-tra.patch
+  4008-HID-apple-Add-support-for-MacBookPro16-1-keyboard-tr.patch
 
   # Broadcom Wifi rambase debugging additions
   5001-brcmfmac-move-brcmf_mp_device-into-its-own-header.patch
@@ -62,26 +70,34 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('568464fce14e8dd070c8f7249dfbdfbe11c87612dfd08520fb73d359b3de3c03'
+sha256sums=('b0d7abae88e5f91893627c645e680a95c818defd1b4fcaf3e2afb4b2b6b4ab86'
             'SKIP'
-            '64aeed3e2b4ceef4c3e7132efccd0e670a19c7f3dca1556df021eeecd61eb837'
+            'c008673216498690f296cf74fc42ec0874ab4b3802f610dfb2acfa2f268edb98'
             '8cb21e0b3411327b627a9dd15b8eb773295a0d2782b1a41b2a8839d1b2f5778c'
-            '227660f321e60d76e9e33f957f0d7eeb4a49a485c14a9da493f3e18b6f3a00fe'
-            '96c9359ad7e648f4f75ecae7aa3d116282b3afe39f66eecc4fd337e3633a9701'
-            '1c2363d3f577b58c5d6b2b7919b0d77a8615701adc36fdf31d63c46e61c73e01'
-            '3b9bfb4a0eaad6b0a6048586388f25ef0af0f5fbfe0251ca2bc205bc43efeda9'
-            'a458def709e61ecf770dbbabc819e04a597a9121ddae6a289f830891945ac821'
-            'b293594d9bccf380790979e79c1114425544dcd65ce3907aa3566d1b665b4e7b'
-            '2c8aaff9cca52535efd3fb4b6f31eb69f8ab403aced2552fcfd5771e247640d9'
-            'f42c1d0f6a29117644219a34ebb7b3c008a32a8f87103cf6e138e750806c9f5b'
-            'dcd8d0209e228b7e9bf9e3e922731abeb03dc9f074df34b147fc419e6adc6e63'
-            'e1d72fdb0a7a66a6f3fc8afb6fe056f28cfa088c1cc9c799b93405b62a274b96'
-            '6785a219662672430af11fdc650c19bf7d2073ae696247a37635a30f28bcb693'
-            '0318952f59efdce4dc72703adc764940db6fdff184960c27a23a80c3413d8a60'
-            'e632f2959efca848fd28acb5e278cc476f8fb54d70ca95272b0a76add47e474e'
-            'eb5134e6b7415528547120e661aa58d7125cc657e982c924989d7a63d253d85e'
+            '043f50b0b4d46fd3a92050ccac5ee814ced56f40377501e7aa64373072723d28'
+            '3b59e6f5dcdbb1a109cdac98e715bf120a7d6e59bb6befda133b50c1f7d0fe41'
+            '4c66abadb92dd781975384e515631bad702b772b9c34c9654ee27119daddca5d'
+            '75701d7395b682335aa6fc4fb625d2f80bf9009ca8dceafc06f27c16e45fa794'
+            '786dfc22e4c6ece883e7dedd0ba3f6c14018584df95450b2cb78f3da8b01f7cb'
+            '41b6ddf1aacc4aa2eb5ea1a2e4c4861143e89f5c0846d1f2f18a1a2abc6ca1e6'
+            '06a1f3f9b3d137cdf91ff33c92e60cf20fd1a06d40fbbd868af5e1d0bed5a161'
+            'e61358ade79af985a1a3f30b6c80e739d4a2bb8f5d8405befa9b05374027d101'
+            '4a9ea26412c648036ed48a0dbc3883741e5f6ccd262fe459bee13ab2527f6fac'
+            'eac6c381860b5cfe25596263cc375e24f99715b4f1a774792db0d6a56915a5e3'
+            '987c68b118c3b2a073523824ca59fe99d047442027120af1cf945f0043256d91'
+            '8cb46bf2e11d4f54a6cefe39d3f2808e44e8e96efafac891ab2b7d2e30cbc09f'
+            '5c7951ca03ffef1c8083c1d625ad98a4b6f756df04f153f057f3b16aafa268b7'
+            '8f8042185376157f429f809c193d139920bfe01989ca729cf35e96916891b1e6'
+            '0b44ac994d455add8bfa0badb93e5e161c7b65d5816da46f9828844a85256dc7'
+            '7cf9dfed7e5e6712d228e78440adcb1f931eae138992ee0ae9c11be97e5719d6'
+            'b0b918e10d2bfab0a1be7475f98a7f3155bc537b70c70328b34553ccc8bd6909'
+            '25d27b2b49d08759cb80b53dac2809a2b934c6ea9195d650d297b859709b965c'
+            '0de44eff8e9c82a1e25152c20b46b78189c8858bf6cb071f325148fdada37921'
+            'a8b3b78c5bf09e521809a3f54203c78e9d2c142f9dd2b12a898476fedfd3578e'
+            '2239c119feba74bf92ebe4e52e351b7b783081834eba1ec6dfa6bf238a923094'
+            '9640178d6251686c980c30fc528b3d70beac6ce8246bf433506a3f843808326c'
             '90a6012cdd8a64ede8e0bbaf7331960bd68f628e0973b65459188eb1ccb5b829'
-            '8ec1429712ac10f0257d8f3c0bfdca418a04f3be147a2f37b3759bd6d44f2690'
+            '3a7baa28d5f45bdbff23e838133f2e3c6896412ffb5a919b4992a7b2d17469d9'
             'edb804461e3820ef3397e1e236f7caabf906b6a13d03f406c8462ec476ecbbe5')
 
 export KBUILD_BUILD_HOST=archlinux

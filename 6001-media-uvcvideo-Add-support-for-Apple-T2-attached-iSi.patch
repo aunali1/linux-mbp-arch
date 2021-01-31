@@ -4,8 +4,8 @@ Date: Tue, 18 Aug 2020 06:55:07 -0500
 Subject: [PATCH] media: uvcvideo: Add support for Apple T2-attached iSight
  Camera
 
-Adds the requisite device id to support detection of the Apple iSight webcam
-exposed over the T2 BCE VHCI interface.
+Adds the requisite device id to support detection of the Apple iSight
+webcam exposed over the T2 BCE VHCI interface.
 
 Tested-by: Aun-Ali Zaidi <admin@kodeit.net>
 Signed-off-by: Aun-Ali Zaidi <admin@kodeit.net>
