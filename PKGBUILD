@@ -11,7 +11,7 @@ url="https://git.archlinux.org/linux.git/log/?h=v$_srctag"
 arch=(x86_64)
 license=(GPL2)
 makedepends=(
-  bc kmod libelf pahole
+  bc kmod libelf pahole cpio perl tar xz
   xmlto python-sphinx python-sphinx_rtd_theme graphviz imagemagick
   git
 )
