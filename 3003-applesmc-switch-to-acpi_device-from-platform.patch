@@ -1,4 +1,4 @@
-From a5c057f9180d3ca3b7cac362430fcb0236873263 Mon Sep 17 00:00:00 2001
+From ee3d4bf4a01bc94553bde2ae3e806a63a13faa12 Mon Sep 17 00:00:00 2001
 From: Paul Pawlowski <paul@mrarm.io>
 Date: Sun, 17 Nov 2019 23:12:08 +0100
 Subject: [PATCH 3/6] applesmc: switch to acpi_device (from platform)

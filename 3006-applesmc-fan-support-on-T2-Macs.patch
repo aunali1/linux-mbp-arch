@@ -1,4 +1,4 @@
-From 10f140f58e632a8ee3298a14120964939b3a55f9 Mon Sep 17 00:00:00 2001
+From 4e63e9b77422aae8e7411ddc7a8458c2585c86df Mon Sep 17 00:00:00 2001
 From: Paul Pawlowski <paul@mrarm.io>
 Date: Sun, 17 Nov 2019 23:12:18 +0100
 Subject: [PATCH 6/6] applesmc: fan support on T2 Macs
@@ -19,7 +19,7 @@ Signed-off-by: Aun-Ali Zaidi <admin@kodeit.net>
  1 file changed, 102 insertions(+), 17 deletions(-)
 
 diff --git a/drivers/hwmon/applesmc.c b/drivers/hwmon/applesmc.c
-index c69a0cad8451..900a30673778 100644
+index 2d23bb9ad9dd..0938227be612 100644
 --- a/drivers/hwmon/applesmc.c
 +++ b/drivers/hwmon/applesmc.c
 @@ -87,6 +87,7 @@
@@ -38,7 +38,7 @@ index c69a0cad8451..900a30673778 100644
  
  #define INIT_TIMEOUT_MSECS	5000	/* wait up to 5s for device init ... */
  #define INIT_WAIT_MSECS		50	/* ... in 50ms increments */
-@@ -731,6 +733,42 @@ static int applesmc_read_s16(struct applesmc_device *smc,
+@@ -734,6 +736,42 @@ static int applesmc_read_s16(struct applesmc_device *smc,
  	return 0;
  }
  
@@ -81,7 +81,7 @@ index c69a0cad8451..900a30673778 100644
  /*
   * applesmc_device_init - initialize the accelerometer.  Can sleep.
   */
-@@ -1239,6 +1277,7 @@ static ssize_t applesmc_show_fan_speed(struct device *dev,
+@@ -1242,6 +1280,7 @@ static ssize_t applesmc_show_fan_speed(struct device *dev,
  				struct device_attribute *attr, char *sysfsbuf)
  {
  	struct applesmc_device *smc = dev_get_drvdata(dev);
@@ -89,7 +89,7 @@ index c69a0cad8451..900a30673778 100644
  	int ret;
  	unsigned int speed = 0;
  	char newkey[5];
-@@ -1247,11 +1286,21 @@ static ssize_t applesmc_show_fan_speed(struct device *dev,
+@@ -1250,11 +1289,21 @@ static ssize_t applesmc_show_fan_speed(struct device *dev,
  	scnprintf(newkey, sizeof(newkey), fan_speed_fmt[to_option(attr)],
  		  to_index(attr));
  
@@ -113,7 +113,7 @@ index c69a0cad8451..900a30673778 100644
  	return snprintf(sysfsbuf, PAGE_SIZE, "%u\n", speed);
  }
  
-@@ -1260,6 +1309,7 @@ static ssize_t applesmc_store_fan_speed(struct device *dev,
+@@ -1263,6 +1312,7 @@ static ssize_t applesmc_store_fan_speed(struct device *dev,
  					const char *sysfsbuf, size_t count)
  {
  	struct applesmc_device *smc = dev_get_drvdata(dev);
@@ -121,7 +121,7 @@ index c69a0cad8451..900a30673778 100644
  	int ret;
  	unsigned long speed;
  	char newkey[5];
-@@ -1271,9 +1321,18 @@ static ssize_t applesmc_store_fan_speed(struct device *dev,
+@@ -1274,9 +1324,18 @@ static ssize_t applesmc_store_fan_speed(struct device *dev,
  	scnprintf(newkey, sizeof(newkey), fan_speed_fmt[to_option(attr)],
  		  to_index(attr));
  
@@ -143,7 +143,7 @@ index c69a0cad8451..900a30673778 100644
  
  	if (ret)
  		return ret;
-@@ -1288,12 +1347,26 @@ static ssize_t applesmc_show_fan_manual(struct device *dev,
+@@ -1291,12 +1350,26 @@ static ssize_t applesmc_show_fan_manual(struct device *dev,
  	int ret;
  	u16 manual = 0;
  	u8 buffer[2];
@@ -172,7 +172,7 @@ index c69a0cad8451..900a30673778 100644
  	return snprintf(sysfsbuf, PAGE_SIZE, "%d\n", manual);
  }
  
-@@ -1304,27 +1377,39 @@ static ssize_t applesmc_store_fan_manual(struct device *dev,
+@@ -1307,27 +1380,39 @@ static ssize_t applesmc_store_fan_manual(struct device *dev,
  	struct applesmc_device *smc = dev_get_drvdata(dev);
  	int ret;
  	u8 buffer[2];

@@ -1,4 +1,4 @@
-From 9624d586c9681dbf85ffb810c9bc8cbebfd4bb47 Mon Sep 17 00:00:00 2001
+From 43df89a1377782788760808d8ea4bcf0730effbb Mon Sep 17 00:00:00 2001
 From: Paul Pawlowski <paul@mrarm.io>
 Date: Sun, 17 Nov 2019 23:12:14 +0100
 Subject: [PATCH 4/6] applesmc: key interface wrappers

@@ -1,4 +1,4 @@
-From b63d4ed6128b359930904b6763885b000495bb85 Mon Sep 17 00:00:00 2001
+From 713e78b8dbb8adb92d4ee09ea11e726b05577689 Mon Sep 17 00:00:00 2001
 From: Paul Pawlowski <paul@mrarm.io>
 Date: Sun, 17 Nov 2019 23:11:56 +0100
 Subject: [PATCH 2/6] applesmc: make io port base addr dynamic

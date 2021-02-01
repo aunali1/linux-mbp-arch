@@ -1,4 +1,4 @@
-From b055f359fe7f1cfb4808411517b733ac1aba3f39 Mon Sep 17 00:00:00 2001
+From 09dd6c563cd73d72e917de07e8d59358c41e051d Mon Sep 17 00:00:00 2001
 From: Paul Pawlowski <paul@mrarm.io>
 Date: Sun, 17 Nov 2019 23:12:55 +0100
 Subject: [PATCH 1/6] applesmc: convert static structures to drvdata
