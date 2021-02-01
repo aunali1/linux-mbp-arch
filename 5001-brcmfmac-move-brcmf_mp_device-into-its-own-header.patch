@@ -1,4 +1,4 @@
-From 6043ba88a42bf99a1f561f4b59b35fcf1ba14413 Mon Sep 17 00:00:00 2001
+From ca775a3e16ac138ff47fcc3eccacd154ee35e9c2 Mon Sep 17 00:00:00 2001
 From: Aun-Ali Zaidi <admin@kodeit.net>
 Date: Fri, 10 Jan 2020 12:47:25 -0600
 Subject: [PATCH 1/2] brcmfmac: move brcmf_mp_device into its own header
