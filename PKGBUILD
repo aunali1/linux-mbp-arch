@@ -2,7 +2,7 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.9.16
+pkgver=5.10.12
 _srcname=linux-${pkgver}
 pkgrel=1
 pkgdesc='Linux for MBP'
@@ -21,13 +21,11 @@ source=(
   https://www.kernel.org/pub/linux/kernel/v${pkgver//.*}.x/linux-${pkgver}.tar.xz
   https://www.kernel.org/pub/linux/kernel/v${pkgver//.*}.x/linux-${pkgver}.tar.sign
   config         # the main kernel config file
-  sphinx-workaround.patch
 
   # Arch Linux patches
   0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
-  0002-Bluetooth-Fix-LL-PRivacy-BLE-device-fails-to-connect.patch
-  0003-Bluetooth-Fix-attempting-to-set-RPA-timeout-when-uns.patch
-  0004-HID-quirks-Add-Apple-Magic-Trackpad-2-to-hid_have_sp.patch
+  0002-HID-quirks-Add-Apple-Magic-Trackpad-2-to-hid_have_sp.patch
+  0003-iwlwifi-provide-gso_type-to-GSO-packets.patch
 
   # Hack for AMD DC eDP link rate bug
   2001-drm-amd-display-Force-link_rate-as-LINK_RATE_RBR2-fo.patch
@@ -70,14 +68,12 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('b0d7abae88e5f91893627c645e680a95c818defd1b4fcaf3e2afb4b2b6b4ab86'
+sha256sums=('1d454f2817ab4f34cf313ea680ab75e20f79c6431b3bd3ea3bcd39353030c4aa'
             'SKIP'
-            'c008673216498690f296cf74fc42ec0874ab4b3802f610dfb2acfa2f268edb98'
-            '8cb21e0b3411327b627a9dd15b8eb773295a0d2782b1a41b2a8839d1b2f5778c'
-            '043f50b0b4d46fd3a92050ccac5ee814ced56f40377501e7aa64373072723d28'
-            '3b59e6f5dcdbb1a109cdac98e715bf120a7d6e59bb6befda133b50c1f7d0fe41'
-            '4c66abadb92dd781975384e515631bad702b772b9c34c9654ee27119daddca5d'
-            '75701d7395b682335aa6fc4fb625d2f80bf9009ca8dceafc06f27c16e45fa794'
+            'f9ead589fa7758fc1749e068f7541d807282a0f374b62eeffe642c71480208ca'
+            '0a440f50e3e353964e9c378e7af8bd8b046dbac653cdef287ae33e4941003622'
+            '745a5fcadf3875d56b8eb5d5560d1af3af80735bffa6f5945f9e5592e84eae18'
+            'f96b40f4c6b5a8a8a65f05734a63324c0b4882d577ca3fc0ae45e87dccff68ac'
             '786dfc22e4c6ece883e7dedd0ba3f6c14018584df95450b2cb78f3da8b01f7cb'
             '4cd7002a6f5c40c5abacbb60221015f73b7b219a9adb133e003877f1d35ec81d'
             '8d8401a99a9dfbc41aa2dc5b6a409a19860b1b918465e19de4a4ff18de075ea3'
