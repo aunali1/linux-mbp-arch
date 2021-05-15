@@ -9,6 +9,7 @@ steps:
     - name: build-products
       path: /tmp/products
   commands:
+    - mkdir -p /var/lib/pacman # temporary workaround: https://bugs.archlinux.org/task/69563
     - pacman --noconfirm -Syyu
     - pacman --noconfirm --needed -S base-devel sudo
     - useradd builduser -m
