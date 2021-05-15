@@ -13,7 +13,7 @@ steps:
     - chmod +x /tmp/pacman-static
     - /tmp/pacman-static --noconfirm -Syy
     - curl --output /tmp/glibc-linux4-2.33-5-x86_64.pkg.tar.zst https://dl.t2linux.org/ci/glibc-linux4-2.33-5-x86_64.pkg.tar.zst
-    - curl --output lib32-glibc-linux4-2.33-5-x86_64.pkg.tar.zst https://dl.t2linux.org/ci/lib32-glibc-linux4-2.33-5-x86_64.pkg.tar.zst
+    - curl --output /tmp/lib32-glibc-linux4-2.33-5-x86_64.pkg.tar.zst https://dl.t2linux.org/ci/lib32-glibc-linux4-2.33-5-x86_64.pkg.tar.zst
     - /tmp/pacman-static --noconfirm -U /tmp/glibc-linux4-2.33-5-x86_64.pkg.tar.zst /tmp/lib32-glibc-linux4-2.33-5-x86_64.pkg.tar.zst
     - pacman --noconfirm -Syu
     - pacman --noconfirm --needed -S base-devel sudo
