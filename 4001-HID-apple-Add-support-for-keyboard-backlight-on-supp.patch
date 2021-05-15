@@ -1,7 +1,7 @@
-From dea63f5efd772740758cc78cde6c94a3df2ebde8 Mon Sep 17 00:00:00 2001
+From a6bf93712831ea518fcd342c3720b34f96afcd78 Mon Sep 17 00:00:00 2001
 From: Paul Pawlowski <paul@mrarm.io>
 Date: Sat, 30 Jan 2021 23:42:14 -0600
-Subject: [PATCH 1/8] HID: apple: Add support for keyboard backlight on
+Subject: [PATCH 1/9] HID: apple: Add support for keyboard backlight on
  supported models
 
 This commit introduces the requisite plumbing for supporting keyboard
@@ -16,7 +16,7 @@ Signed-off-by: Aun-Ali Zaidi <admin@kodeit.net>
  1 file changed, 124 insertions(+)
 
 diff --git a/drivers/hid/hid-apple.c b/drivers/hid/hid-apple.c
-index e82f604d33e9..bcebd6ecb2f2 100644
+index 6b8f0d004d34..e03a621bc741 100644
 --- a/drivers/hid/hid-apple.c
 +++ b/drivers/hid/hid-apple.c
 @@ -7,6 +7,7 @@
@@ -191,5 +191,5 @@ index e82f604d33e9..bcebd6ecb2f2 100644
  }
  
 -- 
-2.30.0
+2.30.1
 

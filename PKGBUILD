@@ -2,7 +2,7 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.10.12
+pkgver=5.10.37
 _srcname=linux-${pkgver}
 pkgrel=1
 pkgdesc='Linux for MBP'
@@ -25,7 +25,6 @@ source=(
   # Arch Linux patches
   0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
   0002-HID-quirks-Add-Apple-Magic-Trackpad-2-to-hid_have_sp.patch
-  0003-iwlwifi-provide-gso_type-to-GSO-packets.patch
 
   # Hack for AMD DC eDP link rate bug
   2001-drm-amd-display-Force-link_rate-as-LINK_RATE_RBR2-fo.patch
@@ -45,8 +44,9 @@ source=(
   4004-HID-apple-Add-support-for-MacBookPro15-1-keyboard-tr.patch
   4005-HID-apple-Add-support-for-MacBookPro15-4-keyboard-tr.patch
   4006-HID-apple-Add-support-for-MacBookPro16-2-keyboard-tr.patch
-  4007-HID-apple-Add-support-for-MacBookAir9-1-keyboard-tra.patch
-  4008-HID-apple-Add-support-for-MacBookPro16-1-keyboard-tr.patch
+  4007-HID-apple-Add-support-for-MacBookPro16-3-keyboard-tr.patch
+  4008-HID-apple-Add-support-for-MacBookAir9-1-keyboard-tra.patch
+  4009-HID-apple-Add-support-for-MacBookPro16-1-keyboard-tr.patch
 
   # Broadcom Wifi rambase debugging additions
   5001-brcmfmac-move-brcmf_mp_device-into-its-own-header.patch
@@ -68,12 +68,11 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('1d454f2817ab4f34cf313ea680ab75e20f79c6431b3bd3ea3bcd39353030c4aa'
+sha256sums=('a8d5e3309dafc484eb70f94747a6efffa29a79bae651ae126333e913c00be077'
             'SKIP'
-            'f9ead589fa7758fc1749e068f7541d807282a0f374b62eeffe642c71480208ca'
-            '0a440f50e3e353964e9c378e7af8bd8b046dbac653cdef287ae33e4941003622'
-            '745a5fcadf3875d56b8eb5d5560d1af3af80735bffa6f5945f9e5592e84eae18'
-            'f96b40f4c6b5a8a8a65f05734a63324c0b4882d577ca3fc0ae45e87dccff68ac'
+            'b8f88f9327335bcf4cc663335a22c68951ec82195ef50bdcf1a4f876e8ee10ce'
+            'f93099f45dc6ed69e63af48ff1e77fc523607c95775d3960f7659d9a1ed5975f'
+            '2184069ab00ef43d9674756e9b7a56d15188bc4494d34425f04ddc779c52acd8'
             '786dfc22e4c6ece883e7dedd0ba3f6c14018584df95450b2cb78f3da8b01f7cb'
             '4cd7002a6f5c40c5abacbb60221015f73b7b219a9adb133e003877f1d35ec81d'
             '8d8401a99a9dfbc41aa2dc5b6a409a19860b1b918465e19de4a4ff18de075ea3'
@@ -81,14 +80,15 @@ sha256sums=('1d454f2817ab4f34cf313ea680ab75e20f79c6431b3bd3ea3bcd39353030c4aa'
             '459906cab172df9f6712a4168e7a5d529f85b2bb58a068f2d44746df14a6d27a'
             '2827dab6eeb2d2a08034938024f902846b5813e967a0ea253dc1ea88315da383'
             '62b7d5831960c5775cdea17d44011cfda790f78d833e9663cf522350ab3643b6'
-            '8cb46bf2e11d4f54a6cefe39d3f2808e44e8e96efafac891ab2b7d2e30cbc09f'
-            '5c7951ca03ffef1c8083c1d625ad98a4b6f756df04f153f057f3b16aafa268b7'
-            '8f8042185376157f429f809c193d139920bfe01989ca729cf35e96916891b1e6'
-            '0b44ac994d455add8bfa0badb93e5e161c7b65d5816da46f9828844a85256dc7'
-            '7cf9dfed7e5e6712d228e78440adcb1f931eae138992ee0ae9c11be97e5719d6'
-            'b0b918e10d2bfab0a1be7475f98a7f3155bc537b70c70328b34553ccc8bd6909'
-            '25d27b2b49d08759cb80b53dac2809a2b934c6ea9195d650d297b859709b965c'
-            '0de44eff8e9c82a1e25152c20b46b78189c8858bf6cb071f325148fdada37921'
+            '0200805d9151cd16135f48c699a0460c0f5b464dabe1b6d8e5a54d2f36ab2dbf'
+            '83f4be6849ba4d5f9fad647ad2eb78bf6409ee98a40ac62e8a5b80496233d70a'
+            '44bd3643b2b22fedc59d79511199f30ce6759fa0acdd9a66262a53c5e046da6b'
+            'eb04a492197783643b3e72b1d0cf0e856290381997bd165a14fbc63ac1489c25'
+            '69d56d42473526f7dbd4fb18c5e1baafe4e6d32995b2506bd48ff981c53b5385'
+            '1deeacae1875cf9075b858a8bfb2463ebc531c9030b7c2ab46bbb8e4c3b974db'
+            '40eff5e88bb30c51c6b97e85c2e7b8dec5f97916f768e6c07618d9c5afe68574'
+            'cac035fe07663a319185c644c5b39b34bef89ada348881fa4a02d15290260445'
+            '45719489a9297d863ea60464e45a7e92f19606e527a7219d3582022e38439c0e'
             '4d22727c1456e268de1c39ac73f2dc0c1630ac25aa66364d99f94e29eba5c6b9'
             '7f41e52285bbdeeaf565e7a1e69860439a4cc302092b473301040f29fc2f5b64'
             '9640178d6251686c980c30fc528b3d70beac6ce8246bf433506a3f843808326c'

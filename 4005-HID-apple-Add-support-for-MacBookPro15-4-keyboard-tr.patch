@@ -1,7 +1,7 @@
-From 3c0c9c386f44263d0003e0cc148cff10a61f5a37 Mon Sep 17 00:00:00 2001
+From f00e6b0e89c89233ca43348f2c74b93757cd7deb Mon Sep 17 00:00:00 2001
 From: Aun-Ali Zaidi <admin@kodeit.net>
 Date: Sun, 31 Jan 2021 01:56:59 -0600
-Subject: [PATCH 5/8] HID: apple: Add support for MacBookPro15,4
+Subject: [PATCH 5/9] HID: apple: Add support for MacBookPro15,4
  keyboard/trackpad
 
 This commit adds the necessary IDs and configuration for the MacBook Pro
@@ -19,10 +19,10 @@ Signed-off-by: Aun-Ali Zaidi <admin@kodeit.net>
  4 files changed, 22 insertions(+)
 
 diff --git a/drivers/hid/hid-apple.c b/drivers/hid/hid-apple.c
-index bf8dfca762a7..11bfc6b16778 100644
+index 9ee795dcfa83..d59d6de017d6 100644
 --- a/drivers/hid/hid-apple.c
 +++ b/drivers/hid/hid-apple.c
-@@ -735,6 +735,8 @@ static const struct hid_device_id apple_devices[] = {
+@@ -737,6 +737,8 @@ static const struct hid_device_id apple_devices[] = {
  		.driver_data = APPLE_HAS_FN | APPLE_BACKLIGHT_CTL },
  	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRINGT2_J680),
  		.driver_data = APPLE_HAS_FN | APPLE_BACKLIGHT_CTL },
@@ -32,7 +32,7 @@ index bf8dfca762a7..11bfc6b16778 100644
  		.driver_data = APPLE_NUMLOCK_EMULATION | APPLE_HAS_FN },
  	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_ALU_WIRELESS_2009_ISO),
 diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index c5340b03a56a..1e28f1f54de8 100644
+index b3e37a63e47e..aaa7cdf96481 100644
 --- a/drivers/hid/hid-ids.h
 +++ b/drivers/hid/hid-ids.h
 @@ -168,6 +168,7 @@
@@ -106,5 +106,5 @@ index e7280b3c1a08..3964f58fb870 100644
  };
  
 -- 
-2.30.0
+2.30.1
 
