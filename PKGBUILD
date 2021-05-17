@@ -2,9 +2,9 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.10.37
+pkgver=5.11.20
 _srcname=linux-${pkgver}
-pkgrel=2
+pkgrel=1
 pkgdesc='Linux for MBP'
 _srctag=v${pkgver%.*}-${pkgver##*.}
 url="https://git.archlinux.org/linux.git/log/?h=v$_srctag"
@@ -24,7 +24,10 @@ source=(
 
   # Arch Linux patches
   0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
-  0002-HID-quirks-Add-Apple-Magic-Trackpad-2-to-hid_have_sp.patch
+  0002-drm-i915-ilk-glk-Fix-link-training-on-links-with-LTT.patch
+  0003-drm-i915-dp-Prevent-setting-the-LTTPR-LT-mode-if-no-.patch
+  0004-drm-i915-Disable-LTTPR-support-when-the-DPCD-rev-1.4.patch
+  0005-drm-i915-Fix-modesetting-in-case-of-unexpected-AUX-t.patch
 
   # Hack for AMD DC eDP link rate bug
   2001-drm-amd-display-Force-link_rate-as-LINK_RATE_RBR2-fo.patch
@@ -68,11 +71,14 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('a8d5e3309dafc484eb70f94747a6efffa29a79bae651ae126333e913c00be077'
+sha256sums=('73faeea560dc4fe1f9ee17af4b8d72446192e536979460d66ed6d0cd03bf0797'
             'SKIP'
-            'b8f88f9327335bcf4cc663335a22c68951ec82195ef50bdcf1a4f876e8ee10ce'
-            'f93099f45dc6ed69e63af48ff1e77fc523607c95775d3960f7659d9a1ed5975f'
-            '2184069ab00ef43d9674756e9b7a56d15188bc4494d34425f04ddc779c52acd8'
+            '849ea169bb72e53a2bfdcafe21b58b12534e998539cbcd15722ffc151c6810f7'
+            '38dc7a61065fbed8c1e7866e40c80ff3a318bafe606152de4cde3fe141af152a'
+            '78a4c70d84340d1a0f335980eb8ec11914f4be548e4c509f07b957a76c57a593'
+            '89104a4f7ecbd82ddd7ccaf847fc78848af327187f22054d4f5066aff8641104'
+            '89fd1c26eb26930771bd8edaf1ef83a50f0b69f8bf8705962bfdc2160b173f77'
+            'ff65f4e0f8132166d64695dde2979e437d4887b212688b56be07b9a47b3b046e'
             '786dfc22e4c6ece883e7dedd0ba3f6c14018584df95450b2cb78f3da8b01f7cb'
             '4cd7002a6f5c40c5abacbb60221015f73b7b219a9adb133e003877f1d35ec81d'
             '8d8401a99a9dfbc41aa2dc5b6a409a19860b1b918465e19de4a4ff18de075ea3'

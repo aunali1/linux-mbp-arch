@@ -1,8 +1,8 @@
 pkgbase = linux-mbp
 	pkgdesc = Linux for MBP
-	pkgver = 5.10.37
-	pkgrel = 2
-	url = https://git.archlinux.org/linux.git/log/?h=vv5.10-37
+	pkgver = 5.11.20
+	pkgrel = 1
+	url = https://git.archlinux.org/linux.git/log/?h=vv5.11-20
 	arch = x86_64
 	license = GPL2
 	makedepends = bc
@@ -20,11 +20,14 @@ pkgbase = linux-mbp
 	makedepends = imagemagick
 	makedepends = git
 	options = !strip
-	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.10.37.tar.xz
-	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.10.37.tar.sign
+	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.11.20.tar.xz
+	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.11.20.tar.sign
 	source = config
 	source = 0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
-	source = 0002-HID-quirks-Add-Apple-Magic-Trackpad-2-to-hid_have_sp.patch
+	source = 0002-drm-i915-ilk-glk-Fix-link-training-on-links-with-LTT.patch
+	source = 0003-drm-i915-dp-Prevent-setting-the-LTTPR-LT-mode-if-no-.patch
+	source = 0004-drm-i915-Disable-LTTPR-support-when-the-DPCD-rev-1.4.patch
+	source = 0005-drm-i915-Fix-modesetting-in-case-of-unexpected-AUX-t.patch
 	source = 2001-drm-amd-display-Force-link_rate-as-LINK_RATE_RBR2-fo.patch
 	source = 3001-applesmc-convert-static-structures-to-drvdata.patch
 	source = 3002-applesmc-make-io-port-base-addr-dynamic.patch
@@ -49,11 +52,14 @@ pkgbase = linux-mbp
 	source = 8002-brcmfmac-Add-initial-support-for-the-BRCM4377.patch
 	validpgpkeys = ABAF11C65A2970B130ABE3C479BE3E4300411886
 	validpgpkeys = 647F28654894E3BD457199BE38DBBDC86092693E
-	sha256sums = a8d5e3309dafc484eb70f94747a6efffa29a79bae651ae126333e913c00be077
+	sha256sums = 73faeea560dc4fe1f9ee17af4b8d72446192e536979460d66ed6d0cd03bf0797
 	sha256sums = SKIP
-	sha256sums = b8f88f9327335bcf4cc663335a22c68951ec82195ef50bdcf1a4f876e8ee10ce
-	sha256sums = f93099f45dc6ed69e63af48ff1e77fc523607c95775d3960f7659d9a1ed5975f
-	sha256sums = 2184069ab00ef43d9674756e9b7a56d15188bc4494d34425f04ddc779c52acd8
+	sha256sums = 849ea169bb72e53a2bfdcafe21b58b12534e998539cbcd15722ffc151c6810f7
+	sha256sums = 38dc7a61065fbed8c1e7866e40c80ff3a318bafe606152de4cde3fe141af152a
+	sha256sums = 78a4c70d84340d1a0f335980eb8ec11914f4be548e4c509f07b957a76c57a593
+	sha256sums = 89104a4f7ecbd82ddd7ccaf847fc78848af327187f22054d4f5066aff8641104
+	sha256sums = 89fd1c26eb26930771bd8edaf1ef83a50f0b69f8bf8705962bfdc2160b173f77
+	sha256sums = ff65f4e0f8132166d64695dde2979e437d4887b212688b56be07b9a47b3b046e
 	sha256sums = 786dfc22e4c6ece883e7dedd0ba3f6c14018584df95450b2cb78f3da8b01f7cb
 	sha256sums = 4cd7002a6f5c40c5abacbb60221015f73b7b219a9adb133e003877f1d35ec81d
 	sha256sums = 8d8401a99a9dfbc41aa2dc5b6a409a19860b1b918465e19de4a4ff18de075ea3
@@ -84,13 +90,13 @@ pkgname = linux-mbp
 	depends = initramfs
 	optdepends = crda: to set the correct wireless channels of your country
 	optdepends = linux-firmware: firmware images needed for some devices
-	provides = linux=5.10.37
+	provides = linux=5.11.20
 	replaces = virtualbox-guest-modules-arch
 	replaces = wireguard-arch
 
 pkgname = linux-mbp-headers
 	pkgdesc = Headers and scripts for building modules for the Linux for MBP kernel
-	provides = linux-headers=5.10.37
+	provides = linux-headers=5.11.20
 
 pkgname = linux-mbp-docs
 	pkgdesc = Documentation for the Linux for MBP kernel
