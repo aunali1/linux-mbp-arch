@@ -50,7 +50,7 @@ index 6b8f0d004d34..e03a621bc741 100644
  	unsigned int fn_on;
  	unsigned int fn_found;
  	DECLARE_BITMAP(pressed_numlock, KEY_CNT);
-+	struct apple_sc_backlight *backlight
++	struct apple_sc_backlight *backlight;
  };
  
  struct apple_key_translation {
