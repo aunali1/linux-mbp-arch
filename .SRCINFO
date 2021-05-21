@@ -1,8 +1,8 @@
 pkgbase = linux-mbp
 	pkgdesc = Linux for MBP
-	pkgver = 5.11.20
+	pkgver = 5.11.22
 	pkgrel = 1
-	url = https://git.archlinux.org/linux.git/log/?h=vv5.11-20
+	url = https://git.archlinux.org/linux.git/log/?h=vv5.11-22
 	arch = x86_64
 	license = GPL2
 	makedepends = bc
@@ -20,8 +20,8 @@ pkgbase = linux-mbp
 	makedepends = imagemagick
 	makedepends = git
 	options = !strip
-	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.11.20.tar.xz
-	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.11.20.tar.sign
+	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.11.22.tar.xz
+	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.11.22.tar.sign
 	source = config
 	source = 0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
 	source = 0002-drm-i915-ilk-glk-Fix-link-training-on-links-with-LTT.patch
@@ -52,7 +52,7 @@ pkgbase = linux-mbp
 	source = 8002-brcmfmac-Add-initial-support-for-the-BRCM4377.patch
 	validpgpkeys = ABAF11C65A2970B130ABE3C479BE3E4300411886
 	validpgpkeys = 647F28654894E3BD457199BE38DBBDC86092693E
-	sha256sums = 73faeea560dc4fe1f9ee17af4b8d72446192e536979460d66ed6d0cd03bf0797
+	sha256sums = 11027c6114eb916edbcc37897226fb6263b2931911d2d5093550473ce1a57600
 	sha256sums = SKIP
 	sha256sums = 849ea169bb72e53a2bfdcafe21b58b12534e998539cbcd15722ffc151c6810f7
 	sha256sums = 38dc7a61065fbed8c1e7866e40c80ff3a318bafe606152de4cde3fe141af152a
@@ -90,13 +90,13 @@ pkgname = linux-mbp
 	depends = initramfs
 	optdepends = crda: to set the correct wireless channels of your country
 	optdepends = linux-firmware: firmware images needed for some devices
-	provides = linux=5.11.20
+	provides = linux=5.11.22
 	replaces = virtualbox-guest-modules-arch
 	replaces = wireguard-arch
 
 pkgname = linux-mbp-headers
 	pkgdesc = Headers and scripts for building modules for the Linux for MBP kernel
-	provides = linux-headers=5.11.20
+	provides = linux-headers=5.11.22
 
 pkgname = linux-mbp-docs
 	pkgdesc = Documentation for the Linux for MBP kernel
