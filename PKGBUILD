@@ -2,7 +2,7 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.11.22
+pkgver=5.12.6
 _srcname=linux-${pkgver}
 pkgrel=1
 pkgdesc='Linux for MBP'
@@ -24,10 +24,7 @@ source=(
 
   # Arch Linux patches
   0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
-  0002-drm-i915-ilk-glk-Fix-link-training-on-links-with-LTT.patch
-  0003-drm-i915-dp-Prevent-setting-the-LTTPR-LT-mode-if-no-.patch
-  0004-drm-i915-Disable-LTTPR-support-when-the-DPCD-rev-1.4.patch
-  0005-drm-i915-Fix-modesetting-in-case-of-unexpected-AUX-t.patch
+  0002-drm-i915-gt-Disable-HiZ-Raw-Stall-Optimization-on-br.patch
 
   # Hack for AMD DC eDP link rate bug
   2001-drm-amd-display-Force-link_rate-as-LINK_RATE_RBR2-fo.patch
@@ -71,21 +68,18 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('11027c6114eb916edbcc37897226fb6263b2931911d2d5093550473ce1a57600'
+sha256sums=('4b704cf7f272c6b8e870130cf72d4d9ce67cc411386f68fc6c25b6578b6abdb1'
             'SKIP'
-            '849ea169bb72e53a2bfdcafe21b58b12534e998539cbcd15722ffc151c6810f7'
-            '38dc7a61065fbed8c1e7866e40c80ff3a318bafe606152de4cde3fe141af152a'
-            '78a4c70d84340d1a0f335980eb8ec11914f4be548e4c509f07b957a76c57a593'
-            '89104a4f7ecbd82ddd7ccaf847fc78848af327187f22054d4f5066aff8641104'
-            '89fd1c26eb26930771bd8edaf1ef83a50f0b69f8bf8705962bfdc2160b173f77'
-            'ff65f4e0f8132166d64695dde2979e437d4887b212688b56be07b9a47b3b046e'
+            'd92bdc38ec98b63004b1816daa982f632e0eef07c079ef96fae373e9844674f2'
+            'fbe6f128598aa2ac91534f5d7a2d1b08c9eb9037bac197ce0cea49c767c0bc01'
+            '1dbd33f717050f8927ff434d48c059d48dedc1b04f76dc3d2295d2e9e60c91be'
             '786dfc22e4c6ece883e7dedd0ba3f6c14018584df95450b2cb78f3da8b01f7cb'
-            '4cd7002a6f5c40c5abacbb60221015f73b7b219a9adb133e003877f1d35ec81d'
-            '8d8401a99a9dfbc41aa2dc5b6a409a19860b1b918465e19de4a4ff18de075ea3'
-            '08d165106fe35b68a7b48f216566951a5db0baac19098c015bcc81c5fcba678d'
-            '459906cab172df9f6712a4168e7a5d529f85b2bb58a068f2d44746df14a6d27a'
-            '2827dab6eeb2d2a08034938024f902846b5813e967a0ea253dc1ea88315da383'
-            '62b7d5831960c5775cdea17d44011cfda790f78d833e9663cf522350ab3643b6'
+            '0d3e591d7cb2532ee68c4621594a10b1d0240528a312159ee0731484bb180400'
+            '63187212c33d844b6b9a26f76e789d9f4144d0d8fe9444dfd499f31430b45648'
+            'd66a0cdf4377d3e5c7f42a7ae45785d8da1a44fcc9001dcb721d987f490018c9'
+            '688dee43c42d2e572c31d26513d43f02f9838c3fe149446db79dfca451801ab9'
+            '560f1b89bd9ea93107903ed34100129ee0ac0ea5dd8b3d74db9a6835b1bfdb4c'
+            'e46140f502d8c00d88e206934a491a8a0dd1ff7fac187bbf93bb8c3a106e5bc7'
             '11565cff9c6a7db8846dc7d5930419045e9527863b8df5979a7465006211bd16'
             '83f4be6849ba4d5f9fad647ad2eb78bf6409ee98a40ac62e8a5b80496233d70a'
             '44bd3643b2b22fedc59d79511199f30ce6759fa0acdd9a66262a53c5e046da6b'

@@ -1,4 +1,4 @@
-From 09dd6c563cd73d72e917de07e8d59358c41e051d Mon Sep 17 00:00:00 2001
+From 86717fd6722b0ddc607d45718c29d67f3671d71d Mon Sep 17 00:00:00 2001
 From: Paul Pawlowski <paul@mrarm.io>
 Date: Sun, 17 Nov 2019 23:12:55 +0100
 Subject: [PATCH 1/6] applesmc: convert static structures to drvdata
@@ -14,7 +14,7 @@ Signed-off-by: Aun-Ali Zaidi <admin@kodeit.net>
  1 file changed, 319 insertions(+), 221 deletions(-)
 
 diff --git a/drivers/hwmon/applesmc.c b/drivers/hwmon/applesmc.c
-index 79b498f816fe..62211b590a61 100644
+index 28b137eedf2e..cf00f7b62a78 100644
 --- a/drivers/hwmon/applesmc.c
 +++ b/drivers/hwmon/applesmc.c
 @@ -6,6 +6,7 @@
@@ -323,7 +323,7 @@ index 79b498f816fe..62211b590a61 100644
  {
 -	struct applesmc_registers *s = &smcreg;
 +	struct applesmc_registers *s = &smc->reg;
- 	bool left_light_sensor = 0, right_light_sensor = 0;
+ 	bool left_light_sensor = false, right_light_sensor = false;
  	unsigned int count;
  	u8 tmp[1];
 @@ -590,35 +606,35 @@ static int applesmc_init_smcreg_try(void)
@@ -1040,7 +1040,7 @@ index 79b498f816fe..62211b590a61 100644
  }
  
  static int applesmc_dmi_match(const struct dmi_system_id *id)
-@@ -1302,86 +1393,100 @@ static const struct dmi_system_id applesmc_whitelist[] __initconst = {
+@@ -1306,86 +1397,100 @@ static const struct dmi_system_id applesmc_whitelist[] __initconst = {
  	{ .ident = NULL }
  };
  
@@ -1190,7 +1190,7 @@ index 79b498f816fe..62211b590a61 100644
  out_driver:
  	platform_driver_unregister(&applesmc_driver);
  out_region:
-@@ -1393,14 +1498,6 @@ static int __init applesmc_init(void)
+@@ -1397,14 +1502,6 @@ static int __init applesmc_init(void)
  
  static void __exit applesmc_exit(void)
  {
@@ -1205,7 +1205,7 @@ index 79b498f816fe..62211b590a61 100644
  	platform_device_unregister(pdev);
  	platform_driver_unregister(&applesmc_driver);
  	release_region(APPLESMC_DATA_PORT, APPLESMC_NR_PORTS);
-@@ -1410,6 +1507,7 @@ module_init(applesmc_init);
+@@ -1414,6 +1511,7 @@ module_init(applesmc_init);
  module_exit(applesmc_exit);
  
  MODULE_AUTHOR("Nicolas Boichat");
@@ -1214,5 +1214,5 @@ index 79b498f816fe..62211b590a61 100644
  MODULE_LICENSE("GPL v2");
  MODULE_DEVICE_TABLE(dmi, applesmc_whitelist);
 -- 
-2.30.0
+2.31.1
 

@@ -1,4 +1,4 @@
-From 799e7a54c62a36007f7874c58d7dac87c9651759 Mon Sep 17 00:00:00 2001
+From 9b8dd8b3f1c53c484449234df6df52514542e94b Mon Sep 17 00:00:00 2001
 From: Aun-Ali Zaidi <admin@kodeit.net>
 Date: Sun, 17 Nov 2019 23:12:16 +0100
 Subject: [PATCH 5/6] applesmc: basic mmio interface implementation
@@ -21,7 +21,7 @@ Signed-off-by: Aun-Ali Zaidi <admin@kodeit.net>
  1 file changed, 231 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/hwmon/applesmc.c b/drivers/hwmon/applesmc.c
-index 3017d8ca2c79..2d23bb9ad9dd 100644
+index e99b7d7b3166..ae0aa5dbc842 100644
 --- a/drivers/hwmon/applesmc.c
 +++ b/drivers/hwmon/applesmc.c
 @@ -42,6 +42,18 @@
@@ -339,5 +339,5 @@ index 3017d8ca2c79..2d23bb9ad9dd 100644
  }
  
 -- 
-2.30.0
+2.31.1
 
