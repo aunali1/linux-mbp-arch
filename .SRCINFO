@@ -1,8 +1,8 @@
 pkgbase = linux-mbp
 	pkgdesc = Linux for MBP
-	pkgver = 5.12.6
+	pkgver = 5.12.8
 	pkgrel = 1
-	url = https://git.archlinux.org/linux.git/log/?h=vv5.12-6
+	url = https://git.archlinux.org/linux.git/log/?h=vv5.12-8
 	arch = x86_64
 	license = GPL2
 	makedepends = bc
@@ -20,11 +20,10 @@ pkgbase = linux-mbp
 	makedepends = imagemagick
 	makedepends = git
 	options = !strip
-	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.12.6.tar.xz
-	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.12.6.tar.sign
+	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.12.8.tar.xz
+	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.12.8.tar.sign
 	source = config
 	source = 0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
-	source = 0002-drm-i915-gt-Disable-HiZ-Raw-Stall-Optimization-on-br.patch
 	source = 2001-drm-amd-display-Force-link_rate-as-LINK_RATE_RBR2-fo.patch
 	source = 3001-applesmc-convert-static-structures-to-drvdata.patch
 	source = 3002-applesmc-make-io-port-base-addr-dynamic.patch
@@ -49,11 +48,10 @@ pkgbase = linux-mbp
 	source = 8002-brcmfmac-Add-initial-support-for-the-BRCM4377.patch
 	validpgpkeys = ABAF11C65A2970B130ABE3C479BE3E4300411886
 	validpgpkeys = 647F28654894E3BD457199BE38DBBDC86092693E
-	sha256sums = 4b704cf7f272c6b8e870130cf72d4d9ce67cc411386f68fc6c25b6578b6abdb1
+	sha256sums = ad46b6ae540c13a6adcd05e8e37a24385686db1145997f7cc7edaffd4b438f8c
 	sha256sums = SKIP
-	sha256sums = d92bdc38ec98b63004b1816daa982f632e0eef07c079ef96fae373e9844674f2
-	sha256sums = fbe6f128598aa2ac91534f5d7a2d1b08c9eb9037bac197ce0cea49c767c0bc01
-	sha256sums = 1dbd33f717050f8927ff434d48c059d48dedc1b04f76dc3d2295d2e9e60c91be
+	sha256sums = 57acef504e43acf77ba6515ca01adfe74870ceb7cec6f0b5fbd5546793da52b1
+	sha256sums = fb8a471c91de22544a63aac13fe56e28a958b786b7cfd533fa57e03d22960366
 	sha256sums = 786dfc22e4c6ece883e7dedd0ba3f6c14018584df95450b2cb78f3da8b01f7cb
 	sha256sums = 0d3e591d7cb2532ee68c4621594a10b1d0240528a312159ee0731484bb180400
 	sha256sums = 63187212c33d844b6b9a26f76e789d9f4144d0d8fe9444dfd499f31430b45648
@@ -84,13 +82,13 @@ pkgname = linux-mbp
 	depends = initramfs
 	optdepends = crda: to set the correct wireless channels of your country
 	optdepends = linux-firmware: firmware images needed for some devices
-	provides = linux=5.12.6
+	provides = linux=5.12.8
 	replaces = virtualbox-guest-modules-arch
 	replaces = wireguard-arch
 
 pkgname = linux-mbp-headers
 	pkgdesc = Headers and scripts for building modules for the Linux for MBP kernel
-	provides = linux-headers=5.12.6
+	provides = linux-headers=5.12.8
 
 pkgname = linux-mbp-docs
 	pkgdesc = Documentation for the Linux for MBP kernel

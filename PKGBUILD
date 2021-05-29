@@ -2,7 +2,7 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.12.6
+pkgver=5.12.8
 _srcname=linux-${pkgver}
 pkgrel=1
 pkgdesc='Linux for MBP'
@@ -24,7 +24,6 @@ source=(
 
   # Arch Linux patches
   0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
-  0002-drm-i915-gt-Disable-HiZ-Raw-Stall-Optimization-on-br.patch
 
   # Hack for AMD DC eDP link rate bug
   2001-drm-amd-display-Force-link_rate-as-LINK_RATE_RBR2-fo.patch
@@ -68,11 +67,10 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('4b704cf7f272c6b8e870130cf72d4d9ce67cc411386f68fc6c25b6578b6abdb1'
+sha256sums=('ad46b6ae540c13a6adcd05e8e37a24385686db1145997f7cc7edaffd4b438f8c'
             'SKIP'
-            'd92bdc38ec98b63004b1816daa982f632e0eef07c079ef96fae373e9844674f2'
-            'fbe6f128598aa2ac91534f5d7a2d1b08c9eb9037bac197ce0cea49c767c0bc01'
-            '1dbd33f717050f8927ff434d48c059d48dedc1b04f76dc3d2295d2e9e60c91be'
+            '57acef504e43acf77ba6515ca01adfe74870ceb7cec6f0b5fbd5546793da52b1'
+            'fb8a471c91de22544a63aac13fe56e28a958b786b7cfd533fa57e03d22960366'
             '786dfc22e4c6ece883e7dedd0ba3f6c14018584df95450b2cb78f3da8b01f7cb'
             '0d3e591d7cb2532ee68c4621594a10b1d0240528a312159ee0731484bb180400'
             '63187212c33d844b6b9a26f76e789d9f4144d0d8fe9444dfd499f31430b45648'
