@@ -2,7 +2,7 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.12.8
+pkgver=5.12.11
 _srcname=linux-${pkgver}
 pkgrel=1
 pkgdesc='Linux for MBP'
@@ -24,6 +24,12 @@ source=(
 
   # Arch Linux patches
   0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
+  0002-x86-setup-Consolidate-early-memory-reservations.patch
+  0003-x86-setup-Merge-several-reservations-of-start-of-mem.patch
+  0004-x86-setup-Move-trim_snb_memory-later-in-setup_arch-t.patch
+  0005-x86-setup-always-reserve-the-first-1M-of-RAM.patch
+  0006-x86-setup-remove-CONFIG_X86_RESERVE_LOW-and-reservel.patch
+  0007-x86-crash-remove-crash_reserve_low_1M.patch
 
   # Hack for AMD DC eDP link rate bug
   2001-drm-amd-display-Force-link_rate-as-LINK_RATE_RBR2-fo.patch
@@ -67,10 +73,16 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('ad46b6ae540c13a6adcd05e8e37a24385686db1145997f7cc7edaffd4b438f8c'
+sha256sums=('ae7c3310365f6afdc0b6bd01f434a52c484589bd9b0fea8067b81a46d6f67f7a'
             'SKIP'
             '57acef504e43acf77ba6515ca01adfe74870ceb7cec6f0b5fbd5546793da52b1'
-            'fb8a471c91de22544a63aac13fe56e28a958b786b7cfd533fa57e03d22960366'
+            '5cba62d057b0338caf5348c2c4ba9d2316d9b643baacfbd3b76a1f21109ca087'
+            '2941e2966740841c5d21e642b3f85d4363db18efc86965ff0f7d197ebacc3a1b'
+            'caf0d5e9e56bc890ed630397f65eb7cba5fff3c9870e367764991668a8f92c86'
+            'dd66b57504483583bc19fbaee5f394dcb81a62507a86aeb7dd513eaff27c830c'
+            '877bf8cf4fe38113c5ad010830a6bf181aca9de7a85d5dff27fe1c23585352fb'
+            'e81362adf65c7dd02ec4ca04304d51856cab72befb89af0a06f4d08685ce170c'
+            'e4306b524c70e420591b8e3630e6720a5de497e60f0c97334f2c75331042e576'
             '786dfc22e4c6ece883e7dedd0ba3f6c14018584df95450b2cb78f3da8b01f7cb'
             '0d3e591d7cb2532ee68c4621594a10b1d0240528a312159ee0731484bb180400'
             '63187212c33d844b6b9a26f76e789d9f4144d0d8fe9444dfd499f31430b45648'
