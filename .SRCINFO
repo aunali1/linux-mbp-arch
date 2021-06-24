@@ -1,8 +1,8 @@
 pkgbase = linux-mbp
 	pkgdesc = Linux for MBP
-	pkgver = 5.12.11
+	pkgver = 5.12.13
 	pkgrel = 1
-	url = https://git.archlinux.org/linux.git/log/?h=vv5.12-11
+	url = https://git.archlinux.org/linux.git/log/?h=vv5.12-13
 	arch = x86_64
 	license = GPL2
 	makedepends = bc
@@ -20,8 +20,8 @@ pkgbase = linux-mbp
 	makedepends = imagemagick
 	makedepends = git
 	options = !strip
-	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.12.11.tar.xz
-	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.12.11.tar.sign
+	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.12.13.tar.xz
+	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.12.13.tar.sign
 	source = config
 	source = 0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
 	source = 0002-x86-setup-Consolidate-early-memory-reservations.patch
@@ -54,16 +54,16 @@ pkgbase = linux-mbp
 	source = 8002-brcmfmac-Add-initial-support-for-the-BRCM4377.patch
 	validpgpkeys = ABAF11C65A2970B130ABE3C479BE3E4300411886
 	validpgpkeys = 647F28654894E3BD457199BE38DBBDC86092693E
-	sha256sums = ae7c3310365f6afdc0b6bd01f434a52c484589bd9b0fea8067b81a46d6f67f7a
+	sha256sums = af485fcde5635981e6713b547cc8904a7f6e74e5ffb784cc08781fa5999dd255
 	sha256sums = SKIP
-	sha256sums = 57acef504e43acf77ba6515ca01adfe74870ceb7cec6f0b5fbd5546793da52b1
-	sha256sums = 5cba62d057b0338caf5348c2c4ba9d2316d9b643baacfbd3b76a1f21109ca087
-	sha256sums = 2941e2966740841c5d21e642b3f85d4363db18efc86965ff0f7d197ebacc3a1b
-	sha256sums = caf0d5e9e56bc890ed630397f65eb7cba5fff3c9870e367764991668a8f92c86
-	sha256sums = dd66b57504483583bc19fbaee5f394dcb81a62507a86aeb7dd513eaff27c830c
-	sha256sums = 877bf8cf4fe38113c5ad010830a6bf181aca9de7a85d5dff27fe1c23585352fb
-	sha256sums = e81362adf65c7dd02ec4ca04304d51856cab72befb89af0a06f4d08685ce170c
-	sha256sums = e4306b524c70e420591b8e3630e6720a5de497e60f0c97334f2c75331042e576
+	sha256sums = 29c568e438ea23ba1dd96c3dcd3532fb9a937c73d552f1be55ad0761c6d79a46
+	sha256sums = 349749cd084974135e89277c5ff0dec209e5a9a5c8ac83ceb787b2707f88f4da
+	sha256sums = 8010c7d37bcba716f595cb93ec2661a8052d44be44d3d383904fe06b33d44d32
+	sha256sums = c2ee371e6dbd98b06f7b53f78d83ce8432a79219fbb0243e770d05cbf8127eb8
+	sha256sums = c29f28e39c05fa74ae001e5038348ac6fcc74af130ddd11cf8a1dc06bcf58d06
+	sha256sums = 588fe60d0c03a6e0f05003292a96435c361281b5bbce86e79ebbb3003ca2d06e
+	sha256sums = 1453f11b1a15d0f05346d079f4cf1f7b3aa8a86bbf130196ce2e8fc75354f5ed
+	sha256sums = 4bd7b86f84dc1af96abadfa5d45d39ba9c192112af699520fdf244e397dca46c
 	sha256sums = 786dfc22e4c6ece883e7dedd0ba3f6c14018584df95450b2cb78f3da8b01f7cb
 	sha256sums = 0d3e591d7cb2532ee68c4621594a10b1d0240528a312159ee0731484bb180400
 	sha256sums = 63187212c33d844b6b9a26f76e789d9f4144d0d8fe9444dfd499f31430b45648
@@ -94,13 +94,13 @@ pkgname = linux-mbp
 	depends = initramfs
 	optdepends = crda: to set the correct wireless channels of your country
 	optdepends = linux-firmware: firmware images needed for some devices
-	provides = linux=5.12.11
+	provides = linux=5.12.13
 	replaces = virtualbox-guest-modules-arch
 	replaces = wireguard-arch
 
 pkgname = linux-mbp-headers
 	pkgdesc = Headers and scripts for building modules for the Linux for MBP kernel
-	provides = linux-headers=5.12.11
+	provides = linux-headers=5.12.13
 
 pkgname = linux-mbp-docs
 	pkgdesc = Documentation for the Linux for MBP kernel
