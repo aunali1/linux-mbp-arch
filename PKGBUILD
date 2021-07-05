@@ -2,7 +2,7 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.12.13
+pkgver=5.12.14
 _srcname=linux-${pkgver}
 pkgrel=1
 pkgdesc='Linux for MBP'
@@ -73,16 +73,16 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('af485fcde5635981e6713b547cc8904a7f6e74e5ffb784cc08781fa5999dd255'
+sha256sums=('90ca3b98088f5d9af097067e04b195ecf0d4fe167bcfaca8a97b142bccb27dac'
             'SKIP'
-            '29c568e438ea23ba1dd96c3dcd3532fb9a937c73d552f1be55ad0761c6d79a46'
-            '349749cd084974135e89277c5ff0dec209e5a9a5c8ac83ceb787b2707f88f4da'
-            '8010c7d37bcba716f595cb93ec2661a8052d44be44d3d383904fe06b33d44d32'
-            'c2ee371e6dbd98b06f7b53f78d83ce8432a79219fbb0243e770d05cbf8127eb8'
-            'c29f28e39c05fa74ae001e5038348ac6fcc74af130ddd11cf8a1dc06bcf58d06'
-            '588fe60d0c03a6e0f05003292a96435c361281b5bbce86e79ebbb3003ca2d06e'
-            '1453f11b1a15d0f05346d079f4cf1f7b3aa8a86bbf130196ce2e8fc75354f5ed'
-            '4bd7b86f84dc1af96abadfa5d45d39ba9c192112af699520fdf244e397dca46c'
+            '90473ec7afd9ce7496fe7446aa8383f99d16824ff30e60febd565fd94281cda9'
+            '4655de784d2e7738ed0c62a92333459a83baff4cdadc88bd75ef5e8477388786'
+            'fbaa7c5e5be156b8f230c41e13d980537a4cc5238c9a2005b152a3b42e2a657a'
+            '2cf849e4230b8fd488b827744e0bce5d14c5f94ee72da56870f26e295d7eda84'
+            '690641969e75b3d557aae3dd861c9f9d1ba05e868d4ec56bde3d49479207f3b2'
+            '5d304deace3c75c6d5c00ea23014ec205e58a404c60bc1fc69fad94d2bf58ee7'
+            '69174911a664bfe358cf12fb62f6bf9de83789bf4a2e447024990cc92aabd926'
+            'bb8868bcbc2741e710118072300bb98965de1806f602cc9f9abe2f17bc3cabb0'
             '786dfc22e4c6ece883e7dedd0ba3f6c14018584df95450b2cb78f3da8b01f7cb'
             '0d3e591d7cb2532ee68c4621594a10b1d0240528a312159ee0731484bb180400'
             '63187212c33d844b6b9a26f76e789d9f4144d0d8fe9444dfd499f31430b45648'
@@ -197,13 +197,16 @@ _package-headers() {
   install -Dt "$builddir/drivers/md" -m644 drivers/md/*.h
   install -Dt "$builddir/net/mac80211" -m644 net/mac80211/*.h
 
-  # http://bugs.archlinux.org/task/13146
+  # https://bugs.archlinux.org/task/13146
   install -Dt "$builddir/drivers/media/i2c" -m644 drivers/media/i2c/msp3400-driver.h
 
-  # http://bugs.archlinux.org/task/20402
+  # https://bugs.archlinux.org/task/20402
   install -Dt "$builddir/drivers/media/usb/dvb-usb" -m644 drivers/media/usb/dvb-usb/*.h
   install -Dt "$builddir/drivers/media/dvb-frontends" -m644 drivers/media/dvb-frontends/*.h
   install -Dt "$builddir/drivers/media/tuners" -m644 drivers/media/tuners/*.h
+
+  # https://bugs.archlinux.org/task/71392
+  install -Dt "$builddir/drivers/iio/common/hid-sensors" -m644 drivers/iio/common/hid-sensors/*.h
 
   echo "Installing KConfig files..."
   find . -name 'Kconfig*' -exec install -Dm644 {} "$builddir/{}" \;

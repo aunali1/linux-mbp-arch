@@ -1,4 +1,4 @@
-From e948c77fea857a5dfa647ad41cfa1e32ee5c20ac Mon Sep 17 00:00:00 2001
+From 626944666ea063c6e05a9de501b1514a670c9a30 Mon Sep 17 00:00:00 2001
 From: Mike Rapoport <rppt@linux.ibm.com>
 Date: Tue, 1 Jun 2021 10:53:53 +0300
 Subject: [PATCH 6/7] x86/setup: remove CONFIG_X86_RESERVE_LOW and reservelow
