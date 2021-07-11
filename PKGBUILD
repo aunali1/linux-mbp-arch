@@ -2,7 +2,7 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.12.14
+pkgver=5.12.15
 _srcname=linux-${pkgver}
 pkgrel=1
 pkgdesc='Linux for MBP'
@@ -73,16 +73,16 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('90ca3b98088f5d9af097067e04b195ecf0d4fe167bcfaca8a97b142bccb27dac'
+sha256sums=('47fcea996c0c01e58ac5f852fc296d77a3496c550f3034152fee77e83ae38fda'
             'SKIP'
             '90473ec7afd9ce7496fe7446aa8383f99d16824ff30e60febd565fd94281cda9'
-            '4655de784d2e7738ed0c62a92333459a83baff4cdadc88bd75ef5e8477388786'
-            'fbaa7c5e5be156b8f230c41e13d980537a4cc5238c9a2005b152a3b42e2a657a'
-            '2cf849e4230b8fd488b827744e0bce5d14c5f94ee72da56870f26e295d7eda84'
-            '690641969e75b3d557aae3dd861c9f9d1ba05e868d4ec56bde3d49479207f3b2'
-            '5d304deace3c75c6d5c00ea23014ec205e58a404c60bc1fc69fad94d2bf58ee7'
-            '69174911a664bfe358cf12fb62f6bf9de83789bf4a2e447024990cc92aabd926'
-            'bb8868bcbc2741e710118072300bb98965de1806f602cc9f9abe2f17bc3cabb0'
+            'ea16157696cb1807f8960de667a8c56da223bfae02c94d7b2aed6853c541f2ed'
+            'f0ae4223a64febc053d779a71d171a5e44bbd2bfa286f713fe7fe97ba0dcb802'
+            '250c98c9c3776ad8a49333ebd8d5a4e56c7cc3f6886b0058ea7c0744a4748780'
+            'c9ccb0167883589c8f0aa6220d7c2005312f83018b9ab26a14527a592e426f1d'
+            '5d1e578231a6742fe8ac4785c8d7129315daa4b5b5703cb968705f90344daabf'
+            '4360ee51d90abb42021dd840337067ec743bbd367c23dc2a1136ff61c4fe70e2'
+            '46d2ae7147968daeb25d128ae9abb30a58f8371218a0b7643fb9916e55da8dfe'
             '786dfc22e4c6ece883e7dedd0ba3f6c14018584df95450b2cb78f3da8b01f7cb'
             '0d3e591d7cb2532ee68c4621594a10b1d0240528a312159ee0731484bb180400'
             '63187212c33d844b6b9a26f76e789d9f4144d0d8fe9444dfd499f31430b45648'

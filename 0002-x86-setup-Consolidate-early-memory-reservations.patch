@@ -1,4 +1,4 @@
-From bb76340a8e02ef21bdd65e45a2fa319a08916ce0 Mon Sep 17 00:00:00 2001
+From 8bd9e7d22ae0676f6dd2af4ea385111c052e745e Mon Sep 17 00:00:00 2001
 From: Mike Rapoport <rppt@linux.ibm.com>
 Date: Tue, 2 Mar 2021 12:04:05 +0200
 Subject: [PATCH 2/7] x86/setup: Consolidate early memory reservations
