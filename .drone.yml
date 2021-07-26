@@ -25,7 +25,7 @@ steps:
     - echo "COMPRESSZST=(zstd -c -T0 -20 --ultra -)" | tee -a /etc/makepkg.conf
     - printf 'builduser ALL=(ALL) ALL\n' | tee -a /etc/sudoers # passwordless sudo
     - chown -R builduser:builduser ./
-    - sudo -u builduser gpg --keyserver pgp.mit.edu --recv-keys 38DBBDC86092693E
+    - sudo -u builduser gpg2 --locate-keys torvalds@kernel.org gregkh@kernel.org
     - sudo -u builduser bash -c 'export MAKEFLAGS=-j32 && makepkg -s --noconfirm'
     - ls -lah *.pkg.tar.zst
     - mv *.pkg.tar.zst /tmp/products
