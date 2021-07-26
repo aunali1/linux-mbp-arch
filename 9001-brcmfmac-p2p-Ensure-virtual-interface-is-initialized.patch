@@ -1,0 +1,86 @@
+From c8f0993e526e930cf497efb54db79250d84ba467 Mon Sep 17 00:00:00 2001
+From: Aun-Ali Zaidi <admin@kodeit.net>
+Date: Mon, 26 Jul 2021 13:56:45 -0500
+Subject: [PATCH] brcmfmac: p2p: Ensure virtual interface is initialized before
+ use
+
+Previously, no check was performed on whether a p2p virtual interface has been
+brought up or not, which caused problems on non-standard devices that require
+an explicit bring up. Solve this by ensuring the interface structure is
+initialized, otherwise bail out.
+
+Based on work by Stan Skowronek <stan@corellium.com>
+
+Signed-off-by: Aun-Ali Zaidi <admin@kodeit.net>
+Tested-by: Aun-Ali Zaidi <admin@kodeit.net>
+---
+ .../wireless/broadcom/brcm80211/brcmfmac/cfg80211.c  |  7 ++++++-
+ .../net/wireless/broadcom/brcm80211/brcmfmac/p2p.c   | 12 +++++++++++-
+ 2 files changed, 17 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index f4405d7861b6..4158b38cfb0e 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -5136,8 +5136,13 @@ brcmf_cfg80211_mgmt_tx(struct wiphy *wiphy, struct wireless_dev *wdev,
+ 		ie_offset =  DOT11_MGMT_HDR_LEN +
+ 			     DOT11_BCN_PRB_FIXED_LEN;
+ 		ie_len = len - ie_offset;
+-		if (vif == cfg->p2p.bss_idx[P2PAPI_BSSCFG_PRIMARY].vif)
++		if (vif == cfg->p2p.bss_idx[P2PAPI_BSSCFG_PRIMARY].vif) {
+ 			vif = cfg->p2p.bss_idx[P2PAPI_BSSCFG_DEVICE].vif;
++			if (vif == NULL) {
++				bphy_err(drvr, "No p2p device available for probe response\n");
++				return -ENODEV;
++			}
++		}
+ 		err = brcmf_vif_set_mgmt_ie(vif,
+ 					    BRCMF_VNDR_IE_PRBRSP_FLAG,
+ 					    &buf[ie_offset],
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
+index 34cd8a7401fe..0849c67e74fd 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
+@@ -565,7 +565,8 @@ static s32 brcmf_p2p_deinit_discovery(struct brcmf_p2p_info *p2p)
+ 
+ 	/* Set the discovery state to SCAN */
+ 	vif = p2p->bss_idx[P2PAPI_BSSCFG_DEVICE].vif;
+-	(void)brcmf_p2p_set_discover_state(vif->ifp, WL_P2P_DISC_ST_SCAN, 0, 0);
++	if (vif != NULL)
++		(void)brcmf_p2p_set_discover_state(vif->ifp, WL_P2P_DISC_ST_SCAN, 0, 0);
+ 
+ 	/* Disable P2P discovery in the firmware */
+ 	vif = p2p->bss_idx[P2PAPI_BSSCFG_PRIMARY].vif;
+@@ -1351,6 +1352,8 @@ brcmf_p2p_gon_req_collision(struct brcmf_p2p_info *p2p, u8 *mac)
+ 	 * if not (sa addr > da addr),
+ 	 * this device will process gon request and drop gon req of peer.
+ 	 */
++	if(p2p->bss_idx[P2PAPI_BSSCFG_DEVICE].vif == NULL)
++		return false;
+ 	ifp = p2p->bss_idx[P2PAPI_BSSCFG_DEVICE].vif->ifp;
+ 	if (memcmp(mac, ifp->mac_addr, ETH_ALEN) < 0) {
+ 		brcmf_dbg(INFO, "Block transmit gon req !!!\n");
+@@ -1558,6 +1561,10 @@ static s32 brcmf_p2p_tx_action_frame(struct brcmf_p2p_info *p2p,
+ 		vif = p2p->bss_idx[P2PAPI_BSSCFG_CONNECTION].vif;
+ 	else
+ 		vif = p2p->bss_idx[P2PAPI_BSSCFG_DEVICE].vif;
++	if (vif == NULL) {
++		bphy_err(drvr, " no P2P interface available\n");
++		goto exit;
++	}
+ 
+ 	err = brcmf_fil_bsscfg_data_set(vif->ifp, "actframe", af_params,
+ 					sizeof(*af_params));
+@@ -1735,6 +1742,9 @@ bool brcmf_p2p_send_action_frame(struct brcmf_cfg80211_info *cfg,
+ 	unsigned long dwell_jiffies = 0;
+ 	bool dwell_overflow = false;
+ 
++	if(p2p->bss_idx[P2PAPI_BSSCFG_DEVICE].vif == NULL)
++		goto exit;
++
+ 	u32 requested_dwell = le32_to_cpu(af_params->dwell_time);
+ 	action_frame = &af_params->action_frame;
+ 	action_frame_len = le16_to_cpu(action_frame->len);
+-- 
+2.32.0
+

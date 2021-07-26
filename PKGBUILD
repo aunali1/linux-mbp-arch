@@ -4,7 +4,7 @@
 pkgbase=linux-mbp
 pkgver=5.12.19
 _srcname=linux-${pkgver}
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux for MBP'
 _srctag=v${pkgver%.*}-${pkgver##*.}
 url="https://git.archlinux.org/linux.git/log/?h=v$_srctag"
@@ -66,6 +66,9 @@ source=(
   # Broadcom WIFI/BT device support
   8001-brcmfmac-Add-initial-support-for-the-BRCM4355.patch
   8002-brcmfmac-Add-initial-support-for-the-BRCM4377.patch
+
+  # Broadcom P2P VIF fix
+  9001-brcmfmac-p2p-Ensure-virtual-interface-is-initialized.patch
 )
 
 validpgpkeys=(
@@ -104,7 +107,8 @@ sha256sums=('e9381cd3525a02f5b895f74147e2440be443ecd45484c6c64075046bc6f94c73'
             '9640178d6251686c980c30fc528b3d70beac6ce8246bf433506a3f843808326c'
             '90a6012cdd8a64ede8e0bbaf7331960bd68f628e0973b65459188eb1ccb5b829'
             '3a7baa28d5f45bdbff23e838133f2e3c6896412ffb5a919b4992a7b2d17469d9'
-            'edb804461e3820ef3397e1e236f7caabf906b6a13d03f406c8462ec476ecbbe5')
+            'edb804461e3820ef3397e1e236f7caabf906b6a13d03f406c8462ec476ecbbe5'
+            'fa0ad2e2f171eafd727d780588f7ef5d47ddf2d75fab02c67356bbc7b26e25e0')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
