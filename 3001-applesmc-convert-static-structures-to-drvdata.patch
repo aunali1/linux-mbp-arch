@@ -744,7 +744,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
 -	backlight_state[0] = value;
 -	ret = queue_work(applesmc_led_wq, &backlight_work);
 +	smc->backlight_state[0] = value;
-+	ret = queue_work(applesmc_led_wq, &smc->backlight_work);
++	ret = queue_work(smc->backlight_wq, &smc->backlight_work);
  
  	if (debug && (!ret))
  		dev_dbg(led_cdev->dev, "work was already on the queue.\n");
