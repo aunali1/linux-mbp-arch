@@ -731,7 +731,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  {
 -	applesmc_write_key(BACKLIGHT_KEY, backlight_state, 2);
 +	struct applesmc_device *smc = container_of(work, struct applesmc_device, backlight_work);
-+	applesmc_write_key(BACKLIGHT_KEY, smc->backlight_state, 2);
++	applesmc_write_key(smc, BACKLIGHT_KEY, smc->backlight_state, 2);
  }
 -static DECLARE_WORK(backlight_work, &applesmc_backlight_set);
  
