@@ -25,7 +25,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
   *
   * Based on hdaps.c driver:
   * Copyright (C) 2005 Robert Love <rml@novell.com>
-@@ -119,7 +120,7 @@ struct applesmc_entry {
+@@ -119,7 +120,7 @@
  };
  
  /* Register lookup and registers common to all SMCs */
@@ -34,7 +34,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  	struct mutex mutex;		/* register read/write mutex */
  	unsigned int key_count;		/* number of SMC registers */
  	unsigned int fan_count;		/* number of fans */
-@@ -133,26 +134,32 @@ static struct applesmc_registers {
+@@ -133,26 +134,32 @@
  	bool init_complete;		/* true when fully initialized */
  	struct applesmc_entry *cache;	/* cached key entries */
  	const char **index;		/* temperature key index */
@@ -82,7 +82,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  
  /*
   * Wait for specific status bits with a mask on the SMC.
-@@ -338,36 +345,37 @@ static int read_register_count(unsigned int *count)
+@@ -338,36 +345,37 @@
   * All functions below are concurrency safe - callers should NOT hold lock.
   */
  
@@ -130,7 +130,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  	u8 key[4], info[6];
  	__be32 be;
  	int ret = 0;
-@@ -375,7 +383,7 @@ static const struct applesmc_entry *applesmc_get_entry_by_index(int index)
+@@ -375,7 +383,7 @@
  	if (cache->valid)
  		return cache;
  
@@ -139,7 +139,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  
  	if (cache->valid)
  		goto out;
-@@ -394,20 +402,21 @@ static const struct applesmc_entry *applesmc_get_entry_by_index(int index)
+@@ -394,20 +402,21 @@
  	cache->valid = 1;
  
  out:
@@ -165,7 +165,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  		if (IS_ERR(entry)) {
  			*lo = 0;
  			return PTR_ERR(entry);
-@@ -422,16 +431,17 @@ static int applesmc_get_lower_bound(unsigned int *lo, const char *key)
+@@ -422,16 +431,17 @@
  	return 0;
  }
  
@@ -187,7 +187,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  			return PTR_ERR(entry);
  		}
  		if (strcmp(key, entry->key) < 0)
-@@ -444,50 +454,54 @@ static int applesmc_get_upper_bound(unsigned int *hi, const char *key)
+@@ -444,50 +454,54 @@
  	return 0;
  }
  
@@ -254,7 +254,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  	if (IS_ERR(entry) && PTR_ERR(entry) != -EINVAL)
  		return PTR_ERR(entry);
  
-@@ -498,12 +512,13 @@ static int applesmc_has_key(const char *key, bool *value)
+@@ -498,12 +512,13 @@
  /*
   * applesmc_read_s16 - Read 16-bit signed big endian register
   */
@@ -270,7 +270,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  	if (ret)
  		return ret;
  
-@@ -514,28 +529,29 @@ static int applesmc_read_s16(const char *key, s16 *value)
+@@ -514,28 +529,29 @@
  /*
   * applesmc_device_init - initialize the accelerometer.  Can sleep.
   */
@@ -305,7 +305,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  {
  	const struct applesmc_entry *entry;
  	unsigned int i;
-@@ -548,7 +564,7 @@ static int applesmc_init_index(struct applesmc_registers *s)
+@@ -548,7 +564,7 @@
  		return -ENOMEM;
  
  	for (i = s->temp_begin; i < s->temp_end; i++) {
@@ -314,7 +314,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  		if (IS_ERR(entry))
  			continue;
  		if (strcmp(entry->type, TEMP_SENSOR_TYPE))
-@@ -562,9 +578,9 @@ static int applesmc_init_index(struct applesmc_registers *s)
+@@ -562,9 +578,9 @@
  /*
   * applesmc_init_smcreg_try - Try to initialize register cache. Idempotent.
   */
@@ -326,7 +326,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  	bool left_light_sensor = false, right_light_sensor = false;
  	unsigned int count;
  	u8 tmp[1];
-@@ -590,35 +606,35 @@ static int applesmc_init_smcreg_try(void)
+@@ -590,35 +606,35 @@
  	if (!s->cache)
  		return -ENOMEM;
  
@@ -370,7 +370,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  	if (ret)
  		return ret;
  
-@@ -634,13 +650,13 @@ static int applesmc_init_smcreg_try(void)
+@@ -634,13 +650,13 @@
  	return 0;
  }
  
@@ -390,7 +390,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  }
  
  /*
-@@ -649,12 +665,12 @@ static void applesmc_destroy_smcreg(void)
+@@ -649,12 +665,12 @@
   * Retries until initialization is successful, or the operation times out.
   *
   */
@@ -405,7 +405,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  		if (!ret) {
  			if (ms)
  				pr_info("init_smcreg() took %d ms\n", ms);
-@@ -663,21 +679,58 @@ static int applesmc_init_smcreg(void)
+@@ -663,21 +679,58 @@
  		msleep(INIT_WAIT_MSECS);
  	}
  
@@ -451,8 +451,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
 +	platform_set_drvdata(dev, NULL);
 +	mutex_destroy(&smc->reg.mutex);
 +	kfree(smc);
- 
--	applesmc_device_init();
++
 +	return ret;
 +}
 +
@@ -462,13 +461,14 @@ index 28b137eedf2e..cf00f7b62a78 100644
 +
 +	applesmc_destroy_modules(smc);
 +	applesmc_destroy_smcreg(smc);
-+
+ 
+-	applesmc_device_init();
 +	mutex_destroy(&smc->reg.mutex);
 +	kfree(smc);
  
  	return 0;
  }
-@@ -685,15 +738,21 @@ static int applesmc_probe(struct platform_device *dev)
+@@ -685,15 +738,21 @@
  /* Synchronize device with memorized backlight state */
  static int applesmc_pm_resume(struct device *dev)
  {
@@ -493,7 +493,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  	return applesmc_pm_resume(dev);
  }
  
-@@ -704,6 +763,7 @@ static const struct dev_pm_ops applesmc_pm_ops = {
+@@ -704,6 +763,7 @@
  
  static struct platform_driver applesmc_driver = {
  	.probe = applesmc_probe,
@@ -501,7 +501,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  	.driver	= {
  		.name = "applesmc",
  		.pm = &applesmc_pm_ops,
-@@ -714,25 +774,26 @@ static struct platform_driver applesmc_driver = {
+@@ -714,25 +774,26 @@
   * applesmc_calibrate - Set our "resting" values.  Callers must
   * hold applesmc_lock.
   */
@@ -536,7 +536,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  	input_sync(idev);
  }
  
-@@ -747,16 +808,17 @@ static ssize_t applesmc_name_show(struct device *dev,
+@@ -747,16 +808,17 @@
  static ssize_t applesmc_position_show(struct device *dev,
  				   struct device_attribute *attr, char *buf)
  {
@@ -557,7 +557,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  	if (ret)
  		goto out;
  
-@@ -770,6 +832,7 @@ static ssize_t applesmc_position_show(struct device *dev,
+@@ -770,6 +832,7 @@
  static ssize_t applesmc_light_show(struct device *dev,
  				struct device_attribute *attr, char *sysfsbuf)
  {
@@ -565,7 +565,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  	const struct applesmc_entry *entry;
  	static int data_length;
  	int ret;
-@@ -777,7 +840,7 @@ static ssize_t applesmc_light_show(struct device *dev,
+@@ -777,7 +840,7 @@
  	u8 buffer[10];
  
  	if (!data_length) {
@@ -574,7 +574,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  		if (IS_ERR(entry))
  			return PTR_ERR(entry);
  		if (entry->len > 10)
-@@ -786,7 +849,7 @@ static ssize_t applesmc_light_show(struct device *dev,
+@@ -786,7 +849,7 @@
  		pr_info("light sensor data length set to %d\n", data_length);
  	}
  
@@ -583,7 +583,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  	if (ret)
  		goto out;
  	/* newer macbooks report a single 10-bit bigendian value */
-@@ -796,7 +859,7 @@ static ssize_t applesmc_light_show(struct device *dev,
+@@ -796,7 +859,7 @@
  	}
  	left = buffer[2];
  
@@ -592,7 +592,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  	if (ret)
  		goto out;
  	right = buffer[2];
-@@ -812,7 +875,8 @@ static ssize_t applesmc_light_show(struct device *dev,
+@@ -812,7 +875,8 @@
  static ssize_t applesmc_show_sensor_label(struct device *dev,
  			struct device_attribute *devattr, char *sysfsbuf)
  {
@@ -600,9 +600,9 @@ index 28b137eedf2e..cf00f7b62a78 100644
 +	struct applesmc_device *smc = dev_get_drvdata(dev);
 +	const char *key = smc->reg.index[to_index(devattr)];
  
- 	return snprintf(sysfsbuf, PAGE_SIZE, "%s\n", key);
+ 	return sysfs_emit(sysfsbuf, "%s\n", key);
  }
-@@ -821,12 +885,13 @@ static ssize_t applesmc_show_sensor_label(struct device *dev,
+@@ -821,12 +885,13 @@
  static ssize_t applesmc_show_temperature(struct device *dev,
  			struct device_attribute *devattr, char *sysfsbuf)
  {
@@ -618,7 +618,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  	if (ret)
  		return ret;
  
-@@ -838,6 +903,7 @@ static ssize_t applesmc_show_temperature(struct device *dev,
+@@ -838,6 +903,7 @@
  static ssize_t applesmc_show_fan_speed(struct device *dev,
  				struct device_attribute *attr, char *sysfsbuf)
  {
@@ -626,7 +626,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  	int ret;
  	unsigned int speed = 0;
  	char newkey[5];
-@@ -846,7 +912,7 @@ static ssize_t applesmc_show_fan_speed(struct device *dev,
+@@ -846,7 +912,7 @@
  	scnprintf(newkey, sizeof(newkey), fan_speed_fmt[to_option(attr)],
  		  to_index(attr));
  
@@ -635,7 +635,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  	if (ret)
  		return ret;
  
-@@ -858,6 +924,7 @@ static ssize_t applesmc_store_fan_speed(struct device *dev,
+@@ -858,6 +924,7 @@
  					struct device_attribute *attr,
  					const char *sysfsbuf, size_t count)
  {
@@ -643,7 +643,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  	int ret;
  	unsigned long speed;
  	char newkey[5];
-@@ -871,7 +938,7 @@ static ssize_t applesmc_store_fan_speed(struct device *dev,
+@@ -871,7 +938,7 @@
  
  	buffer[0] = (speed >> 6) & 0xff;
  	buffer[1] = (speed << 2) & 0xff;
@@ -652,7 +652,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  
  	if (ret)
  		return ret;
-@@ -882,11 +949,12 @@ static ssize_t applesmc_store_fan_speed(struct device *dev,
+@@ -882,11 +949,12 @@
  static ssize_t applesmc_show_fan_manual(struct device *dev,
  			struct device_attribute *attr, char *sysfsbuf)
  {
@@ -666,7 +666,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  	if (ret)
  		return ret;
  
-@@ -898,6 +966,7 @@ static ssize_t applesmc_store_fan_manual(struct device *dev,
+@@ -898,6 +966,7 @@
  					 struct device_attribute *attr,
  					 const char *sysfsbuf, size_t count)
  {
@@ -674,7 +674,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  	int ret;
  	u8 buffer[2];
  	unsigned long input;
-@@ -906,7 +975,7 @@ static ssize_t applesmc_store_fan_manual(struct device *dev,
+@@ -906,7 +975,7 @@
  	if (kstrtoul(sysfsbuf, 10, &input) < 0)
  		return -EINVAL;
  
@@ -683,7 +683,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  	if (ret)
  		goto out;
  
-@@ -920,7 +989,7 @@ static ssize_t applesmc_store_fan_manual(struct device *dev,
+@@ -920,7 +989,7 @@
  	buffer[0] = (val >> 8) & 0xFF;
  	buffer[1] = val & 0xFF;
  
@@ -692,7 +692,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  
  out:
  	if (ret)
-@@ -932,13 +1001,14 @@ static ssize_t applesmc_store_fan_manual(struct device *dev,
+@@ -932,13 +1001,14 @@
  static ssize_t applesmc_show_fan_position(struct device *dev,
  				struct device_attribute *attr, char *sysfsbuf)
  {
@@ -708,14 +708,13 @@ index 28b137eedf2e..cf00f7b62a78 100644
  	buffer[16] = 0;
  
  	if (ret)
-@@ -950,30 +1020,36 @@ static ssize_t applesmc_show_fan_position(struct device *dev,
+@@ -950,30 +1020,33 @@
  static ssize_t applesmc_calibrate_show(struct device *dev,
  				struct device_attribute *attr, char *sysfsbuf)
  {
--	return snprintf(sysfsbuf, PAGE_SIZE, "(%d,%d)\n", rest_x, rest_y);
+-	return sysfs_emit(sysfsbuf, "(%d,%d)\n", rest_x, rest_y);
 +	struct applesmc_device *smc = dev_get_drvdata(dev);
-+
-+	return snprintf(sysfsbuf, PAGE_SIZE, "(%d,%d)\n", smc->rest_x, smc->rest_y);
++	return sysfs_emit(sysfsbuf, "(%d,%d)\n", smc->rest_x, smc->rest_y);
  }
  
  static ssize_t applesmc_calibrate_store(struct device *dev,
@@ -723,7 +722,6 @@ index 28b137eedf2e..cf00f7b62a78 100644
  {
 -	applesmc_calibrate();
 +	struct applesmc_device *smc = dev_get_drvdata(dev);
-+
 +	applesmc_calibrate(smc);
  
  	return count;
@@ -733,7 +731,6 @@ index 28b137eedf2e..cf00f7b62a78 100644
  {
 -	applesmc_write_key(BACKLIGHT_KEY, backlight_state, 2);
 +	struct applesmc_device *smc = container_of(work, struct applesmc_device, backlight_work);
-+
 +	applesmc_write_key(smc, BACKLIGHT_KEY, smc->backlight_state, 2);
  }
 -static DECLARE_WORK(backlight_work, &applesmc_backlight_set);
@@ -751,7 +748,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  
  	if (debug && (!ret))
  		dev_dbg(led_cdev->dev, "work was already on the queue.\n");
-@@ -982,11 +1058,12 @@ static void applesmc_brightness_set(struct led_classdev *led_cdev,
+@@ -982,11 +1055,12 @@
  static ssize_t applesmc_key_count_show(struct device *dev,
  				struct device_attribute *attr, char *sysfsbuf)
  {
@@ -765,7 +762,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  	if (ret)
  		return ret;
  
-@@ -998,13 +1075,14 @@ static ssize_t applesmc_key_count_show(struct device *dev,
+@@ -998,13 +1072,14 @@
  static ssize_t applesmc_key_at_index_read_show(struct device *dev,
  				struct device_attribute *attr, char *sysfsbuf)
  {
@@ -782,7 +779,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  	if (ret)
  		return ret;
  
-@@ -1014,9 +1092,10 @@ static ssize_t applesmc_key_at_index_read_show(struct device *dev,
+@@ -1014,9 +1089,10 @@
  static ssize_t applesmc_key_at_index_data_length_show(struct device *dev,
  				struct device_attribute *attr, char *sysfsbuf)
  {
@@ -794,7 +791,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  	if (IS_ERR(entry))
  		return PTR_ERR(entry);
  
-@@ -1026,9 +1105,10 @@ static ssize_t applesmc_key_at_index_data_length_show(struct device *dev,
+@@ -1026,9 +1102,10 @@
  static ssize_t applesmc_key_at_index_type_show(struct device *dev,
  				struct device_attribute *attr, char *sysfsbuf)
  {
@@ -806,7 +803,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  	if (IS_ERR(entry))
  		return PTR_ERR(entry);
  
-@@ -1038,9 +1118,10 @@ static ssize_t applesmc_key_at_index_type_show(struct device *dev,
+@@ -1038,9 +1115,10 @@
  static ssize_t applesmc_key_at_index_name_show(struct device *dev,
  				struct device_attribute *attr, char *sysfsbuf)
  {
@@ -818,22 +815,21 @@ index 28b137eedf2e..cf00f7b62a78 100644
  	if (IS_ERR(entry))
  		return PTR_ERR(entry);
  
-@@ -1050,28 +1131,25 @@ static ssize_t applesmc_key_at_index_name_show(struct device *dev,
+@@ -1050,27 +1128,23 @@
  static ssize_t applesmc_key_at_index_show(struct device *dev,
  				struct device_attribute *attr, char *sysfsbuf)
  {
--	return snprintf(sysfsbuf, PAGE_SIZE, "%d\n", key_at_index);
+-	return sysfs_emit(sysfsbuf, "%d\n", key_at_index);
 +	struct applesmc_device *smc = dev_get_drvdata(dev);
-+
-+	return snprintf(sysfsbuf, PAGE_SIZE, "%d\n", smc->key_at_index);
++	return sysfs_emit(sysfsbuf, "%d\n", smc->key_at_index);
  }
  
  static ssize_t applesmc_key_at_index_store(struct device *dev,
  	struct device_attribute *attr, const char *sysfsbuf, size_t count)
  {
-+	struct applesmc_device *smc = dev_get_drvdata(dev);
  	unsigned long newkey;
- 
+-
++	struct applesmc_device *smc = dev_get_drvdata(dev);
  	if (kstrtoul(sysfsbuf, 10, &newkey) < 0
 -	    || newkey >= smcreg.key_count)
 +	    || newkey >= smc->reg.key_count)
@@ -849,11 +845,10 @@ index 28b137eedf2e..cf00f7b62a78 100644
 -	.default_trigger	= "nand-disk",
 -	.brightness_set		= applesmc_brightness_set,
 -};
--
+ 
  static struct applesmc_node_group info_group[] = {
  	{ "name", applesmc_name_show },
- 	{ "key_count", applesmc_key_count_show },
-@@ -1116,14 +1194,15 @@ static struct applesmc_node_group temp_group[] = {
+@@ -1116,14 +1190,15 @@
  /*
   * applesmc_destroy_nodes - remove files and free associated memory
   */
@@ -871,7 +866,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  					  &node->sda.dev_attr.attr);
  		kfree(grp->nodes);
  		grp->nodes = NULL;
-@@ -1133,7 +1212,8 @@ static void applesmc_destroy_nodes(struct applesmc_node_group *groups)
+@@ -1133,7 +1208,8 @@
  /*
   * applesmc_create_nodes - create a two-dimensional group of sysfs files
   */
@@ -881,7 +876,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  {
  	struct applesmc_node_group *grp;
  	struct applesmc_dev_attr *node;
-@@ -1157,7 +1237,7 @@ static int applesmc_create_nodes(struct applesmc_node_group *groups, int num)
+@@ -1157,7 +1233,7 @@
  			sysfs_attr_init(attr);
  			attr->name = node->name;
  			attr->mode = 0444 | (grp->store ? 0200 : 0);
@@ -890,7 +885,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  			if (ret) {
  				attr->name = NULL;
  				goto out;
-@@ -1167,57 +1247,57 @@ static int applesmc_create_nodes(struct applesmc_node_group *groups, int num)
+@@ -1167,57 +1243,57 @@
  
  	return 0;
  out:
@@ -965,7 +960,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  
  out:
  	pr_warn("driver init failed (ret=%d)!\n", ret);
-@@ -1225,44 +1305,55 @@ static int applesmc_create_accelerometer(void)
+@@ -1225,44 +1301,55 @@
  }
  
  /* Release all resources used by the accelerometer */
@@ -1040,7 +1035,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  }
  
  static int applesmc_dmi_match(const struct dmi_system_id *id)
-@@ -1306,86 +1397,100 @@ static const struct dmi_system_id applesmc_whitelist[] __initconst = {
+@@ -1306,86 +1393,100 @@
  	{ .ident = NULL }
  };
  
@@ -1062,7 +1057,8 @@ index 28b137eedf2e..cf00f7b62a78 100644
 -	}
 -
 -	ret = platform_driver_register(&applesmc_driver);
--	if (ret)
++	ret = applesmc_create_nodes(smc, info_group, 1);
+ 	if (ret)
 -		goto out_region;
 -
 -	pdev = platform_device_register_simple("applesmc", APPLESMC_DATA_PORT,
@@ -1078,8 +1074,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
 -		goto out_device;
 -
 -	ret = applesmc_create_nodes(info_group, 1);
-+	ret = applesmc_create_nodes(smc, info_group, 1);
- 	if (ret)
+-	if (ret)
 -		goto out_smcreg;
 +		goto out;
  
@@ -1190,7 +1185,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  out_driver:
  	platform_driver_unregister(&applesmc_driver);
  out_region:
-@@ -1397,14 +1502,6 @@ static int __init applesmc_init(void)
+@@ -1397,14 +1498,6 @@
  
  static void __exit applesmc_exit(void)
  {
@@ -1205,7 +1200,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  	platform_device_unregister(pdev);
  	platform_driver_unregister(&applesmc_driver);
  	release_region(APPLESMC_DATA_PORT, APPLESMC_NR_PORTS);
-@@ -1414,6 +1511,7 @@ module_init(applesmc_init);
+@@ -1414,6 +1507,7 @@
  module_exit(applesmc_exit);
  
  MODULE_AUTHOR("Nicolas Boichat");
@@ -1213,6 +1208,3 @@ index 28b137eedf2e..cf00f7b62a78 100644
  MODULE_DESCRIPTION("Apple SMC");
  MODULE_LICENSE("GPL v2");
  MODULE_DEVICE_TABLE(dmi, applesmc_whitelist);
--- 
-2.31.1
-
