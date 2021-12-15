@@ -1,7 +1,7 @@
 From f00e6b0e89c89233ca43348f2c74b93757cd7deb Mon Sep 17 00:00:00 2001
 From: Aun-Ali Zaidi <admin@kodeit.net>
 Date: Sun, 31 Jan 2021 01:56:59 -0600
-Subject: [PATCH 5/9] HID: apple: Add support for MacBookPro15,4
+Subject: [PATCH 5/10] HID: apple: Add support for MacBookPro15,4
  keyboard/trackpad
 
 This commit adds the necessary IDs and configuration for the MacBook Pro

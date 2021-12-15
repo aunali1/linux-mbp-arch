@@ -1,0 +1,114 @@
+From 57ed05689d88d3e1e03d32daba7778f4cd179cba Mon Sep 17 00:00:00 2001
+From: Aditya Garg <gargaditya08@live.com>
+Date: Wed, 15 Dec 2021 18:22:16 +0530
+Subject: [PATCH 10/10] HID: apple: Add ability to use numbers as function keys on T2
+ Macs
+
+Some T2 Macs don't have their touchbar working properly on linux.
+Thus we add an ability to use numbers as function keys instead.
+We also ensure that the apple_fn_keys table is used instead of
+powerbook_fn_keys on T2 Macs, which was being used earlier.
+
+Signed-off-by: Aditya Garg <gargaditya08@live.com>
+---
+ drivers/hid/hid-apple.c | 70 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 70 insertions(+)
+
+diff --git a/drivers/hid/hid-apple.c b/drivers/hid/hid-apple.c
+index 2c9c5faa7..a1c2f1ee3 100644
+--- a/drivers/hid/hid-apple.c
++++ b/drivers/hid/hid-apple.c
+@@ -91,6 +91,51 @@ static const struct apple_key_translation macbookair_fn_keys[] = {
+ 	{ }
+ };
+ 
++static const struct apple_key_translation macbookpro_no_esc_fn_keys[] = {
++	{ KEY_BACKSPACE, KEY_DELETE },
++	{ KEY_ENTER,	KEY_INSERT },
++	{ KEY_GRAVE,	KEY_ESC },
++	{ KEY_1,	KEY_F1 },
++	{ KEY_2,	KEY_F2 },
++	{ KEY_3,	KEY_F3 },
++	{ KEY_4,	KEY_F4 },
++	{ KEY_5,	KEY_F5 },
++	{ KEY_6,	KEY_F6 },
++	{ KEY_7,	KEY_F7 },
++	{ KEY_8,	KEY_F8 },
++	{ KEY_9,	KEY_F9 },
++	{ KEY_0,	KEY_F10 },
++	{ KEY_MINUS,	KEY_F11 },
++	{ KEY_EQUAL,	KEY_F12 },
++	{ KEY_UP,	KEY_PAGEUP },
++	{ KEY_DOWN,	KEY_PAGEDOWN },
++	{ KEY_LEFT,	KEY_HOME },
++	{ KEY_RIGHT,	KEY_END },
++	{ }
++};
++
++static const struct apple_key_translation macbookpro_dedicated_esc_fn_keys[] = {
++	{ KEY_BACKSPACE, KEY_DELETE },
++	{ KEY_ENTER,	KEY_INSERT },
++	{ KEY_1,	KEY_F1 },
++	{ KEY_2,	KEY_F2 },
++	{ KEY_3,	KEY_F3 },
++	{ KEY_4,	KEY_F4 },
++	{ KEY_5,	KEY_F5 },
++	{ KEY_6,	KEY_F6 },
++	{ KEY_7,	KEY_F7 },
++	{ KEY_8,	KEY_F8 },
++	{ KEY_9,	KEY_F9 },
++	{ KEY_0,	KEY_F10 },
++	{ KEY_MINUS,	KEY_F11 },
++	{ KEY_EQUAL,	KEY_F12 },
++	{ KEY_UP,	KEY_PAGEUP },
++	{ KEY_DOWN,	KEY_PAGEDOWN },
++	{ KEY_LEFT,	KEY_HOME },
++	{ KEY_RIGHT,	KEY_END },
++	{ }
++};
++
+ static const struct apple_key_translation apple_fn_keys[] = {
+ 	{ KEY_BACKSPACE, KEY_DELETE },
+ 	{ KEY_ENTER,	KEY_INSERT },
+@@ -217,6 +262,25 @@ static int hidinput_apple_event(struct hid_device *hid, struct input_dev *input,
+ 		if (hid->product >= USB_DEVICE_ID_APPLE_WELLSPRING4_ANSI &&
+ 				hid->product <= USB_DEVICE_ID_APPLE_WELLSPRING4A_JIS)
+ 			table = macbookair_fn_keys;
++		else if (hid->product >= USB_DEVICE_ID_APPLE_WELLSPRINGT2_J140K &&
++				hid->product <= USB_DEVICE_ID_APPLE_WELLSPRINGT2_J152F) {
++				switch (hid->product) {
++				/* MacBook Pros with esc on the touchbar */
++				case USB_DEVICE_ID_APPLE_WELLSPRINGT2_J132:
++				case USB_DEVICE_ID_APPLE_WELLSPRINGT2_J680:
++				case USB_DEVICE_ID_APPLE_WELLSPRINGT2_J213:
++					table = macbookpro_no_esc_fn_keys;
++					break;
++				/* MacBook Pros with a dedicated esc key */
++				case USB_DEVICE_ID_APPLE_WELLSPRINGT2_J214K:
++				case USB_DEVICE_ID_APPLE_WELLSPRINGT2_J223:
++				case USB_DEVICE_ID_APPLE_WELLSPRINGT2_J152F:
++					table = macbookpro_dedicated_esc_fn_keys;
++					break;
++				default:
++					table = apple_fn_keys;
++				}
++			}
+ 		else if (hid->product < 0x21d || hid->product >= 0x300)
+ 			table = powerbook_fn_keys;
+ 		else
+@@ -364,6 +428,12 @@ static void apple_setup_input(struct input_dev *input)
+ 	set_bit(KEY_NUMLOCK, input->keybit);
+ 
+ 	/* Enable all needed keys */
++	for (trans = macbookpro_no_esc_fn_keys; trans->from; trans++)
++		set_bit(trans->to, input->keybit);
++
++	for (trans = macbookpro_dedicated_esc_fn_keys; trans->from; trans++)
++		set_bit(trans->to, input->keybit);
++
+ 	for (trans = apple_fn_keys; trans->from; trans++)
+ 		set_bit(trans->to, input->keybit);
+ 
+-- 
+2.25.1
+

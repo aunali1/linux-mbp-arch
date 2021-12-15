@@ -1,7 +1,7 @@
 From 8e1462a94ac6c6e2fe407c88084beb03aa5a485f Mon Sep 17 00:00:00 2001
 From: Aun-Ali Zaidi <admin@kodeit.net>
 Date: Sun, 31 Jan 2021 02:16:15 -0600
-Subject: [PATCH 8/9] HID: apple: Add support for MacBookAir9,1
+Subject: [PATCH 8/10] HID: apple: Add support for MacBookAir9,1
  keyboard/trackpad
 
 This commit adds the necessary IDs and configuration for the MacBook Air

@@ -52,6 +52,7 @@ source=(
   4007-HID-apple-Add-support-for-MacBookPro16-3-keyboard-tr.patch
   4008-HID-apple-Add-support-for-MacBookAir9-1-keyboard-tra.patch
   4009-HID-apple-Add-support-for-MacBookPro16-1-keyboard-tr.patch
+  4010-HID-apple-Add-ability-to-use-numbers-as-function-key.patch
 
   # Broadcom Wifi rambase debugging additions
   5001-brcmfmac-move-brcmf_mp_device-into-its-own-header.patch
@@ -93,15 +94,16 @@ sha256sums=('e9381cd3525a02f5b895f74147e2440be443ecd45484c6c64075046bc6f94c73'
             '688dee43c42d2e572c31d26513d43f02f9838c3fe149446db79dfca451801ab9'
             '560f1b89bd9ea93107903ed34100129ee0ac0ea5dd8b3d74db9a6835b1bfdb4c'
             'e46140f502d8c00d88e206934a491a8a0dd1ff7fac187bbf93bb8c3a106e5bc7'
-            '11565cff9c6a7db8846dc7d5930419045e9527863b8df5979a7465006211bd16'
-            '83f4be6849ba4d5f9fad647ad2eb78bf6409ee98a40ac62e8a5b80496233d70a'
-            '44bd3643b2b22fedc59d79511199f30ce6759fa0acdd9a66262a53c5e046da6b'
-            'eb04a492197783643b3e72b1d0cf0e856290381997bd165a14fbc63ac1489c25'
-            '69d56d42473526f7dbd4fb18c5e1baafe4e6d32995b2506bd48ff981c53b5385'
-            '1deeacae1875cf9075b858a8bfb2463ebc531c9030b7c2ab46bbb8e4c3b974db'
-            '40eff5e88bb30c51c6b97e85c2e7b8dec5f97916f768e6c07618d9c5afe68574'
-            'cac035fe07663a319185c644c5b39b34bef89ada348881fa4a02d15290260445'
-            '9dfa9f02d17c5cd9620fa2c1d43ca967b81b6a56d33c2bafae14e0c64e498baa'
+            'f6e64aabe1ecffa01096e939c2c661b089404ee845bbc37043dcb2494110bb85'
+            '005d313ae1cd276f4d02853cf7793ac8131752886923ca6dc7df26577226ccc4'
+            '73f6bd4f1eb0b6e2c58611b34166bf9590deb5cc4c092fbad040c1b97fddfc44'
+            '857911ed351694fc3fbe006f4ba59e6307e3bc458e522fdacfcd9051d03e830c'
+            'da60d99270f1e83e591a7c137709e5659319dddf4b4edcc31797d66203cf19a0'
+            'd1fcd08971e57c91b30986b52a7454f63ee5e2f40448d462f6ee17ca05ddb777'
+            '5e6e6adc54e7bb3b9af0c4d2b424261b958329fa6569dd83f053bf2fa9024e77'
+            'e436666470264ebc259ce19d97b8f4474c9562a988467c06bffe1cff6444bc73'
+            'f1e76ffe27b60236e9fbb89eca60ee3425667f7844e28225cdf288fe156c43f2'
+            '2cfc28a394117184c4fd4c14fd8d1cbf2ed6d2c5ddba93f077cbbc621d73ca81'
             '4d22727c1456e268de1c39ac73f2dc0c1630ac25aa66364d99f94e29eba5c6b9'
             '7f41e52285bbdeeaf565e7a1e69860439a4cc302092b473301040f29fc2f5b64'
             '9640178d6251686c980c30fc528b3d70beac6ce8246bf433506a3f843808326c'
