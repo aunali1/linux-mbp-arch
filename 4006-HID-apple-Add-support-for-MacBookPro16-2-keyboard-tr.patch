@@ -1,7 +1,7 @@
 From 6ebbc10ae708e487bca63bbc59f1ba51a90e4f4c Mon Sep 17 00:00:00 2001
 From: Aun-Ali Zaidi <admin@kodeit.net>
 Date: Sun, 31 Jan 2021 02:00:14 -0600
-Subject: [PATCH 6/9] HID: apple: Add support for MacBookPro16,2
+Subject: [PATCH 6/10] HID: apple: Add support for MacBookPro16,2
  keyboard/trackpad
 
 This commit adds the necessary IDs and configuration for the MacBook Pro
