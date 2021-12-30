@@ -4,7 +4,7 @@
 pkgbase=linux-mbp
 pkgver=5.15.12
 _srcname=linux-${pkgver}
-pkgrel=1
+pkgrel=2
 pkgdesc='Linux for MBP'
 _srctag=v${pkgver%.*}-${pkgver##*.}
 url="https://git.archlinux.org/linux.git/log/?h=v$_srctag"
@@ -35,6 +35,7 @@ source=(
   3004-applesmc-key-interface-wrappers.patch
   3005-applesmc-basic-mmio-interface-implementation.patch
   3006-applesmc-fan-support-on-T2-Macs.patch
+  3007-applesmc-Add-iMacPro-to-applesmc_whitelist.patch
 
   # T2 USB Keyboard/Touchpad support
   4001-HID-apple-Add-support-for-keyboard-backlight-on-supp.patch
@@ -81,6 +82,7 @@ sha256sums=('7de919772b62647591527e904e3b3583783381a29d812404f58a222484e751a0'
             '459906cab172df9f6712a4168e7a5d529f85b2bb58a068f2d44746df14a6d27a'
             '2827dab6eeb2d2a08034938024f902846b5813e967a0ea253dc1ea88315da383'
             '398dec7d54c6122ae2263cd5a6d52353800a1a60fd85e52427c372ea9974a625'
+            '3aaab94e7dc3b73ec51778db07fde1f15a7606b7dce3cc13ee472ae24deddbc9'
             '11565cff9c6a7db8846dc7d5930419045e9527863b8df5979a7465006211bd16'
             '83f4be6849ba4d5f9fad647ad2eb78bf6409ee98a40ac62e8a5b80496233d70a'
             '44bd3643b2b22fedc59d79511199f30ce6759fa0acdd9a66262a53c5e046da6b'
