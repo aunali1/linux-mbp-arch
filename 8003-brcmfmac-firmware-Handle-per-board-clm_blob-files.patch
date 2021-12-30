@@ -1,0 +1,56 @@
+From 637e3946944e25c98c8955ec2a84133b79afca4d Mon Sep 17 00:00:00 2001
+From: Hector Martin <marcan@marcan.st>
+Date: Sat, 18 Dec 2021 20:52:04 +0900
+Subject: [PATCH 03/34] brcmfmac: firmware: Handle per-board clm_blob files
+
+Teach brcm_alt_fw_paths to correctly split off variable length
+extensions, and enable alt firmware lookups for the CLM blob firmware
+requests.
+
+Apple platforms have per-board CLM blob files.
+
+Signed-off-by: Hector Martin <marcan@marcan.st>
+---
+ .../broadcom/brcm80211/brcmfmac/firmware.c       | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
+index dff974955..16f342bc5 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
+@@ -598,16 +598,16 @@ static const char **brcm_alt_fw_paths(const char *path, const char *board_type)
+ {
+ 	char alt_path[BRCMF_FW_NAME_LEN];
+ 	char **alt_paths;
+-	char suffix[5];
++	const char *suffix;
+ 
+-	strscpy(alt_path, path, BRCMF_FW_NAME_LEN);
+-	/* At least one character + suffix */
+-	if (strlen(alt_path) < 5)
++	suffix = strrchr(path, '.');
++	if (!suffix || suffix == path)
+ 		return NULL;
+ 
+-	/* strip .txt or .bin at the end */
+-	strscpy(suffix, alt_path + strlen(alt_path) - 4, 5);
+-	alt_path[strlen(alt_path) - 4] = 0;
++	/* strip extension at the end */
++	strscpy(alt_path, path, BRCMF_FW_NAME_LEN);
++	alt_path[suffix - path] = 0;
++
+ 	strlcat(alt_path, ".", BRCMF_FW_NAME_LEN);
+ 	strlcat(alt_path, board_type, BRCMF_FW_NAME_LEN);
+ 	strlcat(alt_path, suffix, BRCMF_FW_NAME_LEN);
+@@ -638,7 +638,7 @@ static int brcmf_fw_request_firmware(const struct firmware **fw,
+ 	int ret, i;
+ 
+ 	/* Files can be board-specific, first try a board-specific path */
+-	if (cur->type == BRCMF_FW_TYPE_NVRAM && fwctx->req->board_type) {
++	if (fwctx->req->board_type) {
+ 		const char **alt_paths = brcm_alt_fw_paths(cur->path, fwctx);
+ 		if (!alt_paths)
+ 			goto fallback;
+-- 
+2.34.1
+

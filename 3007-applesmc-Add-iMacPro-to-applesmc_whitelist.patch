@@ -1,0 +1,31 @@
+From 101657def81e8d1ff7522eedf9cec63a531ea2e6 Mon Sep 17 00:00:00 2001
+From: Orlando Chamberlain <redecorating@protonmail.com>
+Date: Sat, 25 Dec 2021 13:41:26 +1100
+Subject: [PATCH 1/1] applesmc: Add iMacPro to applesmc_whitelist
+
+The iMacPro1,1 is the only iMacPro model released before its product
+line was discontinued. Add it to the dmi_system_id table.
+
+Signed-off-by: Orlando Chamberlain <redecorating@protonmail.com>
+---
+ drivers/hwmon/applesmc.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/drivers/hwmon/applesmc.c b/drivers/hwmon/applesmc.c
+index 8b3f73fcbb8a..b196f9939b28 100644
+--- a/drivers/hwmon/applesmc.c
++++ b/drivers/hwmon/applesmc.c
+@@ -1812,6 +1812,10 @@ static const struct dmi_system_id applesmc_whitelist[] __initconst = {
+ 	  DMI_MATCH(DMI_BOARD_VENDOR, "Apple"),
+ 	  DMI_MATCH(DMI_PRODUCT_NAME, "iMac") },
+ 	},
++	{ applesmc_dmi_match, "Apple iMacPro", {
++	  DMI_MATCH(DMI_BOARD_VENDOR, "Apple"),
++	  DMI_MATCH(DMI_PRODUCT_NAME, "iMacPro") },
++	},
+ 	{ applesmc_dmi_match, "Apple Xserve", {
+ 	  DMI_MATCH(DMI_BOARD_VENDOR, "Apple"),
+ 	  DMI_MATCH(DMI_PRODUCT_NAME, "Xserve") },
+-- 
+2.34.1
+
