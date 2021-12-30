@@ -1,4 +1,4 @@
-From 6192a81898ac42d249fa66dd0f7eb63ffe3d9ed3 Mon Sep 17 00:00:00 2001
+From ee3d4bf4a01bc94553bde2ae3e806a63a13faa12 Mon Sep 17 00:00:00 2001
 From: Paul Pawlowski <paul@mrarm.io>
 Date: Sun, 17 Nov 2019 23:12:08 +0100
 Subject: [PATCH 3/6] applesmc: switch to acpi_device (from platform)
@@ -21,7 +21,7 @@ Signed-off-by: Aun-Ali Zaidi <admin@kodeit.net>
  1 file changed, 85 insertions(+), 40 deletions(-)
 
 diff --git a/drivers/hwmon/applesmc.c b/drivers/hwmon/applesmc.c
-index 51f4a05235b9..3abc38b24128 100644
+index 39ed0bb21365..bdaaf696f7b6 100644
 --- a/drivers/hwmon/applesmc.c
 +++ b/drivers/hwmon/applesmc.c
 @@ -19,7 +19,7 @@
@@ -210,7 +210,7 @@ index 51f4a05235b9..3abc38b24128 100644
  	if (!smc->reg.has_accelerometer)
  		return 0;
  
-@@ -1467,8 +1533,6 @@ static void applesmc_destroy_modules(struct applesmc_device *smc)
+@@ -1463,8 +1529,6 @@ static void applesmc_destroy_modules(struct applesmc_device *smc)
  	applesmc_destroy_nodes(smc, info_group);
  }
  
@@ -219,7 +219,7 @@ index 51f4a05235b9..3abc38b24128 100644
  static int __init applesmc_init(void)
  {
  	int ret;
-@@ -1479,29 +1543,12 @@ static int __init applesmc_init(void)
+@@ -1475,29 +1539,12 @@ static int __init applesmc_init(void)
  		goto out;
  	}
  
@@ -251,7 +251,7 @@ index 51f4a05235b9..3abc38b24128 100644
  out:
  	pr_warn("driver init failed (ret=%d)!\n", ret);
  	return ret;
-@@ -1509,9 +1556,7 @@ static int __init applesmc_init(void)
+@@ -1505,9 +1552,7 @@ static int __init applesmc_init(void)
  
  static void __exit applesmc_exit(void)
  {
@@ -263,5 +263,5 @@ index 51f4a05235b9..3abc38b24128 100644
  
  module_init(applesmc_init);
 -- 
-2.31.1
+2.30.0
 

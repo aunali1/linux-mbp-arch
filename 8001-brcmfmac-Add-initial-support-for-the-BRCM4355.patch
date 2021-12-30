@@ -35,8 +35,8 @@ index 39381cbde89e..60e3b0ce4fd7 100644
  BRCMF_FW_DEF(4350, "brcmfmac4350-pcie");
  BRCMF_FW_DEF(4350C, "brcmfmac4350c2-pcie");
 +BRCMF_FW_DEF(4355, "brcmfmac4355-pcie");
- BRCMF_FW_DEF(4356, "brcmfmac4356-pcie");
- BRCMF_FW_DEF(43570, "brcmfmac43570-pcie");
+ BRCMF_FW_CLM_DEF(4356, "brcmfmac4356-pcie");
+ BRCMF_FW_CLM_DEF(43570, "brcmfmac43570-pcie");
  BRCMF_FW_DEF(4358, "brcmfmac4358-pcie");
 @@ -65,6 +66,7 @@ static const struct brcmf_firmware_mapping brcmf_pcie_fwnames[] = {
  	BRCMF_FW_ENTRY(BRCM_CC_4350_CHIP_ID, 0x000000FF, 4350C),

@@ -43,7 +43,7 @@ index a3a257089696..039dcf7853a6 100644
 +		ci->pub.rambase = (settings &&
 +				    settings->rambase_addr > 0) ? settings->rambase_addr
 +								: brcmf_chip_tcm_rambase(ci);
- 		if (!ci->pub.rambase) {
+ 		if (ci->pub.rambase == INVALID_RAMBASE) {
  			brcmf_err("RAM base not provided with ARM CR4 core\n");
  			return -EINVAL;
 @@ -755,7 +757,9 @@ int brcmf_chip_get_raminfo(struct brcmf_chip *pub)
@@ -54,7 +54,7 @@ index a3a257089696..039dcf7853a6 100644
 +			ci->pub.rambase = (settings &&
 +					    settings->rambase_addr > 0) ? settings->rambase_addr
 +								      : brcmf_chip_tcm_rambase(ci);
- 			if (!ci->pub.rambase) {
+ 			if (ci->pub.rambase == INVALID_RAMBASE) {
  				brcmf_err("RAM base not provided with ARM CA7 core\n");
  				return -EINVAL;
 @@ -941,7 +945,7 @@ int brcmf_chip_dmp_erom_scan(struct brcmf_chip_priv *ci)
@@ -78,7 +78,7 @@ index a3a257089696..039dcf7853a6 100644
 @@ -1088,7 +1092,8 @@ static int brcmf_chip_setup(struct brcmf_chip_priv *chip)
  }
  
- struct brcmf_chip *brcmf_chip_attach(void *ctx,
+ struct brcmf_chip *brcmf_chip_attach(void *ctx, u16 devid,
 -				     const struct brcmf_buscore_ops *ops)
 +				     const struct brcmf_buscore_ops *ops,
 +				     struct brcmf_mp_device *settings)
@@ -113,7 +113,7 @@ index 8fa38658e727..7da0ef3129a0 100644
  
 -int brcmf_chip_get_raminfo(struct brcmf_chip *pub);
 +int brcmf_chip_get_raminfo(struct brcmf_chip *pub, struct brcmf_mp_device *settings);
- struct brcmf_chip *brcmf_chip_attach(void *ctx,
+ struct brcmf_chip *brcmf_chip_attach(void *ctx, u16 devid,
 -				     const struct brcmf_buscore_ops *ops);
 +				     const struct brcmf_buscore_ops *ops,
 +				     struct brcmf_mp_device *settings);
@@ -168,12 +168,14 @@ index 39381cbde89e..a9575ae8add1 100644
  	if (ret) {
  		brcmf_err(bus, "Failed to get RAM info\n");
  		goto fail;
-@@ -1884,7 +1884,7 @@ brcmf_pcie_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+@@ -1884,8 +1884,8 @@ brcmf_pcie_probe(struct pci_dev *pdev, const struct pci_device_id *id)
  
  	devinfo->pdev = pdev;
  	pcie_bus_dev = NULL;
--	devinfo->ci = brcmf_chip_attach(devinfo, &brcmf_pcie_buscore_ops);
-+	devinfo->ci = brcmf_chip_attach(devinfo, &brcmf_pcie_buscore_ops, devinfo->settings);
+-	devinfo->ci = brcmf_chip_attach(devinfo, pdev->device,
+-					&brcmf_pcie_buscore_ops);
++	devinfo->ci = brcmf_chip_attach(devinfo, pdev->device,
++					&brcmf_pcie_buscore_ops, devinfo->settings);
  	if (IS_ERR(devinfo->ci)) {
  		ret = PTR_ERR(devinfo->ci);
  		devinfo->ci = NULL;
@@ -185,8 +187,10 @@ index ac3ee93a2378..d4bf1c7e3c81 100644
  		goto fail;
  	}
  
--	bus->ci = brcmf_chip_attach(sdiodev, &brcmf_sdio_buscore_ops);
-+	bus->ci = brcmf_chip_attach(sdiodev, &brcmf_sdio_buscore_ops, sdiodev->settings);
+-	bus->ci = brcmf_chip_attach(sdiodev, sdiodev->func1->device,
+-				    &brcmf_sdio_buscore_ops);
++	bus->ci = brcmf_chip_attach(sdiodev, sdiodev->func1->device,
++				    &brcmf_sdio_buscore_ops, sdiodev->settings);
  	if (IS_ERR(bus->ci)) {
  		brcmf_err("brcmf_chip_attach failed!\n");
  		bus->ci = NULL;

@@ -2,9 +2,9 @@
 # Contributor: Jan Alexander Steffens (heftig) <jan.steffens@gmail.com>
 
 pkgbase=linux-mbp
-pkgver=5.12.19
+pkgver=5.15.12
 _srcname=linux-${pkgver}
-pkgrel=2
+pkgrel=1
 pkgdesc='Linux for MBP'
 _srctag=v${pkgver%.*}-${pkgver##*.}
 url="https://git.archlinux.org/linux.git/log/?h=v$_srctag"
@@ -24,12 +24,6 @@ source=(
 
   # Arch Linux patches
   0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
-  0002-x86-setup-Consolidate-early-memory-reservations.patch
-  0003-x86-setup-Merge-several-reservations-of-start-of-mem.patch
-  0004-x86-setup-Move-trim_snb_memory-later-in-setup_arch-t.patch
-  0005-x86-setup-always-reserve-the-first-1M-of-RAM.patch
-  0006-x86-setup-remove-CONFIG_X86_RESERVE_LOW-and-reservel.patch
-  0007-x86-crash-remove-crash_reserve_low_1M.patch
 
   # Hack for AMD DC eDP link rate bug
   2001-drm-amd-display-Force-link_rate-as-LINK_RATE_RBR2-fo.patch
@@ -76,23 +70,17 @@ validpgpkeys=(
   '647F28654894E3BD457199BE38DBBDC86092693E'  # Greg Kroah-Hartman
 )
 
-sha256sums=('e9381cd3525a02f5b895f74147e2440be443ecd45484c6c64075046bc6f94c73'
+sha256sums=('7de919772b62647591527e904e3b3583783381a29d812404f58a222484e751a0'
             'SKIP'
-            '90473ec7afd9ce7496fe7446aa8383f99d16824ff30e60febd565fd94281cda9'
+            '6ab7a66895804f832f1b9594b682be0e2e6982455a8fc3f7e87111e1c7dff866'
             'ea16157696cb1807f8960de667a8c56da223bfae02c94d7b2aed6853c541f2ed'
-            'f0ae4223a64febc053d779a71d171a5e44bbd2bfa286f713fe7fe97ba0dcb802'
-            '250c98c9c3776ad8a49333ebd8d5a4e56c7cc3f6886b0058ea7c0744a4748780'
-            'c9ccb0167883589c8f0aa6220d7c2005312f83018b9ab26a14527a592e426f1d'
-            '5d1e578231a6742fe8ac4785c8d7129315daa4b5b5703cb968705f90344daabf'
-            '4360ee51d90abb42021dd840337067ec743bbd367c23dc2a1136ff61c4fe70e2'
-            '46d2ae7147968daeb25d128ae9abb30a58f8371218a0b7643fb9916e55da8dfe'
             '786dfc22e4c6ece883e7dedd0ba3f6c14018584df95450b2cb78f3da8b01f7cb'
-            '0d3e591d7cb2532ee68c4621594a10b1d0240528a312159ee0731484bb180400'
-            '63187212c33d844b6b9a26f76e789d9f4144d0d8fe9444dfd499f31430b45648'
-            'd66a0cdf4377d3e5c7f42a7ae45785d8da1a44fcc9001dcb721d987f490018c9'
-            '688dee43c42d2e572c31d26513d43f02f9838c3fe149446db79dfca451801ab9'
-            '560f1b89bd9ea93107903ed34100129ee0ac0ea5dd8b3d74db9a6835b1bfdb4c'
-            'e46140f502d8c00d88e206934a491a8a0dd1ff7fac187bbf93bb8c3a106e5bc7'
+            '7366a08383900a09f8e742b1e4f0a02e0839a385e68e70a89d1815c197df3300'
+            '8d8401a99a9dfbc41aa2dc5b6a409a19860b1b918465e19de4a4ff18de075ea3'
+            '08d165106fe35b68a7b48f216566951a5db0baac19098c015bcc81c5fcba678d'
+            '459906cab172df9f6712a4168e7a5d529f85b2bb58a068f2d44746df14a6d27a'
+            '2827dab6eeb2d2a08034938024f902846b5813e967a0ea253dc1ea88315da383'
+            '398dec7d54c6122ae2263cd5a6d52353800a1a60fd85e52427c372ea9974a625'
             '11565cff9c6a7db8846dc7d5930419045e9527863b8df5979a7465006211bd16'
             '83f4be6849ba4d5f9fad647ad2eb78bf6409ee98a40ac62e8a5b80496233d70a'
             '44bd3643b2b22fedc59d79511199f30ce6759fa0acdd9a66262a53c5e046da6b'
@@ -103,11 +91,11 @@ sha256sums=('e9381cd3525a02f5b895f74147e2440be443ecd45484c6c64075046bc6f94c73'
             'cac035fe07663a319185c644c5b39b34bef89ada348881fa4a02d15290260445'
             '9dfa9f02d17c5cd9620fa2c1d43ca967b81b6a56d33c2bafae14e0c64e498baa'
             '4d22727c1456e268de1c39ac73f2dc0c1630ac25aa66364d99f94e29eba5c6b9'
-            '7f41e52285bbdeeaf565e7a1e69860439a4cc302092b473301040f29fc2f5b64'
+            'cc8a177699862101cbed9172def8c3985d65f7b5c7755f600559aa45dd80e348'
             '9640178d6251686c980c30fc528b3d70beac6ce8246bf433506a3f843808326c'
             '90a6012cdd8a64ede8e0bbaf7331960bd68f628e0973b65459188eb1ccb5b829'
-            '3a7baa28d5f45bdbff23e838133f2e3c6896412ffb5a919b4992a7b2d17469d9'
-            'edb804461e3820ef3397e1e236f7caabf906b6a13d03f406c8462ec476ecbbe5'
+            'fb73c8ba175ec2bdf765207f434d1e8977efa0be3097a6d1e2843536a531c351'
+            '294300fe5e290e18ee4062fe6847f7838c0f1a977af91157a1630828f55f7aa2'
             'fa0ad2e2f171eafd727d780588f7ef5d47ddf2d75fab02c67356bbc7b26e25e0')
 
 export KBUILD_BUILD_HOST=archlinux

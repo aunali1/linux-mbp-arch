@@ -1,4 +1,4 @@
-From 86717fd6722b0ddc607d45718c29d67f3671d71d Mon Sep 17 00:00:00 2001
+From 09dd6c563cd73d72e917de07e8d59358c41e051d Mon Sep 17 00:00:00 2001
 From: Paul Pawlowski <paul@mrarm.io>
 Date: Sun, 17 Nov 2019 23:12:55 +0100
 Subject: [PATCH 1/6] applesmc: convert static structures to drvdata
@@ -14,7 +14,7 @@ Signed-off-by: Aun-Ali Zaidi <admin@kodeit.net>
  1 file changed, 319 insertions(+), 221 deletions(-)
 
 diff --git a/drivers/hwmon/applesmc.c b/drivers/hwmon/applesmc.c
-index 28b137eedf2e..cf00f7b62a78 100644
+index 79b498f816fe..62211b590a61 100644
 --- a/drivers/hwmon/applesmc.c
 +++ b/drivers/hwmon/applesmc.c
 @@ -6,6 +6,7 @@
@@ -600,7 +600,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
 +	struct applesmc_device *smc = dev_get_drvdata(dev);
 +	const char *key = smc->reg.index[to_index(devattr)];
  
- 	return snprintf(sysfsbuf, PAGE_SIZE, "%s\n", key);
+ 	return sysfs_emit(sysfsbuf, "%s\n", key);
  }
 @@ -821,12 +885,13 @@ static ssize_t applesmc_show_sensor_label(struct device *dev,
  static ssize_t applesmc_show_temperature(struct device *dev,
@@ -712,10 +712,10 @@ index 28b137eedf2e..cf00f7b62a78 100644
  static ssize_t applesmc_calibrate_show(struct device *dev,
  				struct device_attribute *attr, char *sysfsbuf)
  {
--	return snprintf(sysfsbuf, PAGE_SIZE, "(%d,%d)\n", rest_x, rest_y);
+-	return sysfs_emit(sysfsbuf, "(%d,%d)\n", rest_x, rest_y);
 +	struct applesmc_device *smc = dev_get_drvdata(dev);
 +
-+	return snprintf(sysfsbuf, PAGE_SIZE, "(%d,%d)\n", smc->rest_x, smc->rest_y);
++	return sysfs_emit(sysfsbuf, "(%d,%d)\n", smc->rest_x, smc->rest_y);
  }
  
  static ssize_t applesmc_calibrate_store(struct device *dev,
@@ -822,10 +822,10 @@ index 28b137eedf2e..cf00f7b62a78 100644
  static ssize_t applesmc_key_at_index_show(struct device *dev,
  				struct device_attribute *attr, char *sysfsbuf)
  {
--	return snprintf(sysfsbuf, PAGE_SIZE, "%d\n", key_at_index);
+-	return sysfs_emit(sysfsbuf, "%d\n", key_at_index);
 +	struct applesmc_device *smc = dev_get_drvdata(dev);
 +
-+	return snprintf(sysfsbuf, PAGE_SIZE, "%d\n", smc->key_at_index);
++	return sysfs_emit(sysfsbuf, PAGE_SIZE, "%d\n", smc->key_at_index);
  }
  
  static ssize_t applesmc_key_at_index_store(struct device *dev,
@@ -1040,7 +1040,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  }
  
  static int applesmc_dmi_match(const struct dmi_system_id *id)
-@@ -1306,86 +1397,100 @@ static const struct dmi_system_id applesmc_whitelist[] __initconst = {
+@@ -1302,86 +1393,100 @@ static const struct dmi_system_id applesmc_whitelist[] __initconst = {
  	{ .ident = NULL }
  };
  
@@ -1190,7 +1190,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  out_driver:
  	platform_driver_unregister(&applesmc_driver);
  out_region:
-@@ -1397,14 +1502,6 @@ static int __init applesmc_init(void)
+@@ -1393,14 +1498,6 @@ static int __init applesmc_init(void)
  
  static void __exit applesmc_exit(void)
  {
@@ -1205,7 +1205,7 @@ index 28b137eedf2e..cf00f7b62a78 100644
  	platform_device_unregister(pdev);
  	platform_driver_unregister(&applesmc_driver);
  	release_region(APPLESMC_DATA_PORT, APPLESMC_NR_PORTS);
-@@ -1414,6 +1511,7 @@ module_init(applesmc_init);
+@@ -1410,6 +1507,7 @@ module_init(applesmc_init);
  module_exit(applesmc_exit);
  
  MODULE_AUTHOR("Nicolas Boichat");
@@ -1214,5 +1214,5 @@ index 28b137eedf2e..cf00f7b62a78 100644
  MODULE_LICENSE("GPL v2");
  MODULE_DEVICE_TABLE(dmi, applesmc_whitelist);
 -- 
-2.31.1
+2.30.0
 

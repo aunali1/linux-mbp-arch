@@ -1,4 +1,4 @@
-From 4b80a87b8273833a093cdac96dabdb865e0d6e86 Mon Sep 17 00:00:00 2001
+From 4e63e9b77422aae8e7411ddc7a8458c2585c86df Mon Sep 17 00:00:00 2001
 From: Paul Pawlowski <paul@mrarm.io>
 Date: Sun, 17 Nov 2019 23:12:18 +0100
 Subject: [PATCH 6/6] applesmc: fan support on T2 Macs
@@ -19,7 +19,7 @@ Signed-off-by: Aun-Ali Zaidi <admin@kodeit.net>
  1 file changed, 102 insertions(+), 17 deletions(-)
 
 diff --git a/drivers/hwmon/applesmc.c b/drivers/hwmon/applesmc.c
-index ae0aa5dbc842..867cf857448c 100644
+index 2d23bb9ad9dd..0938227be612 100644
 --- a/drivers/hwmon/applesmc.c
 +++ b/drivers/hwmon/applesmc.c
 @@ -87,6 +87,7 @@
@@ -110,7 +110,7 @@ index ae0aa5dbc842..867cf857448c 100644
  		return ret;
  
 -	speed = ((buffer[0] << 8 | buffer[1]) >> 2);
- 	return snprintf(sysfsbuf, PAGE_SIZE, "%u\n", speed);
+ 	return sysfs_emit(sysfsbuf, "%u\n", speed);
  }
  
 @@ -1263,6 +1312,7 @@ static ssize_t applesmc_store_fan_speed(struct device *dev,
@@ -169,7 +169,7 @@ index ae0aa5dbc842..867cf857448c 100644
  		return ret;
  
 -	manual = ((buffer[0] << 8 | buffer[1]) >> to_index(attr)) & 0x01;
- 	return snprintf(sysfsbuf, PAGE_SIZE, "%d\n", manual);
+ 	return sysfs_emit(sysfsbuf, "%d\n", manual);
  }
  
 @@ -1307,27 +1380,39 @@ static ssize_t applesmc_store_fan_manual(struct device *dev,
@@ -223,5 +223,5 @@ index ae0aa5dbc842..867cf857448c 100644
  out:
  	if (ret)
 -- 
-2.31.1
+2.30.0
 

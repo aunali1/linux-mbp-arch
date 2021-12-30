@@ -18,15 +18,14 @@ diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c b/drivers/n
 index 6c39415a69d6..d2392a8fdbbb 100644
 --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
 +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/chip.c
-@@ -727,6 +727,8 @@ static u32 brcmf_chip_tcm_rambase(struct brcmf_chip_priv *ci)
- 	case BRCM_CC_4364_CHIP_ID:
+@@ -727,6 +727,7 @@ static u32 brcmf_chip_tcm_rambase(struct brcmf_chip_priv *ci)
  	case CY_CC_4373_CHIP_ID:
  		return 0x160000;
+ 	case CY_CC_43752_CHIP_ID:
 +	case BRCM_CC_4377_CHIP_ID:
-+		return 0x170000;
+ 		return 0x170000;
  	default:
  		brcmf_err("unknown chip: %s\n", ci->pub.name);
- 		break;
 diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
 index 60e3b0ce4fd7..a262e2eb36af 100644
 --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c

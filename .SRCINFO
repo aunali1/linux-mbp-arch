@@ -1,8 +1,8 @@
 pkgbase = linux-mbp
 	pkgdesc = Linux for MBP
-	pkgver = 5.12.19
-	pkgrel = 2
-	url = https://git.archlinux.org/linux.git/log/?h=vv5.12-19
+	pkgver = 5.15.12
+	pkgrel = 1
+	url = https://git.archlinux.org/linux.git/log/?h=vv5.15-12
 	arch = x86_64
 	license = GPL2
 	makedepends = bc
@@ -20,16 +20,10 @@ pkgbase = linux-mbp
 	makedepends = imagemagick
 	makedepends = git
 	options = !strip
-	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.12.19.tar.xz
-	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.12.19.tar.sign
+	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.15.12.tar.xz
+	source = https://www.kernel.org/pub/linux/kernel/v5.x/linux-5.15.12.tar.sign
 	source = config
 	source = 0001-ZEN-Add-sysctl-and-CONFIG-to-disallow-unprivileged-C.patch
-	source = 0002-x86-setup-Consolidate-early-memory-reservations.patch
-	source = 0003-x86-setup-Merge-several-reservations-of-start-of-mem.patch
-	source = 0004-x86-setup-Move-trim_snb_memory-later-in-setup_arch-t.patch
-	source = 0005-x86-setup-always-reserve-the-first-1M-of-RAM.patch
-	source = 0006-x86-setup-remove-CONFIG_X86_RESERVE_LOW-and-reservel.patch
-	source = 0007-x86-crash-remove-crash_reserve_low_1M.patch
 	source = 2001-drm-amd-display-Force-link_rate-as-LINK_RATE_RBR2-fo.patch
 	source = 3001-applesmc-convert-static-structures-to-drvdata.patch
 	source = 3002-applesmc-make-io-port-base-addr-dynamic.patch
@@ -55,23 +49,17 @@ pkgbase = linux-mbp
 	source = 9001-brcmfmac-p2p-Ensure-virtual-interface-is-initialized.patch
 	validpgpkeys = ABAF11C65A2970B130ABE3C479BE3E4300411886
 	validpgpkeys = 647F28654894E3BD457199BE38DBBDC86092693E
-	sha256sums = e9381cd3525a02f5b895f74147e2440be443ecd45484c6c64075046bc6f94c73
+	sha256sums = 7de919772b62647591527e904e3b3583783381a29d812404f58a222484e751a0
 	sha256sums = SKIP
-	sha256sums = 90473ec7afd9ce7496fe7446aa8383f99d16824ff30e60febd565fd94281cda9
+	sha256sums = 6ab7a66895804f832f1b9594b682be0e2e6982455a8fc3f7e87111e1c7dff866
 	sha256sums = ea16157696cb1807f8960de667a8c56da223bfae02c94d7b2aed6853c541f2ed
-	sha256sums = f0ae4223a64febc053d779a71d171a5e44bbd2bfa286f713fe7fe97ba0dcb802
-	sha256sums = 250c98c9c3776ad8a49333ebd8d5a4e56c7cc3f6886b0058ea7c0744a4748780
-	sha256sums = c9ccb0167883589c8f0aa6220d7c2005312f83018b9ab26a14527a592e426f1d
-	sha256sums = 5d1e578231a6742fe8ac4785c8d7129315daa4b5b5703cb968705f90344daabf
-	sha256sums = 4360ee51d90abb42021dd840337067ec743bbd367c23dc2a1136ff61c4fe70e2
-	sha256sums = 46d2ae7147968daeb25d128ae9abb30a58f8371218a0b7643fb9916e55da8dfe
 	sha256sums = 786dfc22e4c6ece883e7dedd0ba3f6c14018584df95450b2cb78f3da8b01f7cb
-	sha256sums = 0d3e591d7cb2532ee68c4621594a10b1d0240528a312159ee0731484bb180400
-	sha256sums = 63187212c33d844b6b9a26f76e789d9f4144d0d8fe9444dfd499f31430b45648
-	sha256sums = d66a0cdf4377d3e5c7f42a7ae45785d8da1a44fcc9001dcb721d987f490018c9
-	sha256sums = 688dee43c42d2e572c31d26513d43f02f9838c3fe149446db79dfca451801ab9
-	sha256sums = 560f1b89bd9ea93107903ed34100129ee0ac0ea5dd8b3d74db9a6835b1bfdb4c
-	sha256sums = e46140f502d8c00d88e206934a491a8a0dd1ff7fac187bbf93bb8c3a106e5bc7
+	sha256sums = 7366a08383900a09f8e742b1e4f0a02e0839a385e68e70a89d1815c197df3300
+	sha256sums = 8d8401a99a9dfbc41aa2dc5b6a409a19860b1b918465e19de4a4ff18de075ea3
+	sha256sums = 08d165106fe35b68a7b48f216566951a5db0baac19098c015bcc81c5fcba678d
+	sha256sums = 459906cab172df9f6712a4168e7a5d529f85b2bb58a068f2d44746df14a6d27a
+	sha256sums = 2827dab6eeb2d2a08034938024f902846b5813e967a0ea253dc1ea88315da383
+	sha256sums = 398dec7d54c6122ae2263cd5a6d52353800a1a60fd85e52427c372ea9974a625
 	sha256sums = 11565cff9c6a7db8846dc7d5930419045e9527863b8df5979a7465006211bd16
 	sha256sums = 83f4be6849ba4d5f9fad647ad2eb78bf6409ee98a40ac62e8a5b80496233d70a
 	sha256sums = 44bd3643b2b22fedc59d79511199f30ce6759fa0acdd9a66262a53c5e046da6b
@@ -80,13 +68,13 @@ pkgbase = linux-mbp
 	sha256sums = 1deeacae1875cf9075b858a8bfb2463ebc531c9030b7c2ab46bbb8e4c3b974db
 	sha256sums = 40eff5e88bb30c51c6b97e85c2e7b8dec5f97916f768e6c07618d9c5afe68574
 	sha256sums = cac035fe07663a319185c644c5b39b34bef89ada348881fa4a02d15290260445
-	sha256sums = 45719489a9297d863ea60464e45a7e92f19606e527a7219d3582022e38439c0e
+	sha256sums = 9dfa9f02d17c5cd9620fa2c1d43ca967b81b6a56d33c2bafae14e0c64e498baa
 	sha256sums = 4d22727c1456e268de1c39ac73f2dc0c1630ac25aa66364d99f94e29eba5c6b9
-	sha256sums = 7f41e52285bbdeeaf565e7a1e69860439a4cc302092b473301040f29fc2f5b64
+	sha256sums = cc8a177699862101cbed9172def8c3985d65f7b5c7755f600559aa45dd80e348
 	sha256sums = 9640178d6251686c980c30fc528b3d70beac6ce8246bf433506a3f843808326c
 	sha256sums = 90a6012cdd8a64ede8e0bbaf7331960bd68f628e0973b65459188eb1ccb5b829
-	sha256sums = 3a7baa28d5f45bdbff23e838133f2e3c6896412ffb5a919b4992a7b2d17469d9
-	sha256sums = edb804461e3820ef3397e1e236f7caabf906b6a13d03f406c8462ec476ecbbe5
+	sha256sums = fb73c8ba175ec2bdf765207f434d1e8977efa0be3097a6d1e2843536a531c351
+	sha256sums = 294300fe5e290e18ee4062fe6847f7838c0f1a977af91157a1630828f55f7aa2
 	sha256sums = fa0ad2e2f171eafd727d780588f7ef5d47ddf2d75fab02c67356bbc7b26e25e0
 
 pkgname = linux-mbp
@@ -96,13 +84,13 @@ pkgname = linux-mbp
 	depends = initramfs
 	optdepends = crda: to set the correct wireless channels of your country
 	optdepends = linux-firmware: firmware images needed for some devices
-	provides = linux=5.12.19
+	provides = linux=5.15.12
 	replaces = virtualbox-guest-modules-arch
 	replaces = wireguard-arch
 
 pkgname = linux-mbp-headers
 	pkgdesc = Headers and scripts for building modules for the Linux for MBP kernel
-	provides = linux-headers=5.12.19
+	provides = linux-headers=5.15.12
 
 pkgname = linux-mbp-docs
 	pkgdesc = Documentation for the Linux for MBP kernel
