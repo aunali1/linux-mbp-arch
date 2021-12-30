@@ -1,0 +1,31 @@
+From fbf132e816fb5ab9fc5e44be8a3ba78cdc5bb1e1 Mon Sep 17 00:00:00 2001
+From: Hector Martin <marcan@marcan.st>
+Date: Tue, 21 Dec 2021 17:44:51 +0900
+Subject: [PATCH 29/34] brcmfmac: pcie: Release firmwares in the
+ brcmf_pcie_setup error path
+
+This avoids leaking memory if brcmf_chip_get_raminfo fails. Note that
+the CLM blob is released in the device remove path.
+
+Fixes: 82f93cf46d60 ("brcmfmac: get chip's default RAM info during PCIe setup")
+Signed-off-by: Hector Martin <marcan@marcan.st>
+---
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+index 8b67cddb7..f1b90b5e7 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+@@ -2125,6 +2125,8 @@ static void brcmf_pcie_setup(struct device *dev, int ret,
+ 	ret = brcmf_chip_get_raminfo(devinfo->ci);
+ 	if (ret) {
+ 		brcmf_err(bus, "Failed to get RAM info\n");
++		release_firmware(fw);
++		brcmf_fw_nvram_free(nvram);
+ 		goto fail;
+ 	}
+ 
+-- 
+2.34.1
+

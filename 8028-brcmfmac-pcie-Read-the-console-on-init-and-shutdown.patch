@@ -1,0 +1,45 @@
+From f6f42c43e1301ba77fe6b4480007871b3a2da85c Mon Sep 17 00:00:00 2001
+From: Hector Martin <marcan@marcan.st>
+Date: Tue, 21 Dec 2021 17:43:03 +0900
+Subject: [PATCH 28/34] brcmfmac: pcie: Read the console on init and shutdown
+
+This allows us to get console messages if the firmware crashed during
+early init, or if an operation failed and we're about to shut down.
+
+Signed-off-by: Hector Martin <marcan@marcan.st>
+---
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+index 865e3f28c..8b67cddb7 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+@@ -854,6 +854,8 @@ static void brcmf_pcie_bus_console_read(struct brcmf_pciedev_info *devinfo,
+ 		return;
+ 
+ 	console = &devinfo->shared.console;
++	if (!console->base_addr)
++		return;
+ 	addr = console->base_addr + BRCMF_CONSOLE_WRITEIDX_OFFSET;
+ 	newidx = brcmf_pcie_read_tcm32(devinfo, addr);
+ 	while (newidx != console->read_idx) {
+@@ -1632,6 +1634,7 @@ brcmf_pcie_init_share_ram_info(struct brcmf_pciedev_info *devinfo,
+ 		  shared->max_rxbufpost, shared->rx_dataoffset);
+ 
+ 	brcmf_pcie_bus_console_init(devinfo);
++	brcmf_pcie_bus_console_read(devinfo, false);
+ 
+ 	return 0;
+ }
+@@ -2401,6 +2404,7 @@ brcmf_pcie_remove(struct pci_dev *pdev)
+ 		return;
+ 
+ 	devinfo = bus->bus_priv.pcie->devinfo;
++	brcmf_pcie_bus_console_read(devinfo, false);
+ 
+ 	devinfo->state = BRCMFMAC_PCIE_STATE_DOWN;
+ 	if (devinfo->ci)
+-- 
+2.34.1
+
