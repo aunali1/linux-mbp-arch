@@ -4,7 +4,7 @@
 pkgbase=linux-mbp
 pkgver=5.15.12
 _srcname=linux-${pkgver}
-pkgrel=2
+pkgrel=3
 pkgdesc='Linux for MBP'
 _srctag=v${pkgver%.*}-${pkgver##*.}
 url="https://git.archlinux.org/linux.git/log/?h=v$_srctag"
@@ -58,12 +58,19 @@ source=(
   # Hack for i915 overscan issues
   7001-drm-i915-fbdev-Discard-BIOS-framebuffers-exceeding-h.patch
 
-  # Broadcom WIFI/BT device support
+  # Broadcom WIFI device support
   8001-brcmfmac-Add-initial-support-for-the-BRCM4355.patch
   8002-brcmfmac-Add-initial-support-for-the-BRCM4377.patch
 
   # Broadcom P2P VIF fix
-  9001-brcmfmac-p2p-Ensure-virtual-interface-is-initialized.patch
+  8003-brcmfmac-p2p-Ensure-virtual-interface-is-initialized.patch
+
+  # Broadcom BT device support
+  9001-bluetooth-add-disable-read-tx-power-quirk.patch
+  9002-mfd-intel-lpss-Add-support-for-MacBookPro16-2-ICL-N-.patch
+  9003-mfd-intel-lpss-Fix-too-early-PM-enablement-in-the-AC.patch
+
+
 )
 
 validpgpkeys=(
@@ -98,7 +105,10 @@ sha256sums=('7de919772b62647591527e904e3b3583783381a29d812404f58a222484e751a0'
             '90a6012cdd8a64ede8e0bbaf7331960bd68f628e0973b65459188eb1ccb5b829'
             'fb73c8ba175ec2bdf765207f434d1e8977efa0be3097a6d1e2843536a531c351'
             '294300fe5e290e18ee4062fe6847f7838c0f1a977af91157a1630828f55f7aa2'
-            'fa0ad2e2f171eafd727d780588f7ef5d47ddf2d75fab02c67356bbc7b26e25e0')
+            'fa0ad2e2f171eafd727d780588f7ef5d47ddf2d75fab02c67356bbc7b26e25e0'
+            '31e414978a947bdb71f27ed364c4da73b81fcf1921250cb69ee1bcf2bbd25636'
+            '8aeed7ebb2544aabf2361c7eaeea4ab76f1ce2c5f6257224545b82ef42cf4b44'
+            '3bffb2bb84800453ba05676293de9b0b1619d0c19b6295e803f0d9c3a07be23a')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase

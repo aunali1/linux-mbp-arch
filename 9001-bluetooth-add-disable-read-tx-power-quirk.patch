@@ -1,0 +1,63 @@
+From 64dad24333ddb290f4e2f6c489abe03247030320 Mon Sep 17 00:00:00 2001
+From: Orlando Chamberlain <redecorating@protonmail.com>
+Date: Tue, 28 Sep 2021 20:41:35 +1000
+Subject: [PATCH] bluetooth: add disable read tx power quirk
+
+---
+ drivers/bluetooth/btbcm.c   | 4 ++++
+ include/net/bluetooth/hci.h | 9 +++++++++
+ net/bluetooth/hci_core.c    | 3 ++-
+ 3 files changed, 15 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/bluetooth/btbcm.c b/drivers/bluetooth/btbcm.c
+index e4182acee488..4ecc50d93107 100644
+--- a/drivers/bluetooth/btbcm.c
++++ b/drivers/bluetooth/btbcm.c
+@@ -353,6 +353,10 @@ static int btbcm_read_info(struct hci_dev *hdev)
+ 		return PTR_ERR(skb);
+ 
+ 	bt_dev_info(hdev, "BCM: chip id %u", skb->data[1]);
++
++	if (skb->data[1] == 150)
++		set_bit(HCI_QUIRK_BROKEN_READ_TRANSMIT_POWER, &hdev->quirks);
++
+ 	kfree_skb(skb);
+ 
+ 	/* Read Controller Features */
+diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
+index b80415011dcd..9ce46cb8564d 100644
+--- a/include/net/bluetooth/hci.h
++++ b/include/net/bluetooth/hci.h
+@@ -246,6 +246,15 @@ enum {
+ 	 * HCI after resume.
+ 	 */
+ 	HCI_QUIRK_NO_SUSPEND_NOTIFIER,
++
++	/*
++	 * When this quirk is set, LE tx power is not queried on startup
++	 * and the min/max tx power values default to HCI_TX_POWER_INVALID.
++	 *
++	 * This quirk can be set before hci_register_dev is called or
++	 * during the hdev->setup vendor callback.
++	 */
++	HCI_QUIRK_BROKEN_READ_TRANSMIT_POWER,
+ };
+ 
+ /* HCI device flags */
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index 8a47a3017d61..9a23fe7c8d67 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -742,7 +742,8 @@ static int hci_init3_req(struct hci_request *req, unsigned long opt)
+ 			hci_req_add(req, HCI_OP_LE_READ_ADV_TX_POWER, 0, NULL);
+ 		}
+ 
+-		if (hdev->commands[38] & 0x80) {
++		if (hdev->commands[38] & 0x80 &&
++	    	!test_bit(HCI_QUIRK_BROKEN_READ_TRANSMIT_POWER, &hdev->quirks)) {
+ 			/* Read LE Min/Max Tx Power*/
+ 			hci_req_add(req, HCI_OP_LE_READ_TRANSMIT_POWER,
+ 				    0, NULL);
+-- 
+2.33.0
+
